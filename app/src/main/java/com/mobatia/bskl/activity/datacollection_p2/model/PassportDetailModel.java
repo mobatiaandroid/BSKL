@@ -6,11 +6,15 @@ public class PassportDetailModel implements Serializable {
     String id;
     String student_id;
     String student_name;
+    String date_of_issue;
     String passport_number;
     String nationality;
     String passport_image;
-    String date_of_issue;
     String expiry_date;
+    String original_passport_number;
+    String original_nationality;
+    String original_passport_image;
+    String original_expiry_date;
     String visa_permit_no;
     String visa_permit_expiry_date;
     String visa_image;
@@ -21,6 +25,7 @@ public class PassportDetailModel implements Serializable {
     String updated_at;
     String IsNational;
     String visa;
+    String not_have_a_valid_passport;
     String visa_image_path;
     String passport_image_path;
     String visa_image_name;
@@ -29,6 +34,46 @@ public class PassportDetailModel implements Serializable {
     String visa_expired;
     boolean isPassportDateChanged;
     boolean isVisaDateChanged;
+
+    public String getOriginal_passport_number() {
+        return original_passport_number;
+    }
+
+    public void setOriginal_passport_number(String original_passport_number) {
+        this.original_passport_number = original_passport_number;
+    }
+
+    public String getOriginal_nationality() {
+        return original_nationality;
+    }
+
+    public void setOriginal_nationality(String original_nationality) {
+        this.original_nationality = original_nationality;
+    }
+
+    public String getOriginal_passport_image() {
+        return original_passport_image;
+    }
+
+    public void setOriginal_passport_image(String original_passport_image) {
+        this.original_passport_image = original_passport_image;
+    }
+
+    public String getOriginal_expiry_date() {
+        return original_expiry_date;
+    }
+
+    public void setOriginal_expiry_date(String original_expiry_date) {
+        this.original_expiry_date = original_expiry_date;
+    }
+
+    public String getNot_have_a_valid_passport() {
+        return not_have_a_valid_passport;
+    }
+
+    public void setNot_have_a_valid_passport(String not_have_a_valid_passport) {
+        this.not_have_a_valid_passport = not_have_a_valid_passport;
+    }
 
     public boolean isPassportDateChanged() {
         return isPassportDateChanged;

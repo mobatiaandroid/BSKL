@@ -1597,18 +1597,11 @@ public class HomeScreenFragment extends Fragment implements
                         if (status_code.equalsIgnoreCase("303"))
                         {
 
-                            System.out.println("Works DATA COLLECTIOM");
-//                            JSONObject respObj = secobj.getJSONObject("data");
-//                            Log.e("shared: ", String.valueOf(respObj));
-//                            SharedPreferences.Editor editor = getActivity().getSharedPreferences("BSKL", Context.MODE_PRIVATE).edit();
-//                            editor.putString("DATA_COLLECTION", String.valueOf(respObj));
-//                            editor.apply();
                              JSONObject dataObj=secobj.optJSONObject("data");
                              PreferenceManager.setDisplayMessage(mContext,dataObj.optString("display_message"));
                              JSONArray ownDetailArray=dataObj.getJSONArray("own_details");
                              if(ownDetailArray.length()>0)
                              {
-                                 System.out.println("Works DATA COLLECTIOM");
                                  for (int i = 0; i < ownDetailArray.length(); i++)
                                  {
                                      JSONObject dataObject = ownDetailArray.getJSONObject(i);
@@ -1716,31 +1709,6 @@ public class HomeScreenFragment extends Fragment implements
                                     }
                                 }
 
-//                                if (!isKinFound)
-//                                {
-//                                    KinModel model = new KinModel();
-//                                    model.setId("Mobatia_KIN");
-//                                    model.setUser_id("");
-//                                    model.setKin_id("Mobatia_KIN");
-//                                    model.setTitle("");;
-//                                    model.setName("");
-//                                    model.setLast_name("");
-//                                    model.setRelationship("Next of kin");
-//                                    model.setEmail("");
-//                                    model.setPhone("");
-//                                    model.setCode("");
-//                                    System.out.println("Works DATA COLLECTIOM549894");
-//                                    model.setUser_mobile("");
-//                                    model.setStudent_id("");
-//                                    model.setCreated_at("");
-//                                    model.setUpdated_at("");
-//                                    model.setNewData("YES");
-//                                    model.setReportmailmerge("");
-//                                    model.setCorrespondencemailmerge("");
-//                                    model.setNewData(true);
-//                                    model.setConfirmed(false);
-//                                    KinArray.add(model);
-//                                }
                                 if (!isLocalFound)
                                 {
                                     KinModel model = new KinModel();
@@ -1772,31 +1740,7 @@ public class HomeScreenFragment extends Fragment implements
                             }
                             else
                             {
-//                                if (!isKinFound)
-//                                {
-//                                    KinModel model = new KinModel();
-//                                    model.setId("Mobatia_KIN");
-//                                    model.setUser_id("");
-//                                    model.setKin_id("Mobatia_KIN");
-//                                    model.setTitle("");;
-//                                    model.setName("");
-//                                    model.setLast_name("");
-//                                    model.setRelationship("Next of kin");
-//                                    model.setEmail("");
-//                                    model.setPhone("");
-//                                    model.setCode("");
-//                                    System.out.println("Works DATA COLLECTIOM549894");
-//                                    model.setUser_mobile("");
-//                                    model.setStudent_id("");
-//                                    model.setCreated_at("");
-//                                    model.setUpdated_at("");
-//                                    model.setReportmailmerge("");
-//                                    model.setCorrespondencemailmerge("");
-//                                    model.setNewData("YES");
-//                                    model.setNewData(true);
-//                                    model.setConfirmed(false);
-//                                    KinArray.add(model);
-//                                }
+
                                 if (!isLocalFound)
                                 {
                                     KinModel model = new KinModel();
@@ -1910,7 +1854,6 @@ public class HomeScreenFragment extends Fragment implements
 
                                  if (PreferenceManager.getInsuranceDetailArrayList(mContext)==null || !PreferenceManager.getIsAlreadyEnteredInsurance(mContext) || PreferenceManager.getInsuranceDetailArrayList(mContext).size()==0)
                                  {
-                                     System.out.println("It works Insurance");
                                      PreferenceManager.setIsAlreadyEnteredInsurance(mContext,true);
                                      PreferenceManager.saveInsuranceDetailArrayList(InsuranceHealthListArray,mContext);
                                  }
@@ -1926,15 +1869,20 @@ public class HomeScreenFragment extends Fragment implements
                                          pModel.setStudent_id(passportObject.optString("student_id"));
                                          pModel.setStudent_name(passportObject.optString("student_name"));
                                          pModel.setPassport_number(passportObject.optString("passport_number"));
+                                         pModel.setOriginal_passport_number(passportObject.optString("passport_number"));
                                          pModel.setNationality(passportObject.optString("nationality"));
+                                         pModel.setOriginal_nationality(passportObject.optString("nationality"));
                                          pModel.setPassport_image(passportObject.optString("passport_image"));
+                                         pModel.setOriginal_passport_image(passportObject.optString("passport_image"));
                                          pModel.setPassport_expired(passportObject.optString("passport_expired"));
+                                         pModel.setOriginal_expiry_date(passportObject.optString("expiry_date"));
                                          pModel.setDate_of_issue(passportObject.optString("date_of_issue"));
                                          pModel.setExpiry_date(passportObject.optString("expiry_date"));
                                          pModel.setVisa(passportObject.optString("visa"));
                                          System.out.println("Visa value"+passportObject.optString("visa"));
                                          pModel.setVisa_permit_no(passportObject.optString("visa_permit_no"));
                                          pModel.setVisa_expired(passportObject.optString("visa_expired"));
+                                         pModel.setNot_have_a_valid_passport(passportObject.optString("not_have_a_valid_passport"));
                                          pModel.setVisa_image_name("");
                                          pModel.setVisa_image_path("");
                                          pModel.setPassport_image_path("");

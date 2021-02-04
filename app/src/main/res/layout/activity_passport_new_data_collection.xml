@@ -123,11 +123,31 @@
            <RelativeLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content">
+               <LinearLayout
+                   android:id="@+id/checkPassportLinear"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:layout_margin="10dp"
+                   android:gravity="center">
+                   <ImageView
+                       android:id="@+id/checkPassportImg"
+                       android:layout_width="25dp"
+                       android:layout_height="25dp"
+                       android:src="@drawable/check_box_header"/>
+                   <com.mobatia.bskl.manager.TextViewFontSansProRegular
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:textColor="@color/black"
+                       android:text="@string/no_valid_passport"
+                       android:layout_marginLeft="10dp"/>
+               </LinearLayout>
                <com.mobatia.bskl.manager.TextViewFontSansProBold
                    android:id="@+id/passportHead"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="Passport"
+                   android:layout_below="@+id/checkPassportLinear"
                    android:layout_marginLeft="10dp"
                    android:textColor="@color/black"/>
                <com.mobatia.bskl.manager.TextViewFontSansProRegular
@@ -276,6 +296,7 @@
                        android:textColor="@color/black"
                        android:textSize="10sp"
                        android:gravity="center"
+                       android:id="@+id/attachPassportTxt"
                        android:layout_marginRight="15dp"
                        android:text="@string/attach_passport"/>
                </LinearLayout>
@@ -437,21 +458,3 @@
         android:text="Submit"/>
 </RelativeLayout>
 
-<!--<ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/studentLinear"
-        android:layout_above="@+id/submitBtn"
-        android:fadeScrollbars="false"
-        android:scrollbarThumbVertical="@drawable/scroll_color">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:visibility="invisible"/>
-        </LinearLayout>
-    </ScrollView>-->

@@ -1051,139 +1051,162 @@ public String emptyValueCheckPassport()
 {
     int pos=AppController.confirmingPosition;
     String feild="";
-
-        if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getNationality().equalsIgnoreCase(""))
+        if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getNot_have_a_valid_passport().equalsIgnoreCase("1"))
         {
-            feild="Nationality";
-            System.out.println("Insrance empty works passport 11111");
-        }
-        else
-        {
-            System.out.println("Insrance empty works passport 2222");
-            if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getPassport_number().equalsIgnoreCase(""))
+            if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa().equalsIgnoreCase("1"))
             {
-                feild="Passport Number";
-                System.out.println("Insrance empty works passport 23333");
-            }
-            else
-            {
-                System.out.println("Insrance empty works passport 4444");
-                if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getExpiry_date().equalsIgnoreCase(""))
+                System.out.println("Insrance empty works passport 101010");
+                if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_permit_no().equalsIgnoreCase(""))
                 {
-                    feild="Passport Expiry Date";
+                    feild="Visa/Permit Number";
                 }
                 else
                 {
-                    System.out.println("Insrance empty works passport 5555"+PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getPassport_expired());
-                    if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getPassport_expired().equalsIgnoreCase("1"))
+                    if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_expired().equalsIgnoreCase("1"))
                     {
-                        System.out.println("Insrance empty works passport 6666");
-                        if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).isPassportDateChanged())
+                        if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).isVisaDateChanged())
                         {
-                            System.out.println("Insrance empty works passport 7777");
-                            if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getPassport_image().equalsIgnoreCase(""))
+                            if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_image().equalsIgnoreCase(""))
                             {
-                                System.out.println("Insrance empty works passport 8888");
-                                feild="Upload Passport Image";
-                            }
-                            else
-                            {
-                                System.out.println("Insrance empty works passport 9999");
-                                //visa data
-
-                                if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa().equalsIgnoreCase("1"))
-                                {
-                                    System.out.println("Insrance empty works passport 101010");
-                                    if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_permit_no().equalsIgnoreCase(""))
-                                    {
-                                        System.out.println("Insrance empty works passport 11 11 11 ");
-                                        feild="Visa/Permit Number";
-                                    }
-                                    else
-                                    {
-                                        System.out.println("Insrance empty works passport 12121212");
-                                        System.out.println("It Works inside passport expired"+PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_expired());
-                                        if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_expired().equalsIgnoreCase("1"))
-                                        {
-                                            System.out.println("Insrance empty works passport 131313");
-                                            System.out.println("It Works inside passport expired");
-                                            if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).isVisaDateChanged())
-                                            {
-                                                if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_image().equalsIgnoreCase(""))
-                                                {
-                                                    feild="Upload Visa Image";
-                                                }
-                                            }
-                                            else
-                                            {
-                                                feild="Visa/Permit Expiry Date";
-                                            }
-
-                                        }
-                                        else
-                                        {
-                                            feild="";
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    feild="";
-                                }
+                                feild="Upload Visa Image";
                             }
                         }
                         else
                         {
-                            System.out.println("Insrance empty works passport 1414104");
-                            feild="Passport Expiry Date";
+                            feild="Visa/Permit Expiry Date";
                         }
+
                     }
                     else
                     {
-                        //check visa
-                        System.out.println("Insrance empty works passport !!!!!!1"+PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa());
-                        if (!PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa().equalsIgnoreCase("0"))
+                        feild="";
+                    }
+                }
+            }
+            else
+            {
+                feild="";
+            }
+        }
+        else
+        {
+            if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getNationality().equalsIgnoreCase(""))
+            {
+                feild="Nationality";
+            }
+            else
+            {
+                if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getPassport_number().equalsIgnoreCase(""))
+                {
+                    feild="Passport Number";
+                }
+                else
+                {
+                    if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getExpiry_date().equalsIgnoreCase(""))
+                    {
+                        feild="Passport Expiry Date";
+                    }
+                    else
+                    {
+                        if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getPassport_expired().equalsIgnoreCase("1"))
                         {
-                            System.out.println("Insrance empty works passport 15151515");
-                            if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_permit_no().equalsIgnoreCase(""))
+                            if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).isPassportDateChanged())
                             {
-                                feild="Visa/Permit Number";
-                            }
-                            else
-                            {
-                                System.out.println("Insrance empty works passport 161616");
-                                if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_expired().equalsIgnoreCase("1"))
+                                if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getPassport_image().equalsIgnoreCase(""))
                                 {
-                                    System.out.println("Insrance empty works passport 17171717");
-                                    if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).isVisaDateChanged())
+                                    feild="Upload Passport Image";
+                                }
+                                else
+                                {
+                                    //visa data
+
+                                    if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa().equalsIgnoreCase("1"))
                                     {
-                                        System.out.println("Insrance empty works passport 181818");
-                                        if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_image().equalsIgnoreCase(""))
+                                        System.out.println("Insrance empty works passport 101010");
+                                        if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_permit_no().equalsIgnoreCase(""))
                                         {
-                                            System.out.println("Insrance empty works passport 19191919");
-                                            feild="Upload Visa Image";
+                                            feild="Visa/Permit Number";
+                                        }
+                                        else
+                                        {
+                                            if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_expired().equalsIgnoreCase("1"))
+                                            {
+                                                if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).isVisaDateChanged())
+                                                {
+                                                    if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_image().equalsIgnoreCase(""))
+                                                    {
+                                                        feild="Upload Visa Image";
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    feild="Visa/Permit Expiry Date";
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                feild="";
+                                            }
                                         }
                                     }
                                     else
                                     {
-                                        feild="Visa/Permit Expiry Date";
+                                        feild="";
                                     }
-
                                 }
-                                else
-                                {
-                                    feild="";
-                                }
+                            }
+                            else
+                            {
+                                feild="Passport Expiry Date";
                             }
                         }
                         else
                         {
-                            feild="";
+                            //check visa
+                            if (!PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa().equalsIgnoreCase("0"))
+                            {
+                                if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_permit_no().equalsIgnoreCase(""))
+                                {
+                                    feild="Visa/Permit Number";
+                                }
+                                else
+                                {
+                                    System.out.println("Insrance empty works passport 161616");
+                                    if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_expired().equalsIgnoreCase("1"))
+                                    {
+                                        System.out.println("Insrance empty works passport 17171717");
+                                        if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).isVisaDateChanged())
+                                        {
+                                            System.out.println("Insrance empty works passport 181818");
+                                            if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_image().equalsIgnoreCase(""))
+                                            {
+                                                System.out.println("Insrance empty works passport 19191919");
+                                                feild="Upload Visa Image";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            feild="Visa/Permit Expiry Date";
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        feild="";
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                feild="";
+                            }
                         }
                     }
                 }
             }
         }
+
 
     return feild;
 }

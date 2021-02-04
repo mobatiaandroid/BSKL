@@ -94,7 +94,7 @@ public class ThirdScreen extends Fragment implements NaisTabConstants, CacheDIRC
     ArrayList<StudentModel> studentsModelArrayList = new ArrayList<>();
     ArrayList<String> studentList = new ArrayList<>();
     TextView studentName;
-    String stud_id = "",id="",passportnumber="",dateofIssue="",expdate="",visa="",photo_no_conset="",status="",request="",created_at="",updated="",StudentName="";
+    String stud_id = "",id="",passportnumber="",dateofIssue="",expdate="",visa="",photo_no_conset="",status="",request="",created_at="",updated="",StudentName="",passportCheck="0";
     String studClass = "";
     String alumini = "";
     String progressreport = "";
@@ -325,6 +325,7 @@ public class ThirdScreen extends Fragment implements NaisTabConstants, CacheDIRC
         model.setNationality(passportNationality);
         model.setDate_of_issue(dateofIssue);
         model.setExpiry_date(expdate);
+        model.setNot_have_a_valid_passport(passportCheck);
         model.setVisa_permit_no(visaPermitNumber);
         model.setVisa_permit_expiry_date(visaPermitExpiry);
         model.setVisa_image("");
@@ -716,6 +717,7 @@ public class ThirdScreen extends Fragment implements NaisTabConstants, CacheDIRC
                                              dateofIssue = mPassportDetailArrayList.get(i).getDate_of_issue();
                                              PassportImage = mPassportDetailArrayList.get(i).getPassport_image();
                                              expdate = mPassportDetailArrayList.get(i).getExpiry_date();
+                                             passportCheck = mPassportDetailArrayList.get(i).getNot_have_a_valid_passport();
                                              visaPermitNumber = mPassportDetailArrayList.get(i).getVisa_permit_no();
                                              visaPermitExpiry = mPassportDetailArrayList.get(i).getVisa_permit_expiry_date();
                                              photo_no_conset = mPassportDetailArrayList.get(i).getPhoto_no_consent();

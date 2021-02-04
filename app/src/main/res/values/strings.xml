@@ -223,6 +223,7 @@
     <string name="passport_number">Passport Number</string>
     <string name="passport_expiry">Passport Expiry</string>
     <string name="passport_student_is_malaysia">Student is Malaysian and does not need visa</string>
+    <string name="no_valid_passport">Student does not have a valid passport</string>
     <string name="visa_number">Visa/Permit Number</string>
     <string name="visa_expiry">Visa/Permit Expiry Date</string>
     <string name="visa_passport_upload">Upload</string>
@@ -287,4 +288,5 @@
     <string name="personal_insurance_provider_red">Insurance Provider<font fgcolor="red">*</font></string>
     <string name="personal_insurance_expiry_date_red">Insurance Expiry Date<font fgcolor="red">*</font></string>
     <string name="personal_insurance_expiry_date">Insurance Expiry Date</string>
+    <string name="passport_check">Please provide the new passport details when known</string>
 </resources>

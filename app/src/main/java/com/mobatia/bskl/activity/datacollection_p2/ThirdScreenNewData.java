@@ -40,6 +40,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.mobatia.bskl.R;
+import com.mobatia.bskl.activity.data_collection.DataCollectionHome;
 import com.mobatia.bskl.activity.data_collection.model.NationalityModel;
 import com.mobatia.bskl.activity.datacollection_p2.model.InsuranceDetailModel;
 import com.mobatia.bskl.activity.datacollection_p2.model.PassportDetailModel;
@@ -103,16 +105,30 @@ import static android.app.Activity.RESULT_OK;
 public class ThirdScreenNewData extends Fragment implements NaisTabConstants, CacheDIRConstants, URLConstants,
         IntentPassValueConstants, NaisClassNameConstants, JSONConstants, StatusConstants{
 
-    ImageView checkStudentMalysianImg,CloseIcon;
+    ImageView checkStudentMalysianImg,CloseIcon,checkPassportImg;
+    ImageView studImg;
+    ImageView ViewSelectedVisa,ViewSelectedPassport;
+
     TextView UploadPasspost;
-    EditText visaPermitNumberTxt,visaPermitExpiryTxt;
-    boolean isStudentMalasiyanChecked=false;
     TextView uploadVisa,uploadVisaTxt;
     TextView studentName;
-    ImageView studImg;
-    private Context mContext;
-    LinearLayout mStudentSpinner;
+    TextView attachPassportTxt;
+    TextView PassportImageName,VisaImageName;
+    TextView passportNationalityTxt;
+
+    EditText visaPermitNumberTxt,visaPermitExpiryTxt;
     EditText passportNumberTxt,passportExpiryTxt;
+
+    RelativeLayout paasportNationalityLinear;
+
+    boolean isStudentMalasiyanChecked=false;
+    boolean isPassportChecked=false;
+
+    private Context mContext;
+
+    LinearLayout mStudentSpinner;
+    LinearLayout passportLinear;
+
     String passportNationality="";
     String passportNumber="";
     String passportExpiry="";
@@ -124,40 +140,36 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
     String visaImageData="";
     String passportImageData="";
     String DATE = "";
-    final Calendar myCalendar = Calendar.getInstance();
-    TextView PassportImageName,VisaImageName;
     String IsNational = "YES";
-    ImageView ViewSelectedVisa,ViewSelectedPassport;
     String visa_image_name_path="";
     String passport_image_name_path="";
     String passport_image_path="";
     String visa_image_path="";
     String itemId="";
-    private static final int PICK_IMAGE_REQUEST = 1;
-    private static final int CLICK_IMAGE_REQUEST = 2;
-    private static final int VISA_CAMERA_REQUEST = 3;
-    private static final int VISA_GALLERY_REQUEST = 4;
-
-    File PassportCamera;
-    File CompressPassportCamera;
-    File VisaCamera;
-    File CompressVisaCamera;
-    SpinnerDialog spinnerDialog;
-
-    private File actualImage;
-    private File VisaactualImage;
-    private File compressedImage;
-    private File VisacompressedImage;
     String visaValue="";
+    String passportValue="";
     String visaImgName="";
     String passportImgName="";
     String visaImgPath="";
     String passportImgPath="";
     private String pictureImagePath = "";
+
+    SpinnerDialog spinnerDialog;
+    final Calendar myCalendar = Calendar.getInstance();
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int CLICK_IMAGE_REQUEST = 2;
+    private static final int VISA_CAMERA_REQUEST = 3;
+    private static final int VISA_GALLERY_REQUEST = 4;
     private static final int CAMERA_REQUEST = 1888;
-    LinearLayout passportLinear;
-   TextView passportNationalityTxt;
- //   SearchableSpinner spinner;
+
+    File PassportCamera;
+    File CompressPassportCamera;
+    File VisaCamera;
+    File CompressVisaCamera;
+    private File actualImage;
+    private File VisaactualImage;
+    private File compressedImage;
+    private File VisacompressedImage;
 
     private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
      int dataPosition;
@@ -187,6 +199,7 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         }
 
         checkStudentMalysianImg=v.findViewById(R.id.checkStudentMalysianImg);
+        checkPassportImg=v.findViewById(R.id.checkPassportImg);
         visaPermitNumberTxt=v.findViewById(R.id.visaPermitNumberTxt);
         visaPermitExpiryTxt=v.findViewById(R.id.visaPermitExpiryTxt);
         uploadVisa=v.findViewById(R.id.uploadVisa);
@@ -197,14 +210,14 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         PassportImageName = v.findViewById(R.id.PassImageName);
         VisaImageName = v.findViewById(R.id.VisaImageName);
         passportNationalityTxt=v.findViewById(R.id.passportNationalityTxt);
-//        spinner=v.findViewById(R.id.spinner);
-//        spinner.setAlpha(0.0f);
+        attachPassportTxt=v.findViewById(R.id.attachPassportTxt);
         passportNumberTxt=v.findViewById(R.id.passportNumberTxt);
         passportExpiryTxt=v.findViewById(R.id.passportExpiryTxt);
         mStudentSpinner = v.findViewById(R.id.studentSpinner);
         UploadPasspost = v.findViewById(R.id.uploadPassportTxt);
         ViewSelectedPassport = v.findViewById(R.id.ViewSelectedPassport);
         ViewSelectedVisa = v.findViewById(R.id.ViewSelectedVisa);
+        paasportNationalityLinear = v.findViewById(R.id.paasportNationalityLinear);
         CloseIcon = v.findViewById(R.id.closeImg);
         visaPermitNumberTxt.setImeOptions(EditorInfo.IME_ACTION_DONE);
         passportNumberTxt.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -241,6 +254,7 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
                     visaPermitNumber= AppController.mPassportDetailArrayList.get(i).getVisa_permit_no();
                     visaPermitExpiry= AppController.mPassportDetailArrayList.get(i).getVisa_permit_expiry_date();
                     visaValue= AppController.mPassportDetailArrayList.get(i).getVisa();
+                    passportValue= AppController.mPassportDetailArrayList.get(i).getNot_have_a_valid_passport();
                     System.out.println("visa value "+AppController.mPassportDetailArrayList.get(i).getVisa());
                     visaImgName=AppController.mPassportDetailArrayList.get(i).getVisa_image_name();
                     passportImgName=AppController.mPassportDetailArrayList.get(i).getPassport_image_name();
@@ -251,12 +265,6 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
                 }
             }
         }
-        System.out.println(" passport visa details passportImgPath"+AppController.mPassportDetailArrayList.get(dataPosition).getPassport_image());
-        System.out.println(" passport visa details visaImgPath"+visaImgPath);
-        System.out.println(" passport visa details passportImgName"+passportImgName);
-        System.out.println(" passport visa details visaImgName"+visaImgName);
-        System.out.println(" passport visa details visavalue"+visaValue);
-        System.out.println("Default nationality"+passportNationality);
         if(passportNationality.equalsIgnoreCase(""))
         {
             passportNationalityTxt.setHint(R.string.AST_COUNTRY);
@@ -311,6 +319,11 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         mModel.setNationality(passportNationalityTxt.getText().toString());
         mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
         mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date());
+        mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+        mModel.setOriginal_passport_image(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_image());
+        mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+        mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
+        mModel.setNot_have_a_valid_passport(AppController.mPassportDetailArrayList.get(dataPosition).getNot_have_a_valid_passport());
         mModel.setVisa_permit_no(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_permit_no());
         if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
         {
@@ -362,20 +375,6 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
             passportExpiryTxt.setText(AppUtils.dateConversionMMM(passportExpiry));
         }
 
-
-        System.out.println("Visa value initially"+visaValue);
-//        isStudentMalasiyanChecked=false;
-//        visaPermitNumberTxt.setHint(R.string.AST_VISA_PERMIT_TEXT_WITH_RED);
-//        visaPermitExpiryTxt.setHint(R.string.AST_VISA_PERMIT_EXPIRY_WITH_RED);
-//        checkStudentMalysianImg.setImageResource(R.drawable.check_box_header);
-//        visaPermitNumberTxt.setBackgroundResource(R.drawable.rect_background_grey);
-//        visaPermitExpiryTxt.setBackgroundResource(R.drawable.rect_background_grey);
-//        uploadVisa.setAlpha(1.0f);
-//        uploadVisaTxt.setAlpha(1.0f);
-//        uploadVisa.setEnabled(true);
-//        visaPermitNumberTxt.setEnabled(true);
-//        visaPermitExpiryTxt.setEnabled(true);
-        System.out.println("Visa value starting"+visaValue);
         if (visaValue.equalsIgnoreCase("1"))
         {
             isStudentMalasiyanChecked=false;
@@ -432,6 +431,47 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
 
 
         }
+
+        if (passportValue.equalsIgnoreCase("1"))
+        {
+            isPassportChecked=true;
+            checkPassportImg.setImageResource(R.drawable.check_box_header_tick);
+            paasportNationalityLinear.setBackgroundResource(R.drawable.rect_background_grey_checked);
+            passportNumberTxt.setBackgroundResource(R.drawable.rect_background_grey_checked);
+            passportExpiryTxt.setBackgroundResource(R.drawable.rect_background_grey_checked);
+            UploadPasspost.setAlpha(0.5f);
+            attachPassportTxt.setAlpha(0.5f);
+            passportNumberTxt.setClickable(false);
+            passportNumberTxt.setEnabled(false);
+            passportExpiryTxt.setClickable(false);
+            passportExpiryTxt.setEnabled(false);
+            passportLinear.setClickable(false);
+            passportLinear.setEnabled(false);
+            UploadPasspost.setClickable(false);
+            UploadPasspost.setEnabled(false);
+
+
+        }
+        else
+        {
+            isPassportChecked=false;
+            checkPassportImg.setImageResource(R.drawable.check_box_header);
+            paasportNationalityLinear.setBackgroundResource(R.drawable.rect_background_grey);
+            passportNumberTxt.setBackgroundResource(R.drawable.rect_background_grey);
+            passportExpiryTxt.setBackgroundResource(R.drawable.rect_background_grey);
+            UploadPasspost.setAlpha(1.0f);
+            attachPassportTxt.setAlpha(1.0f);
+            passportNumberTxt.setClickable(true);
+            passportNumberTxt.setEnabled(true);
+            passportExpiryTxt.setClickable(true);
+            passportExpiryTxt.setEnabled(true);
+            passportLinear.setClickable(true);
+            passportLinear.setEnabled(true);
+            UploadPasspost.setClickable(true);
+            UploadPasspost.setEnabled(true);
+
+
+        }
         if(visaImgName.equalsIgnoreCase(""))
         {
             VisaImageName.setText(visaImgName);
@@ -460,10 +500,11 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         System.out.println("passportImgPath name"+passportImgName);
         if(passportImgPath.equalsIgnoreCase(""))
         {
-
+            ViewSelectedPassport.setVisibility(View.INVISIBLE);
         }
         else
         {
+            ViewSelectedPassport.setVisibility(View.VISIBLE);
             ViewSelectedPassport.setImageBitmap(BitmapFactory.decodeFile(passportImgPath));
         }
 
@@ -533,16 +574,6 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
             public void onClick(View v)
             {
 
-//                if (AppController.isInsuranceEdited || AppController.isPassportEdited)
-//                {
-//                    ShowDiscardDialog(mContext, "Confirm?", "Do you want to Discard changes?", R.drawable.questionmark_icon, R.drawable.round);
-//                }
-//                else
-//                {
-//                    getActivity().finish();
-//                }
-
-
                 String dataId=AppController.mPassportDetailArrayList.get(dataPosition).getId();
                 String dataStatus="";
                 String dataRequest="";
@@ -573,8 +604,13 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
                 mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
                 mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date());
                 mModel.setVisa_permit_no(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_permit_no());
+                mModel.setNot_have_a_valid_passport(AppController.mPassportDetailArrayList.get(dataPosition).getNot_have_a_valid_passport());
                 mModel.setVisa_expired(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_expired());
                 mModel.setPassport_expired(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_expired());
+                mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+                mModel.setOriginal_passport_image(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_image());
+                mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+                mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
                 if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
                 {
                     //  AppUtils.dateConversionYToD
@@ -668,6 +704,239 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
 
             }
         });
+        checkPassportImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isPassportChecked)
+                {
+                    isPassportChecked=false;
+                    checkPassportImg.setImageResource(R.drawable.check_box_header);
+                    paasportNationalityLinear.setBackgroundResource(R.drawable.rect_background_grey);
+                    passportNumberTxt.setBackgroundResource(R.drawable.rect_background_grey);
+                    passportExpiryTxt.setBackgroundResource(R.drawable.rect_background_grey);
+                    UploadPasspost.setAlpha(1.0f);
+                    attachPassportTxt.setAlpha(1.0f);
+                    passportNumberTxt.setClickable(true);
+                    passportNumberTxt.setEnabled(true);
+                    passportExpiryTxt.setClickable(true);
+                    passportExpiryTxt.setEnabled(true);
+                    passportLinear.setClickable(true);
+                    passportLinear.setEnabled(true);
+                    UploadPasspost.setClickable(true);
+                    UploadPasspost.setEnabled(true);
+                    AppController.isPassportEdited=true;
+                    String dataId=AppController.mPassportDetailArrayList.get(dataPosition).getId();
+                    String dataStatus="";
+                    String dataRequest="";
+                    if(dataId.equalsIgnoreCase(""))
+                    {
+                        dataStatus="0";
+                        dataRequest="1";
+                    }
+                    else
+                    {
+                        dataStatus="1";
+                        dataRequest="0";
+                    }
+                    String dataCreatedAt=AppController.mPassportDetailArrayList.get(dataPosition).getCreated_at();
+                    String dataUpdatedAt=AppController.mPassportDetailArrayList.get(dataPosition).getUpdated_at();
+                    PassportDetailModel mModel=new PassportDetailModel();
+                    mModel.setId(dataId);
+                    mModel.setStudent_id(studentId);
+                    mModel.setStudent_name(studentNamePass);
+                    mModel.setPassport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
+                    mModel.setNationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+                    mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
+                    mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+                    mModel.setVisa_expired(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_expired());
+                    mModel.setPassport_expired(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_expired());
+                    mModel.setVisa_permit_no(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_permit_no());
+                    mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+                    mModel.setOriginal_passport_image("");
+                    mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+                    mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
+                    mModel.setNot_have_a_valid_passport("0");
+                    if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
+                    {
+                        //  AppUtils.dateConversionYToD
+                        mModel.setVisa_permit_expiry_date(visaPermitExpiryTxt.getText().toString().trim());
+                    }
+                    else
+                    {
+                        mModel.setVisa_permit_expiry_date(AppUtils.dateConversionYToD(visaPermitExpiryTxt.getText().toString().trim()));
+                    }
+                    mModel.setVisa_image(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image());
+                    mModel.setVisa_image_name(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image_name());
+                    mModel.setVisa_image_path(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image_path());
+                    mModel.setPassport_image_path("");
+                    mModel.setPassport_image_name("");
+                    mModel.setPhoto_no_consent(AppController.mPassportDetailArrayList.get(dataPosition).getPhoto_no_consent());
+                    mModel.setVisa(visaValue);
+                    mModel.setStatus(dataStatus);
+                    mModel.setRequest(dataRequest);
+                    mModel.setPassport_image("");
+                    mModel.setCreated_at(dataCreatedAt);
+                    mModel.setUpdated_at(dataUpdatedAt);
+                    mModel.setPassportDateChanged(AppController.mPassportDetailArrayList.get(dataPosition).isPassportDateChanged());
+                    mModel.setVisaDateChanged(AppController.mPassportDetailArrayList.get(dataPosition).isVisaDateChanged());
+                    AppController.mPassportDetailArrayList.remove(dataPosition);
+                    AppController.mPassportDetailArrayList.add(dataPosition,mModel);
+                    Log.e("Ins asize", String.valueOf(AppController.mPassportDetailArrayList.size()));
+                    for (int j=0;j<AppController.mPassportDetailArrayList.size();j++)
+                    {
+                        Log.e("Ins after",AppController.mPassportDetailArrayList.get(j).getId() +j);
+
+                    }
+                    PreferenceManager.getPassportDetailArrayList(mContext).clear();
+                    PreferenceManager.savePassportDetailArrayList(AppController.mPassportDetailArrayList,mContext);
+                    if(passportImgName.equalsIgnoreCase(""))
+                    {
+                        PassportImageName.setText("");
+                    }
+                    else
+                    {
+                        PassportImageName.setText("");
+                    }
+                    if (!AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date().equalsIgnoreCase(""))
+                    {
+                        passportExpiryTxt.setText(AppUtils.dateConversionMMM(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date()));
+                    }
+                    if(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_image_path().equalsIgnoreCase(""))
+                    {
+                        ViewSelectedPassport.setVisibility(View.INVISIBLE);
+                    }
+                    else
+                    {
+                        ViewSelectedPassport.setVisibility(View.VISIBLE);
+                        ViewSelectedPassport.setImageBitmap(BitmapFactory.decodeFile(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_image_path()));
+                    }
+                    passportNumberTxt.setText(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
+                    if(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality().equalsIgnoreCase(""))
+                    {
+                        passportNationalityTxt.setHint(R.string.AST_COUNTRY);
+                    }
+                    else
+                    {
+                        passportNationalityTxt.setText(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+                    }
+                }
+                else
+                {
+                    isPassportChecked=true;
+                    checkPassportImg.setImageResource(R.drawable.check_box_header_tick);
+                    paasportNationalityLinear.setBackgroundResource(R.drawable.rect_background_grey_checked);
+                    passportNumberTxt.setBackgroundResource(R.drawable.rect_background_grey_checked);
+                    passportExpiryTxt.setBackgroundResource(R.drawable.rect_background_grey_checked);
+                    UploadPasspost.setAlpha(0.5f);
+                    attachPassportTxt.setAlpha(0.5f);
+                    passportNumberTxt.setClickable(false);
+                    passportNumberTxt.setEnabled(false);
+                    passportExpiryTxt.setClickable(false);
+                    passportExpiryTxt.setEnabled(false);
+                    passportLinear.setClickable(false);
+                    passportLinear.setEnabled(false);
+                    UploadPasspost.setClickable(false);
+                    UploadPasspost.setEnabled(false);
+                    AppController.isPassportEdited=true;
+                    String dataId=AppController.mPassportDetailArrayList.get(dataPosition).getId();
+                    String dataStatus="";
+                    String dataRequest="";
+                    if(dataId.equalsIgnoreCase(""))
+                    {
+                        dataStatus="0";
+                        dataRequest="1";
+                    }
+                    else
+                    {
+                        dataStatus="1";
+                        dataRequest="0";
+                    }
+                    String dataCreatedAt=AppController.mPassportDetailArrayList.get(dataPosition).getCreated_at();
+                    String dataUpdatedAt=AppController.mPassportDetailArrayList.get(dataPosition).getUpdated_at();
+                    PassportDetailModel mModel=new PassportDetailModel();
+                    mModel.setId(dataId);
+                    mModel.setStudent_id(studentId);
+                    mModel.setStudent_name(studentNamePass);
+                    mModel.setPassport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
+                    mModel.setNationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+                    mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
+                    mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+                    mModel.setVisa_expired(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_expired());
+                    mModel.setPassport_expired(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_expired());
+                    mModel.setVisa_permit_no(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_permit_no());
+                    mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+                    mModel.setOriginal_passport_image("");
+                    mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+                    mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
+                    if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
+                    {
+                        //  AppUtils.dateConversionYToD
+                        mModel.setVisa_permit_expiry_date(visaPermitExpiryTxt.getText().toString().trim());
+                    }
+                    else
+                    {
+                        mModel.setVisa_permit_expiry_date(AppUtils.dateConversionYToD(visaPermitExpiryTxt.getText().toString().trim()));
+                    }
+                    mModel.setVisa_image(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image());
+                    mModel.setVisa_image_name(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image_name());
+                    mModel.setVisa_image_path(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image_path());
+                    mModel.setPassport_image_path("");
+                    mModel.setPassport_image_name("");
+                    mModel.setPhoto_no_consent(AppController.mPassportDetailArrayList.get(dataPosition).getPhoto_no_consent());
+                    mModel.setVisa(visaValue);
+                    mModel.setNot_have_a_valid_passport("1");
+                    mModel.setStatus(dataStatus);
+                    mModel.setRequest(dataRequest);
+                    mModel.setPassport_image("");
+                    mModel.setCreated_at(dataCreatedAt);
+                    mModel.setUpdated_at(dataUpdatedAt);
+                    mModel.setPassportDateChanged(AppController.mPassportDetailArrayList.get(dataPosition).isPassportDateChanged());
+                    mModel.setVisaDateChanged(AppController.mPassportDetailArrayList.get(dataPosition).isVisaDateChanged());
+                    AppController.mPassportDetailArrayList.remove(dataPosition);
+                    AppController.mPassportDetailArrayList.add(dataPosition,mModel);
+                    Log.e("Ins asize", String.valueOf(AppController.mPassportDetailArrayList.size()));
+                    for (int j=0;j<AppController.mPassportDetailArrayList.size();j++)
+                    {
+                        Log.e("Ins after",AppController.mPassportDetailArrayList.get(j).getId() +j);
+
+                    }
+                    PreferenceManager.getPassportDetailArrayList(mContext).clear();
+                    PreferenceManager.savePassportDetailArrayList(AppController.mPassportDetailArrayList,mContext);
+                    showDataSuccess(mContext, "Alert", getString(R.string.passport_check), R.drawable.exclamationicon, R.drawable.round);
+                    if(passportImgName.equalsIgnoreCase(""))
+                    {
+                        PassportImageName.setText("");
+                    }
+                    else
+                    {
+                        PassportImageName.setText("");
+                    }
+                    if (!AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date().equalsIgnoreCase(""))
+                    {
+                        passportExpiryTxt.setText(AppUtils.dateConversionMMM(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date()));
+                    }
+                    if(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_image_path().equalsIgnoreCase(""))
+                    {
+                        ViewSelectedPassport.setVisibility(View.INVISIBLE);
+                    }
+                    else
+                    {
+                        ViewSelectedPassport.setVisibility(View.VISIBLE);
+                        ViewSelectedPassport.setImageBitmap(BitmapFactory.decodeFile(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_image_path()));
+                    }
+                    if(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality().equalsIgnoreCase(""))
+                    {
+                        passportNationalityTxt.setHint(R.string.AST_COUNTRY);
+                    }
+                    else
+                    {
+                        passportNationalityTxt.setText(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+                    }
+                    passportNumberTxt.setText(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
+                }
+            }
+        });
 
         checkStudentMalysianImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -715,7 +984,12 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
                     mModel.setNationality(AppController.mPassportDetailArrayList.get(dataPosition).getNationality());
                     mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
                     mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date());
+                    mModel.setNot_have_a_valid_passport(AppController.mPassportDetailArrayList.get(dataPosition).getNot_have_a_valid_passport());
                     mModel.setVisa_permit_no("");
+                    mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+                    mModel.setOriginal_passport_image(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_image());
+                    mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+                    mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
                     if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
                     {
                       //  AppUtils.dateConversionYToD
@@ -796,7 +1070,12 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
                     mModel.setNationality(AppController.mPassportDetailArrayList.get(dataPosition).getNationality());
                     mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
                     mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date());
+                    mModel.setNot_have_a_valid_passport(AppController.mPassportDetailArrayList.get(dataPosition).getNot_have_a_valid_passport());
                     mModel.setVisa_permit_no("");
+                    mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+                    mModel.setOriginal_passport_image(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_image());
+                    mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+                    mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
                     if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
                     {
                         //  AppUtils.dateConversionYToD
@@ -919,9 +1198,14 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
                 mModel.setNationality(AppController.mPassportDetailArrayList.get(dataPosition).getNationality());
                 mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
                 mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date());
+                mModel.setNot_have_a_valid_passport(AppController.mPassportDetailArrayList.get(dataPosition).getNot_have_a_valid_passport());
                 mModel.setVisa_expired(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_expired());
                 mModel.setPassport_expired(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_expired());
                 mModel.setVisa_permit_no(newData);
+                mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+                mModel.setOriginal_passport_image(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_image());
+                mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+                mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
                 if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
                 {
                     //  AppUtils.dateConversionYToD
@@ -1007,6 +1291,11 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
                 mModel.setNationality(AppController.mPassportDetailArrayList.get(dataPosition).getNationality());
                 mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
                 mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date());
+                mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+                mModel.setOriginal_passport_image(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_image());
+                mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+                mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
+                mModel.setNot_have_a_valid_passport(AppController.mPassportDetailArrayList.get(dataPosition).getNot_have_a_valid_passport());
                 mModel.setVisa_permit_no(newData);
                 if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
                 {
@@ -1048,94 +1337,6 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
 
         });
 
-//        passportNationalityTxt.addTextChangedListener(new TextWatcher()
-//        {
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                // TODO Auto-generated method stub
-//            }
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                // TODO Auto-generated method stub
-//
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s)
-//
-//            {
-//                AppController.isPassportEdited=true;
-//                String dataId=AppController.mPassportDetailArrayList.get(dataPosition).getId();
-//                String dataStatus="";
-//                String dataRequest="";
-//                if(dataId.equalsIgnoreCase(""))
-//                {
-//                    dataStatus="0";
-//                    dataRequest="1";
-//                }
-//                else
-//                {
-//                    dataStatus="1";
-//                    dataRequest="0";
-//                }
-//                String dataCreatedAt=AppController.mPassportDetailArrayList.get(dataPosition).getCreated_at();
-//                String dataUpdatedAt=AppController.mPassportDetailArrayList.get(dataPosition).getUpdated_at();
-//                String newData=passportNationalityTxt.getText().toString();
-//
-//                //  Log.e("INSURANCE ", "textChange"+);
-//
-//                PassportDetailModel mModel=new PassportDetailModel();
-//                mModel.setId(dataId);
-//                mModel.setStudent_id(studentId);
-//                mModel.setStudent_name(studentNamePass);
-//                mModel.setPassport_number(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_number());
-//                mModel.setNationality(passportNationalityTxt.getText().toString());
-//                mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
-//                mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date());
-//                mModel.setVisa_permit_no(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_permit_no());
-//                if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
-//                {
-//                    //  AppUtils.dateConversionYToD
-//                    mModel.setVisa_permit_expiry_date(visaPermitExpiryTxt.getText().toString().trim());
-//                }
-//                else
-//                {
-//                    mModel.setVisa_permit_expiry_date(AppUtils.dateConversionYToD(visaPermitExpiryTxt.getText().toString().trim()));
-//                }
-//                mModel.setVisa_image(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image());
-//                mModel.setVisa_image_name(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image_name());
-//                mModel.setVisa_image_path(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image_path());
-//                mModel.setPassport_image_path(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_image_path());
-//                mModel.setPassport_image_name(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_image_name());
-//                mModel.setPhoto_no_consent(AppController.mPassportDetailArrayList.get(dataPosition).getPhoto_no_consent());
-//                mModel.setVisa(visaValue);
-//                mModel.setStatus(dataStatus);
-//                mModel.setRequest(dataRequest);
-//                mModel.setPassport_image(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_image());
-//                mModel.setCreated_at(dataCreatedAt);
-//                mModel.setUpdated_at(dataUpdatedAt);
-//                mModel.setVisa_expired(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_expired());
-//                mModel.setPassport_expired(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_expired());
-//                mModel.setPassportDateChanged(AppController.mPassportDetailArrayList.get(dataPosition).isPassportDateChanged());
-//                mModel.setVisaDateChanged(AppController.mPassportDetailArrayList.get(dataPosition).isVisaDateChanged());
-//                AppController.mPassportDetailArrayList.remove(dataPosition);
-//                AppController.mPassportDetailArrayList.add(dataPosition,mModel);
-//                Log.e("Ins asize", String.valueOf(AppController.mPassportDetailArrayList.size()));
-//                for (int j=0;j<AppController.mPassportDetailArrayList.size();j++)
-//                {
-//                    Log.e("Ins after",AppController.mPassportDetailArrayList.get(j).getId() +j);
-//
-//                }
-//
-//                PreferenceManager.getPassportDetailArrayList(mContext).clear();
-//                PreferenceManager.savePassportDetailArrayList(AppController.mPassportDetailArrayList,mContext);
-//            }
-//
-//
-//        });
         visaPermitExpiryTxt.addTextChangedListener(new TextWatcher()
         {
 
@@ -1185,6 +1386,11 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
                 mModel.setNationality(AppController.mPassportDetailArrayList.get(dataPosition).getNationality());
                 mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
                 mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date());
+                mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+                mModel.setOriginal_passport_image(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_image());
+                mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+                mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
+                mModel.setNot_have_a_valid_passport(AppController.mPassportDetailArrayList.get(dataPosition).getNot_have_a_valid_passport());
                 mModel.setVisa_permit_no(visaPermitNumberTxt.getText().toString().trim());
                 if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
                 {
@@ -1282,6 +1488,11 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         {
             mModel.setExpiry_date(AppUtils.dateConversionYToD(passportExpiryTxt.getText().toString().trim()));
         }
+        mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+        mModel.setOriginal_passport_image(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_image());
+        mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+        mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
+        mModel.setNot_have_a_valid_passport(AppController.mPassportDetailArrayList.get(dataPosition).getNot_have_a_valid_passport());
         mModel.setVisa_image(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image());
         mModel.setVisa_image_name(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image_name());
         mModel.setVisa_image_path(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image_path());
@@ -1361,6 +1572,11 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         {
             mModel.setExpiry_date(AppUtils.dateConversionYToD(passportExpiryTxt.getText().toString().trim()));
         }
+        mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+        mModel.setOriginal_passport_image(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_image());
+        mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+        mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
+        mModel.setNot_have_a_valid_passport(AppController.mPassportDetailArrayList.get(dataPosition).getNot_have_a_valid_passport());
         mModel.setVisa_image(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image());
         mModel.setVisa_image_name(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image_name());
         mModel.setVisa_image_path(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image_path());
@@ -1576,6 +1792,7 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
 
         options.inSampleSize = 2;
         bitmap = BitmapFactory.decodeFile(CompressPassportCamera.getPath(), options);
+        ViewSelectedPassport.setVisibility(View.VISIBLE);
         ViewSelectedPassport.setImageBitmap(BitmapFactory.decodeFile(CompressPassportCamera.getPath()));
         passport_image_path=CompressPassportCamera.getPath();
         passport_image_name_path=CompressPassportCamera.getName();
@@ -1631,6 +1848,7 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         mModel.setNationality(AppController.mPassportDetailArrayList.get(dataPosition).getNationality());
         mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
         mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date());
+        mModel.setNot_have_a_valid_passport(AppController.mPassportDetailArrayList.get(dataPosition).getNot_have_a_valid_passport());
         mModel.setVisa_permit_no(visaPermitNumberTxt.getText().toString().trim());
         if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
         {
@@ -1641,7 +1859,10 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         {
             mModel.setVisa_permit_expiry_date(AppUtils.dateConversionYToD(visaPermitExpiryTxt.getText().toString().trim()));
         }
-
+        mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+        mModel.setOriginal_passport_image(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_image());
+        mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+        mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
         mModel.setPhoto_no_consent(AppController.mPassportDetailArrayList.get(dataPosition).getPhoto_no_consent());
         mModel.setVisa(visaValue);
         mModel.setPassport_image(passportImageData);
@@ -1735,6 +1956,7 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         mModel.setNationality(AppController.mPassportDetailArrayList.get(dataPosition).getNationality());
         mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
         mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date());
+        mModel.setNot_have_a_valid_passport(AppController.mPassportDetailArrayList.get(dataPosition).getNot_have_a_valid_passport());
         mModel.setVisa_permit_no(visaPermitNumberTxt.getText().toString().trim());
         if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
         {
@@ -1745,7 +1967,10 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         {
             mModel.setVisa_permit_expiry_date(AppUtils.dateConversionYToD(visaPermitExpiryTxt.getText().toString().trim()));
         }
-
+        mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+        mModel.setOriginal_passport_image(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_image());
+        mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+        mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
 
         mModel.setPhoto_no_consent(AppController.mPassportDetailArrayList.get(dataPosition).getPhoto_no_consent());
         mModel.setVisa(visaValue);
@@ -1836,6 +2061,7 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         mModel.setNationality(AppController.mPassportDetailArrayList.get(dataPosition).getNationality());
         mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
         mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date());
+        mModel.setNot_have_a_valid_passport(AppController.mPassportDetailArrayList.get(dataPosition).getNot_have_a_valid_passport());
         mModel.setVisa_permit_no(visaPermitNumberTxt.getText().toString().trim());
         if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
         {
@@ -1846,7 +2072,10 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         {
             mModel.setVisa_permit_expiry_date(AppUtils.dateConversionYToD(visaPermitExpiryTxt.getText().toString().trim()));
         }
-
+        mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+        mModel.setOriginal_passport_image(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_image());
+        mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+        mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
         mModel.setVisa_image(visaImageData);
         mModel.setPhoto_no_consent(AppController.mPassportDetailArrayList.get(dataPosition).getPhoto_no_consent());
         mModel.setVisa(visaValue);
@@ -1882,6 +2111,7 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
 
         options.inSampleSize = 2;
         bitmap = BitmapFactory.decodeFile(compressedImage.getPath(), options);
+        ViewSelectedPassport.setVisibility(View.VISIBLE);
         ViewSelectedPassport.setImageBitmap(BitmapFactory.decodeFile(compressedImage.getPath()));
         passport_image_path=compressedImage.getPath();
         passport_image_name_path=compressedImage.getName();
@@ -1938,6 +2168,7 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         mModel.setNationality(AppController.mPassportDetailArrayList.get(dataPosition).getNationality());
         mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
         mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date());
+        mModel.setNot_have_a_valid_passport(AppController.mPassportDetailArrayList.get(dataPosition).getNot_have_a_valid_passport());
         mModel.setVisa_permit_no(visaPermitNumberTxt.getText().toString().trim());
         if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
         {
@@ -1948,7 +2179,10 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         {
             mModel.setVisa_permit_expiry_date(AppUtils.dateConversionYToD(visaPermitExpiryTxt.getText().toString().trim()));
         }
-
+        mModel.setOriginal_expiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_expiry_date());
+        mModel.setOriginal_passport_image(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_image());
+        mModel.setOriginal_nationality(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_nationality());
+        mModel.setOriginal_passport_number(AppController.mPassportDetailArrayList.get(dataPosition).getOriginal_passport_number());
         mModel.setPhoto_no_consent(AppController.mPassportDetailArrayList.get(dataPosition).getPhoto_no_consent());
         mModel.setVisa(visaValue);
         mModel.setStatus(dataStatus);
@@ -2005,108 +2239,29 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
         });
         dialog.show();
     }
-//    public void ShowDatePicker(View view){
-//        DatePickerDialog dpd = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
-//            @Override
-//            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-//
-//            }
-//        }, year, month, day);
-//        //disaple past date
-//        dpd.getDatePicker().setMinDate(new Date().getTime());
-//        dpd.show();
-//    }
-
-
-//    private void setDataToAdapter(ArrayList<String> arrayList)
-//    {
-//        spinner.setAlpha(0.0f);
-//        // Creating ArrayAdapter using the string array and default spinner layout
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, arrayList);
-//        // Specify layout to be used when list of choices appears
-//        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        // Applying the adapter to our spinner
-//        spinner.setAdapter(arrayAdapter);
-//        spinner.setOnItemSelectedListener(this);
-//    }
-
-//    @Override
-//    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//        String selectedItemText = parent.getItemAtPosition(position).toString();
-//        spinner.setTitle("Select Nationality");
-//        System.out.println("This is working");
-//        Toast.makeText(mContext, " You select >> " + selectedItemText, Toast.LENGTH_SHORT).show();
-//        passportNationalityTxt.setText(selectedItemText);
-//        AppController.isPassportEdited=true;
-//        String dataId=AppController.mPassportDetailArrayList.get(dataPosition).getId();
-//        String dataStatus="";
-//        String dataRequest="";
-//        if(dataId.equalsIgnoreCase(""))
-//        {
-//            dataStatus="0";
-//            dataRequest="1";
-//        }
-//        else
-//        {
-//            dataStatus="1";
-//            dataRequest="0";
-//        }
-//        String dataCreatedAt=AppController.mPassportDetailArrayList.get(dataPosition).getCreated_at();
-//        String dataUpdatedAt=AppController.mPassportDetailArrayList.get(dataPosition).getUpdated_at();
-//        String newData=selectedItemText;
-//
-//        //  Log.e("INSURANCE ", "textChange"+);
-//
-//        PassportDetailModel mModel=new PassportDetailModel();
-//        mModel.setId(dataId);
-//        mModel.setStudent_id(studentId);
-//        mModel.setStudent_name(studentNamePass);
-//        mModel.setPassport_number(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_number());
-//        mModel.setNationality(passportNationalityTxt.getText().toString());
-//        mModel.setDate_of_issue(AppController.mPassportDetailArrayList.get(dataPosition).getDate_of_issue());
-//        mModel.setExpiry_date(AppController.mPassportDetailArrayList.get(dataPosition).getExpiry_date());
-//        mModel.setVisa_permit_no(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_permit_no());
-//        if (visaPermitExpiryTxt.getText().toString().equalsIgnoreCase(""))
-//        {
-//            //  AppUtils.dateConversionYToD
-//            mModel.setVisa_permit_expiry_date(visaPermitExpiryTxt.getText().toString().trim());
-//        }
-//        else
-//        {
-//            mModel.setVisa_permit_expiry_date(AppUtils.dateConversionYToD(visaPermitExpiryTxt.getText().toString().trim()));
-//        }
-//        mModel.setVisa_image(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image());
-//        mModel.setVisa_image_name(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image_name());
-//        mModel.setVisa_image_path(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_image_path());
-//        mModel.setPassport_image_path(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_image_path());
-//        mModel.setPassport_image_name(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_image_name());
-//        mModel.setPhoto_no_consent(AppController.mPassportDetailArrayList.get(dataPosition).getPhoto_no_consent());
-//        mModel.setVisa(visaValue);
-//        mModel.setStatus(dataStatus);
-//        mModel.setRequest(dataRequest);
-//        mModel.setPassport_image(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_image());
-//        mModel.setCreated_at(dataCreatedAt);
-//        mModel.setUpdated_at(dataUpdatedAt);
-//        mModel.setVisa_expired(AppController.mPassportDetailArrayList.get(dataPosition).getVisa_expired());
-//        mModel.setPassport_expired(AppController.mPassportDetailArrayList.get(dataPosition).getPassport_expired());
-//        mModel.setPassportDateChanged(AppController.mPassportDetailArrayList.get(dataPosition).isPassportDateChanged());
-//        mModel.setVisaDateChanged(AppController.mPassportDetailArrayList.get(dataPosition).isVisaDateChanged());
-//        AppController.mPassportDetailArrayList.remove(dataPosition);
-//        AppController.mPassportDetailArrayList.add(dataPosition,mModel);
-//        Log.e("Ins asize", String.valueOf(AppController.mPassportDetailArrayList.size()));
-//        for (int j=0;j<AppController.mPassportDetailArrayList.size();j++)
-//        {
-//            Log.e("Ins after",AppController.mPassportDetailArrayList.get(j).getId() +j);
-//
-//        }
-//
-//        PreferenceManager.getPassportDetailArrayList(mContext).clear();
-//        PreferenceManager.savePassportDetailArrayList(AppController.mPassportDetailArrayList,mContext);
-//    }
-//
-//    @Override
-//    public void onNothingSelected(AdapterView<?> parent) {
-//
-//    }
+    private void showDataSuccess(Context mContext, String msgHead, String msg, int ico, int bgIcon)
+    {
+        final Dialog dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.alert_dialogue_ok_layout);
+        ImageView icon = dialog.findViewById(R.id.iconImageView);
+        icon.setBackgroundResource(bgIcon);
+        icon.setImageResource(ico);
+        TextView text = dialog.findViewById(R.id.text_dialog);
+        TextView textHead = dialog.findViewById(R.id.alertHead);
+        text.setText(msg);
+        textHead.setText(msgHead);
+        Button dialogButton = dialog.findViewById(R.id.btn_Ok);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Button dialogButtonCancel = dialog.findViewById(R.id.btn_Cancel);
+        dialog.show();
+    }
 }
 
