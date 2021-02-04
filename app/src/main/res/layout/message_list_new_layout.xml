@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+    <RelativeLayout
+        android:id="@+id/noMsgAlert"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="50dp"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/no_message"
+                android:layout_gravity="center"/>
+            <com.mobatia.bskl.manager.TextViewFontSansProRegular
+                android:id="@+id/noMsgAlertTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey"
+                android:layout_margin="5dp"
+                android:textSize="20dp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/markLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        >
+
+        <com.mobatia.bskl.manager.TextViewFontSansProRegularColorBlack
+            android:id="@+id/markReadTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right|center"
+            android:text="Mark as Read"
+            android:layout_margin="5dp"
+            android:textSize="15sp"
+            android:visibility="gone"
+
+            />
+
+        <com.mobatia.bskl.manager.TextViewFontSansProRegularColorBlack
+            android:id="@+id/markUnreadTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right|center"
+            android:text="Mark as Unread"
+            android:layout_margin="5dp"
+            android:textSize="15sp"
+            android:visibility="visible"
+            />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/maniRelative"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/msgUnreadLinear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="20">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="14">
+
+                        <com.mobatia.bskl.manager.TextViewFontSansProSemiBoldColorBlack
+                            android:id="@+id/msgUnRead"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="10dp"
+                            android:text="Unread"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:gravity="right|center">
+
+                        <ImageView
+                            android:id="@+id/messageUnread"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_margin="12dp"
+                            android:src="@drawable/check_box_header"
+                            android:visibility="visible" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/listMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/mMessageUnReadList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/descriptionTV"
+                        android:background="@color/white"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        android:scrollbars="vertical" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/msgReadLinear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="20">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="14">
+
+                        <com.mobatia.bskl.manager.TextViewFontSansProSemiBoldColorBlack
+                            android:id="@+id/msgRead"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="10dp"
+                            android:text="Read"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:gravity="right|center">
+
+                        <ImageView
+                            android:id="@+id/messageRead"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_margin="13dp"
+                            android:src="@drawable/check_box_header"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/listRead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/mMessageReadList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/descriptionTV"
+                        android:background="@color/white"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        android:scrollbars="vertical" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    </LinearLayout>

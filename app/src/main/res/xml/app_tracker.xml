@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- End current session if app sleeps for a period of time -->
+    <integer name="ga_sessionTimeout">300</integer>
+
+    <!-- Enable automatic Activity measurement -->
+    <bool name="ga_autoActivityTracking">false</bool>
+
+    <!--  The property id associated with this analytics tracker -->
+    <!--<string name="ga_trackingId">UA-126664424-1</string>//bskltest account-->
+
+
+   <!-- <string name="ga_trackingId">UA-128359311-1</string>&lt;!&ndash;//bskltLive account&ndash;&gt;-->
+
+
+      <string name="ga_trackingId">UA-128379282-1</string>
+<!--
+    //&#45;&#45;new BSKL Live above #rijo comment
+-->
+    <string name="ga_sampleFrequency">100.0</string>
+
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+    <screenName name="com.mobatia.bskl.activity.calender.CalenderDetailActivity">Calendar Event Detail</screenName>
+<!--
+    <screenName name="com.mobatia.bskl.activity.home.HomeActivity">Home Screen</screenName>
+-->
+    <!--<screenName name="com.mobatia.bskl.activity.login.LoginActivity">Login Page</screenName>-->
+    <screenName name="com.mobatia.bskl.activity.notification.TextalertActivity">Message Event Detail</screenName>
+    <screenName name="com.mobatia.bskl.activity.notification.AudioPlayerViewActivity">Message Event Detail</screenName>
+    <screenName name="com.mobatia.bskl.activity.notification.ImageActivity">Message Event Detail</screenName>
+    <screenName name="com.mobatia.bskl.activity.notification.VideoWebViewActivity">Message Event Detail</screenName>
+    <screenName name="com.mobatia.bskl.activity.terms_of_service.TermsOfServiceActivity">Terms of service</screenName>
+    <screenName name="com.mobatia.bskl.activity.userdetail.StudentDetailActivity">Student Details</screenName>
+    <screenName name="com.mobatia.bskl.activity.userdetail.StudentListActivity">Student List</screenName>
+    <screenName name="com.mobatia.bskl.activity.userdetail.UserDetailActivity">User Detail</screenName>
+    <screenName name="com.mobatia.bskl.fragment.absence.LeavesDetailActivity">Leave Detail</screenName>
+    <screenName name="com.mobatia.bskl.fragment.absence.LeaveRequestSubmissionActivity">Leave Submission</screenName>
+    <screenName name="com.mobatia.bskl.fragment.calendar.CalendarYearRecyclerActivity">Calendar Year</screenName>
+
+    <!--
+      See Project Structure -> Analytics -> Google Analytics -> Learn More
+      to learn more about configuring this file.
+    -->
+</resources>

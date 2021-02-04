@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/closeImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/close" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomLinear"
+        android:layout_below="@id/closeImg"
+        android:orientation="vertical">
+
+        <com.mobatia.bskl.manager.TextViewFontSansProRegularColorBlack
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:singleLine="false"
+            android:text="@string/data_collection_emergency"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:visibility="visible" />
+        <com.mobatia.bskl.manager.TextViewFontSansProRegularColorBlack
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="5dp"
+            android:singleLine="false"
+            android:text="@string/local_emergency_title_hint"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:visibility="visible" />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/addImgfragment"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/add"
+            android:visibility="gone" />
+</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/empty_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/nodata_found" />
+
+                <com.mobatia.bskl.manager.TextViewFontSansProRegularColorBlack
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:singleLine="false"
+                    android:text="@string/empty_text"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:visibility="visible" />
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+

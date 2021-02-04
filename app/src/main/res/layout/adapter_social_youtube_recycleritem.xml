@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/itemImage"
+        android:layout_width="100dp"
+        android:layout_height="50dp" />
+
+    <com.mobatia.bskl.manager.TextViewFontSansProSemiBoldColorBlack
+        android:id="@+id/titleTextView"
+        style="@style/textstyleblacklogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@+id/itemImage"
+        android:text="message1" />
+
+    <com.mobatia.bskl.manager.TextViewFontSansProRegularColorSplit
+        android:id="@+id/dateTextView"
+        style="@style/textstyleblacklow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleTextView"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@+id/itemImage"
+        android:text="message1" />
+
+
+</RelativeLayout>

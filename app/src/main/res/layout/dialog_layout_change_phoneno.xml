@@ -1,0 +1,177 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+
+    <RelativeLayout
+        android:id="@+id/r"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+
+        <ImageView
+            android:id="@+id/a"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/dialoguetopcurve"
+            android:gravity="center"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/b"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/iconImageView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/round"
+            android:src="@drawable/pencil"
+            android:gravity="center"
+            android:scaleType="fitCenter" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/r"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/dialoguebottomcurve">
+
+
+        <com.mobatia.bskl.manager.TextViewFontSansProSemiBoldColorBlack
+            android:id="@+id/alertHead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:gravity="center_horizontal"
+            android:text="Change Phone Number"
+            android:textColor="@color/rel_two"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+
+        <com.mobatia.bskl.manager.EditTextFontSansProRegular
+            android:id="@+id/text_email"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/alertHead"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:gravity="left|center"
+            android:layout_gravity="center"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="10dp"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
+            android:background="@drawable/edit_text_login"/>
+       <RelativeLayout
+           android:id="@+id/phoneNo"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/text_email"
+           android:orientation="horizontal">
+           <com.mobatia.bskl.manager.countrypicker.CountryCodePicker
+             android:id="@+id/spinnerCode"
+               android:layout_width="wrap_content"
+               android:layout_height="45dp"
+               android:layout_marginLeft="10dp"
+               app:ccp_showFlag="false"
+               app:ccp_defaultPhoneCode="60"
+               app:ccpDialog_showNameCode="false"
+               app:ccp_rememberLastSelection="true"
+               android:layout_alignParentLeft="true"
+               app:ccp_showPhoneCode="true"
+               android:background="@drawable/edit_text_login"
+               app:ccp_showNameCode="false"
+               android:layout_marginTop="5dp"
+               android:gravity="center" />
+
+           <com.mobatia.bskl.manager.EditTextFontSansProRegular
+               android:id="@+id/text_phone"
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               android:layout_centerHorizontal="true"
+               android:layout_gravity="center"
+               android:layout_toRightOf="@+id/spinnerCode"
+               android:layout_marginLeft="10dp"
+               android:layout_marginRight="10dp"
+               android:layout_marginTop="5dp"
+               android:layout_marginBottom="5dp"
+               android:background="@drawable/edit_text_login"
+               android:gravity="left|center"
+               android:hint="Phone Number"
+               android:imeOptions="actionDone"
+               android:inputType="number"
+               android:paddingLeft="10dp"
+               android:singleLine="true"
+               android:textColor="@color/black"
+               android:textColorHint="@color/black" />
+       </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/phoneNo"
+            android:gravity="center"
+            android:weightSum="100"
+            android:layout_marginTop="10dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="50">
+                <Button
+                    android:id="@+id/btn_maybelater"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/buttonred_new"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Back "
+                    android:textAllCaps="false"
+                    android:textColor="#ffffffff" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="50">
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_new"
+                    android:text="Submit"
+                    android:textAllCaps="false"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textColor="#ffffffff" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

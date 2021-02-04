@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <RelativeLayout
+    android:id="@+id/parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/closeImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/close" />
+
+        <ScrollView
+            android:id="@+id/scroll1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottomLinear"
+            android:layout_below="@+id/closeImg">
+
+            <LinearLayout
+                android:id="@+id/ownDetailsLinear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <com.mobatia.bskl.manager.TextViewFontSansProBoldColorBlack
+                    android:id="@+id/dataCollectionDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:singleLine="false"
+                    android:text="@string/data_collection"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:visibility="visible" />
+<!--
+
+                <com.mobatia.bskl.manager.TextViewFontSansProBoldColorBlack
+                    android:id="@+id/dataCollectionOwnDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:singleLine="false"
+                    android:text="@string/data_collection_details"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:visibility="visible" />
+-->
+
+                <com.mobatia.bskl.manager.TextViewFontSansProRegularColorBlack
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Own Contact Details" />
+
+                <com.mobatia.bskl.manager.EditTextFontSansProRegular
+                    android:id="@+id/emailOwnDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textEmailAddress"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/edit_text_login"
+                    android:hint="@string/data_collection_own_contact_email_hint"
+                    android:paddingLeft="5dp" />
+                <RelativeLayout
+                    android:id="@+id/phoneNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_email"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+                    <com.mobatia.bskl.manager.countrypicker.CountryCodePicker
+                        android:id="@+id/spinnerCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        app:ccpDialog_backgroundColor="@color/rel_one"
+                        app:ccp_showFlag="false"
+                        app:ccp_defaultPhoneCode="60"
+                        app:ccpDialog_showNameCode="false"
+                        app:ccp_rememberLastSelection="true"
+                        android:layout_alignParentLeft="true"
+                        app:ccp_showPhoneCode="true"
+                        android:background="@drawable/edit_text_login"
+                        app:ccp_showNameCode="false"
+                        android:gravity="center" />
+
+                    <com.mobatia.bskl.manager.EditTextFontSansProRegular
+                        android:id="@+id/contactNoOwnDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_toRightOf="@+id/spinnerCode"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/edit_text_login"
+                        android:gravity="left|center"
+                        android:hint="@string/data_collection_own_contact_no_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:paddingLeft="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black" />
+                </RelativeLayout>
+
+              <!--  <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <com.mobatia.bskl.manager.countrypicker.CountryCodePicker
+                        android:id="@+id/spinnerCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="1dp"
+                        android:background="@drawable/edit_text_login"
+                        android:gravity="center"
+                        app:ccpDialog_backgroundColor="@color/rel_one"
+                        app:ccpDialog_showNameCode="false"
+                        app:ccp_defaultPhoneCode="60"
+                        app:ccp_rememberLastSelection="true"
+                        app:ccp_showFlag="false"
+                        app:ccp_showNameCode="false"
+                        app:ccp_showPhoneCode="true" />
+
+                    <com.mobatia.bskl.manager.EditTextFontSansProRegular
+                        android:id="@+id/contactNoOwnDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        android:inputType="number"
+                        android:background="@drawable/edit_text_login"
+                        android:hint="@string/data_collection_own_contact_no_hint"
+                        android:paddingLeft="5dp" />
+                </LinearLayout>
+-->
+                <com.mobatia.bskl.manager.TextViewFontSansProRegularColorBlack
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/data_collection_home_address" />
+
+                <com.mobatia.bskl.manager.EditTextFontSansProRegular
+                    android:id="@+id/addressLine1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/edit_text_login"
+                    android:hint="@string/data_collection_address_Line1"
+                    android:paddingLeft="5dp" />
+
+                <com.mobatia.bskl.manager.EditTextFontSansProRegular
+                    android:id="@+id/addressLine2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/edit_text_login"
+                    android:hint="@string/data_collection_address_Line2"
+                    android:paddingLeft="5dp" />
+
+                <com.mobatia.bskl.manager.EditTextFontSansProRegular
+                    android:id="@+id/addressLine3"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/edit_text_login"
+                    android:hint="@string/data_collection_address_Line3"
+                    android:paddingLeft="5dp" />
+
+                <com.mobatia.bskl.manager.EditTextFontSansProRegular
+                    android:id="@+id/townTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/edit_text_login"
+                    android:hint="@string/data_collection_address_town"
+                    android:paddingLeft="5dp" />
+
+                <com.mobatia.bskl.manager.EditTextFontSansProRegular
+                    android:id="@+id/stateTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/edit_text_login"
+                    android:hint="@string/data_collection_address_state"
+                    android:paddingLeft="5dp" />
+
+                <com.mobatia.bskl.manager.EditTextFontSansProRegular
+                    android:id="@+id/countryTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/edit_text_login"
+                    android:hint="@string/data_collection_address_country"
+                    android:paddingLeft="5dp" />
+
+                <com.mobatia.bskl.manager.EditTextFontSansProRegular
+                    android:id="@+id/pinTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:inputType="number"
+                    android:layout_marginBottom="150dp"
+                    android:background="@drawable/edit_text_login"
+                    android:hint="@string/data_collection_address_postel_code"
+                    android:paddingLeft="5dp" />
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
