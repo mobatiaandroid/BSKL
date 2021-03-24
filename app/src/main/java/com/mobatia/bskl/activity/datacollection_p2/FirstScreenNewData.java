@@ -1205,14 +1205,14 @@ public class FirstScreenNewData extends Fragment {
                 else
                 {
 
-                    String emailData= PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getEmail();
+                    String emailData= PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getEmail().trim();
                     boolean isFound =false;
                     if (!isFound)
                     {
                      for (int i=0;i<AppController.kinArrayShow.size();i++)
                      {
 
-                         String emaildata=AppController.kinArrayShow.get(i).getEmail();
+                         String emaildata=AppController.kinArrayShow.get(i).getEmail().trim();
                          if (emailData.equalsIgnoreCase(emaildata))
                          {
                              isFound=true;
@@ -1247,69 +1247,78 @@ public class FirstScreenNewData extends Fragment {
                         }
                         else
                         {
-                            PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).clear();
-                            ArrayList<OwnContactModel>mOwnContactData=new ArrayList<>();
-                            OwnContactModel mModel=new OwnContactModel();
-                            mModel.setId(id);
-                            mModel.setUser_id(userId);
-                            mModel.setTitle(DropEdt.getText().toString());
-                            mModel.setName(FirstName.getText().toString().trim());
-                            mModel.setLast_name(LastName.getText().toString().trim());
-                            mModel.setRelationship(RelationalSp.getText().toString());
-                            mModel.setEmail(Email.getText().toString().trim());
-                            mModel.setPhone(Phone.getText().toString());
-                            mModel.setCode(CountryCode.getSelectedCountryCode());
-                            mModel.setUser_mobile(user_mobile);
-                            mModel.setStudent_id(studentId);
-                            mModel.setAddress1(Adr1.getText().toString().trim());
-                            mModel.setAddress2(Adr2.getText().toString().trim());
-                            mModel.setAddress3(Adr3.getText().toString().trim());
-                            mModel.setTown(Twn.getText().toString().trim());
-                            mModel.setState(State.getText().toString().trim());
-                            mModel.setCountry(Country.getText().toString().trim());
-                            mModel.setPincode(PostCode.getText().toString().trim());
-                            mModel.setStatus("1");
-                            mModel.setCreated_at(created_at);
-                            mModel.setUpdated_at(updated_at);
-                            mModel.setUpdated(true);
-                            mModel.setConfirmed(true);
-                            mModel.setReportmailmerge(contactOwn);
-                            mModel.setJustcontact(justContact);
-                            mModel.setCorrespondencemailmerge(corresspondanceOwn);
-                            mOwnContactData.add(mModel);
+                            if(Phone.getText().toString().trim().length()<5)
+                            {
+                                showAlertOKButton(getActivity(), "Alert", "Please enter valid phone number.", "Ok", R.drawable.exclamationicon, R.drawable.round);
 
-                            Gson gson   = new Gson();
-                            String json = gson.toJson(mModel);
-                            OwnDetailArray.add(json);
-                            PreferenceManager.saveOwnDetailsJSONArrayList(OwnDetailArray,mContext);
-                            ownDetailViewRelative.setBackgroundResource(R.drawable.rect_background_grey);
-                            confirmBtnMain.setVisibility(View.GONE);
-                            PreferenceManager.saveOwnDetailArrayList(mOwnContactData,"OwnContact",mContext);
-                            if (!PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getName().equalsIgnoreCase("") && !PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getLast_name().equalsIgnoreCase(""))
-                            {
-                                nameOwnDetailTxt.setText(PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getName()+" "+PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getLast_name());
-                            }
-                            else if (!PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getName().equalsIgnoreCase("") && PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getLast_name().equalsIgnoreCase(""))
-                            {
-                                nameOwnDetailTxt.setText(PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getName());
                             }
                             else
                             {
-                                nameOwnDetailTxt.setText(PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getName());
-                            }
+                                PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).clear();
+                                ArrayList<OwnContactModel>mOwnContactData=new ArrayList<>();
+                                OwnContactModel mModel=new OwnContactModel();
+                                mModel.setId(id);
+                                mModel.setUser_id(userId);
+                                mModel.setTitle(DropEdt.getText().toString());
+                                mModel.setName(FirstName.getText().toString().trim());
+                                mModel.setLast_name(LastName.getText().toString().trim());
+                                mModel.setRelationship(RelationalSp.getText().toString());
+                                mModel.setEmail(Email.getText().toString().trim());
+                                mModel.setPhone(Phone.getText().toString());
+                                mModel.setCode(CountryCode.getSelectedCountryCode());
+                                mModel.setUser_mobile(user_mobile);
+                                mModel.setStudent_id(studentId);
+                                mModel.setAddress1(Adr1.getText().toString().trim());
+                                mModel.setAddress2(Adr2.getText().toString().trim());
+                                mModel.setAddress3(Adr3.getText().toString().trim());
+                                mModel.setTown(Twn.getText().toString().trim());
+                                mModel.setState(State.getText().toString().trim());
+                                mModel.setCountry(Country.getText().toString().trim());
+                                mModel.setPincode(PostCode.getText().toString().trim());
+                                mModel.setStatus("1");
+                                mModel.setCreated_at(created_at);
+                                mModel.setUpdated_at(updated_at);
+                                mModel.setUpdated(true);
+                                mModel.setConfirmed(true);
+                                mModel.setReportmailmerge(contactOwn);
+                                mModel.setJustcontact(justContact);
+                                mModel.setCorrespondencemailmerge(corresspondanceOwn);
+                                mOwnContactData.add(mModel);
 
-                            if (!PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getRelationship().equalsIgnoreCase(""))
-                            {
-                                contactTypeOwnDetailTxt.setText(PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getRelationship());
-                            }
-                            else
-                            {
-                                contactTypeOwnDetailTxt.setText("");
-                            }
+                                Gson gson   = new Gson();
+                                String json = gson.toJson(mModel);
+                                OwnDetailArray.add(json);
+                                PreferenceManager.saveOwnDetailsJSONArrayList(OwnDetailArray,mContext);
+                                ownDetailViewRelative.setBackgroundResource(R.drawable.rect_background_grey);
+                                confirmBtnMain.setVisibility(View.GONE);
+                                PreferenceManager.saveOwnDetailArrayList(mOwnContactData,"OwnContact",mContext);
+                                if (!PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getName().equalsIgnoreCase("") && !PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getLast_name().equalsIgnoreCase(""))
+                                {
+                                    nameOwnDetailTxt.setText(PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getName()+" "+PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getLast_name());
+                                }
+                                else if (!PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getName().equalsIgnoreCase("") && PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getLast_name().equalsIgnoreCase(""))
+                                {
+                                    nameOwnDetailTxt.setText(PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getName());
+                                }
+                                else
+                                {
+                                    nameOwnDetailTxt.setText(PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getName());
+                                }
+
+                                if (!PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getRelationship().equalsIgnoreCase(""))
+                                {
+                                    contactTypeOwnDetailTxt.setText(PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getRelationship());
+                                }
+                                else
+                                {
+                                    contactTypeOwnDetailTxt.setText("");
+                                }
 
 
-                            dialog.dismiss();
+                                dialog.dismiss();
+                            }
                         }
+
                     }
 
                 }
@@ -1709,10 +1718,10 @@ public class FirstScreenNewData extends Fragment {
                                      }
                                      else
                                      {
-                                         String emailData=emailKin.getText().toString();
+                                         String emailData=emailKin.getText().toString().trim();
                                          if (!isFound)
                                          {
-                                             if (PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getEmail().equalsIgnoreCase(emailData))
+                                             if (PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getEmail().trim().equalsIgnoreCase(emailData))
                                              {
                                                  isFound=true;
                                              }
@@ -1720,7 +1729,7 @@ public class FirstScreenNewData extends Fragment {
                                              {
                                                  for (int i=0;i<AppController.kinArrayShow.size();i++)
                                                  {
-                                                     String kinEmail=AppController.kinArrayShow.get(i).getEmail();
+                                                     String kinEmail=AppController.kinArrayShow.get(i).getEmail().trim();
 
                                                      if (kinEmail.equalsIgnoreCase(emailData))
                                                      {
@@ -1770,167 +1779,116 @@ public class FirstScreenNewData extends Fragment {
                                                  isPhoneFound=false;
 
                                              }
-                                             else
-                                             {
-                                                 String countryCOdeCheck=countryCode.getTextView_selectedCountry().getText().toString();
-                                                 if (RelationalSpinner.getText().toString().equalsIgnoreCase("Local Emergency Contact")|| RelationalSpinner.getText().toString().equalsIgnoreCase("Emergency Contact"))
-                                                 {
-                                                     tempId=tempId+1;
-                                                     String TempId="Mobatia_"+tempId;
-                                                     KinModel model = new KinModel();
-                                                     model.setStatus("0");
-                                                     model.setRequest("1");
-                                                     model.setName(firstName.getText().toString().trim());
-                                                     model.setLast_name(lastName.getText().toString().trim());
-                                                     model.setEmail(emailKin.getText().toString().trim());
-                                                     model.setTitle(ContactSpinner.getText().toString());
-                                                     model.setKin_id(TempId);
-                                                     model.setRelationship(RelationalSpinner.getText().toString());
-                                                     model.setCode(countryCode.getTextView_selectedCountry().getText().toString());
-                                                     model.setUser_mobile(contactNumber.getText().toString());
-                                                     model.setStudent_id("");
-                                                     model.setCreated_at("");
-                                                     model.setUpdated_at("");
-                                                     model.setCorrespondencemailmerge("");
-                                                     model.setReportmailmerge("");
-                                                     model.setJustcontact("");
-                                                     model.setPhone(contactNumber.getText().toString());
-                                                     model.setId(TempId);
-                                                     model.setUser_id(PreferenceManager.getUserId(mContext));
-                                                     model.setFullFilled(true);
-                                                     model.setNewData(true);
-                                                     model.setConfirmed(true);
-                                                     AppController.kinArrayPass.add(model);
-                                                     AppController.kinArrayShow.add(model);
-                                                     if (PreferenceManager.getKinDetailsArrayListShow(mContext)==null)
-                                                     {
-                                                         PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass,mContext);
-                                                         PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow,mContext);
-                                                     }
-                                                     else
-                                                     {
-                                                         PreferenceManager.getKinDetailsArrayListShow(mContext).clear();
-                                                         PreferenceManager.getKinDetailsArrayList(mContext).clear();
-                                                         PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass,mContext);
-                                                         PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow,mContext);
-                                                     }
+                                            else {
+                                                if (contactNumber.getText().toString().trim().length()<5)
+                                                {
+                                                    ShowCondition("Please enter valid phone number.");
+                                                }
+                                                else
+                                                {
+                                                    String countryCOdeCheck=countryCode.getTextView_selectedCountry().getText().toString();
+                                                    if (RelationalSpinner.getText().toString().equalsIgnoreCase("Local Emergency Contact")|| RelationalSpinner.getText().toString().equalsIgnoreCase("Emergency Contact"))
+                                                    {
+                                                        tempId=tempId+1;
+                                                        String TempId="Mobatia_"+tempId;
+                                                        KinModel model = new KinModel();
+                                                        model.setStatus("0");
+                                                        model.setRequest("1");
+                                                        model.setName(firstName.getText().toString().trim());
+                                                        model.setLast_name(lastName.getText().toString().trim());
+                                                        model.setEmail(emailKin.getText().toString().trim());
+                                                        model.setTitle(ContactSpinner.getText().toString());
+                                                        model.setKin_id(TempId);
+                                                        model.setRelationship(RelationalSpinner.getText().toString());
+                                                        model.setCode(countryCode.getTextView_selectedCountry().getText().toString());
+                                                        model.setUser_mobile(contactNumber.getText().toString());
+                                                        model.setStudent_id("");
+                                                        model.setCreated_at("");
+                                                        model.setUpdated_at("");
+                                                        model.setCorrespondencemailmerge("");
+                                                        model.setReportmailmerge("");
+                                                        model.setJustcontact("");
+                                                        model.setPhone(contactNumber.getText().toString());
+                                                        model.setId(TempId);
+                                                        model.setUser_id(PreferenceManager.getUserId(mContext));
+                                                        model.setFullFilled(true);
+                                                        model.setNewData(true);
+                                                        model.setConfirmed(true);
+                                                        AppController.kinArrayPass.add(model);
+                                                        AppController.kinArrayShow.add(model);
+                                                        if (PreferenceManager.getKinDetailsArrayListShow(mContext)==null)
+                                                        {
+                                                            PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass,mContext);
+                                                            PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow,mContext);
+                                                        }
+                                                        else
+                                                        {
+                                                            PreferenceManager.getKinDetailsArrayListShow(mContext).clear();
+                                                            PreferenceManager.getKinDetailsArrayList(mContext).clear();
+                                                            PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass,mContext);
+                                                            PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow,mContext);
+                                                        }
 
-                                                     System.out.println("Kin array show Size"+ AppController.kinArrayShow.size());
-                                                     System.out.println("Kin array bshow nsize"+PreferenceManager.getKinDetailsArrayListShow(mContext).size());
-                                                     RecyclerLayout.setVisibility(View.VISIBLE);
-                                                     NoDataLayout.setVisibility(View.GONE);
-                                                     familyKinRecyclerAdapter = new FamilyKinRecyclerAdapter(mContext,AppController.kinArrayShow);
-                                                     mRecyclerView.setAdapter(familyKinRecyclerAdapter);
-                                                     // familyKinRecyclerAdapter.notifyDataSetChanged();
-                                                     dialog.dismiss();
-                                                     System.out.println("It eneters into country code");
-//                                                if (!countryCOdeCheck.equalsIgnoreCase("+60"))
-//                                                {
-//                                                    System.out.println("It eneters into country codeffffffaaaa");
-//                                                    ShowCondition("The “Emergency Contact” must have a Malaysian mobile number");
-//                                                }
-//                                                else
-//                                                {
-//                                                    tempId=tempId+1;
-//                                                    String TempId="Mobatia_"+tempId;
-//                                                    KinModel model = new KinModel();
-//                                                    model.setStatus("0");
-//                                                    model.setRequest("1");
-//                                                    model.setName(firstName.getText().toString().trim());
-//                                                    model.setLast_name(lastName.getText().toString().trim());
-//                                                    model.setEmail(emailKin.getText().toString().trim());
-//                                                    model.setTitle(ContactSpinner.getText().toString());
-//                                                    model.setKin_id(TempId);
-//                                                    model.setRelationship(RelationalSpinner.getText().toString());
-//                                                    model.setCode(countryCode.getTextView_selectedCountry().getText().toString());
-//                                                    model.setUser_mobile(contactNumber.getText().toString());
-//                                                    model.setStudent_id("");
-//                                                    model.setCreated_at("");
-//                                                    model.setUpdated_at("");
-//                                                    model.setCorrespondencemailmerge("");
-//                                                    model.setReportmailmerge("");
-//                                                    model.setJustcontact("");
-//                                                    model.setPhone(contactNumber.getText().toString());
-//                                                    model.setId(TempId);
-//                                                    model.setUser_id(PreferenceManager.getUserId(mContext));
-//                                                    model.setFullFilled(true);
-//                                                    model.setNewData(true);
-//                                                    model.setConfirmed(true);
-//                                                    AppController.kinArrayPass.add(model);
-//                                                    AppController.kinArrayShow.add(model);
-//                                                    if (PreferenceManager.getKinDetailsArrayListShow(mContext)==null)
-//                                                    {
-//                                                        PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass,mContext);
-//                                                        PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow,mContext);
-//                                                    }
-//                                                    else
-//                                                    {
-//                                                        PreferenceManager.getKinDetailsArrayListShow(mContext).clear();
-//                                                        PreferenceManager.getKinDetailsArrayList(mContext).clear();
-//                                                        PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass,mContext);
-//                                                        PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow,mContext);
-//                                                    }
-//
-//                                                    System.out.println("Kin array show Size"+ AppController.kinArrayShow.size());
-//                                                    System.out.println("Kin array bshow nsize"+PreferenceManager.getKinDetailsArrayListShow(mContext).size());
-//                                                    RecyclerLayout.setVisibility(View.VISIBLE);
-//                                                    NoDataLayout.setVisibility(View.GONE);
-//                                                    familyKinRecyclerAdapter = new FamilyKinRecyclerAdapter(mContext,AppController.kinArrayShow);
-//                                                    mRecyclerView.setAdapter(familyKinRecyclerAdapter);
-//                                                    // familyKinRecyclerAdapter.notifyDataSetChanged();
-//                                                    dialog.dismiss();
-//
-//                                                }
-                                                 }
-                                                 else
-                                                 {
-                                                     System.out.println("It eneters into country codedddd");
-                                                     tempId=tempId+1;
-                                                     String TempId="Mobatia_"+tempId;
-                                                     KinModel model = new KinModel();
-                                                     model.setStatus("0");
-                                                     model.setRequest("1");
-                                                     model.setName(firstName.getText().toString().trim());
-                                                     model.setLast_name(lastName.getText().toString().trim());
-                                                     model.setEmail(emailKin.getText().toString().trim());
-                                                     model.setTitle(ContactSpinner.getText().toString());
-                                                     model.setKin_id(TempId);
-                                                     model.setRelationship(RelationalSpinner.getText().toString());
-                                                     model.setCode(countryCode.getTextView_selectedCountry().getText().toString());
-                                                     model.setUser_mobile(contactNumber.getText().toString());
-                                                     model.setStudent_id("");
-                                                     model.setCreated_at("");
-                                                     model.setUpdated_at("");
-                                                     model.setPhone(contactNumber.getText().toString());
-                                                     model.setId(TempId);
-                                                     model.setUser_id(PreferenceManager.getUserId(mContext));
-                                                     model.setFullFilled(true);
-                                                     model.setNewData(true);
-                                                     model.setConfirmed(true);
-                                                     AppController.kinArrayPass.add(model);
-                                                     AppController.kinArrayShow.add(model);
-                                                     if (PreferenceManager.getKinDetailsArrayListShow(mContext)==null)
-                                                     {
-                                                         PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass,mContext);
-                                                         PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow,mContext);
-                                                     }
-                                                     else
-                                                     {
-                                                         PreferenceManager.getKinDetailsArrayListShow(mContext).clear();
-                                                         PreferenceManager.getKinDetailsArrayList(mContext).clear();
-                                                         PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass,mContext);
-                                                         PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow,mContext);
-                                                     }
+                                                        System.out.println("Kin array show Size"+ AppController.kinArrayShow.size());
+                                                        System.out.println("Kin array bshow nsize"+PreferenceManager.getKinDetailsArrayListShow(mContext).size());
+                                                        RecyclerLayout.setVisibility(View.VISIBLE);
+                                                        NoDataLayout.setVisibility(View.GONE);
+                                                        familyKinRecyclerAdapter = new FamilyKinRecyclerAdapter(mContext,AppController.kinArrayShow);
+                                                        mRecyclerView.setAdapter(familyKinRecyclerAdapter);
+                                                        // familyKinRecyclerAdapter.notifyDataSetChanged();
+                                                        dialog.dismiss();
+                                                        System.out.println("It eneters into country code");
+                                                    }
+                                                    else
+                                                    {
+                                                        System.out.println("It eneters into country codedddd");
+                                                        tempId=tempId+1;
+                                                        String TempId="Mobatia_"+tempId;
+                                                        KinModel model = new KinModel();
+                                                        model.setStatus("0");
+                                                        model.setRequest("1");
+                                                        model.setName(firstName.getText().toString().trim());
+                                                        model.setLast_name(lastName.getText().toString().trim());
+                                                        model.setEmail(emailKin.getText().toString().trim());
+                                                        model.setTitle(ContactSpinner.getText().toString());
+                                                        model.setKin_id(TempId);
+                                                        model.setRelationship(RelationalSpinner.getText().toString());
+                                                        model.setCode(countryCode.getTextView_selectedCountry().getText().toString());
+                                                        model.setUser_mobile(contactNumber.getText().toString());
+                                                        model.setStudent_id("");
+                                                        model.setCreated_at("");
+                                                        model.setUpdated_at("");
+                                                        model.setPhone(contactNumber.getText().toString());
+                                                        model.setId(TempId);
+                                                        model.setUser_id(PreferenceManager.getUserId(mContext));
+                                                        model.setFullFilled(true);
+                                                        model.setNewData(true);
+                                                        model.setConfirmed(true);
+                                                        AppController.kinArrayPass.add(model);
+                                                        AppController.kinArrayShow.add(model);
+                                                        if (PreferenceManager.getKinDetailsArrayListShow(mContext)==null)
+                                                        {
+                                                            PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass,mContext);
+                                                            PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow,mContext);
+                                                        }
+                                                        else
+                                                        {
+                                                            PreferenceManager.getKinDetailsArrayListShow(mContext).clear();
+                                                            PreferenceManager.getKinDetailsArrayList(mContext).clear();
+                                                            PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass,mContext);
+                                                            PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow,mContext);
+                                                        }
 
-                                                     System.out.println("Kin array show Size"+ AppController.kinArrayShow.size());
-                                                     System.out.println("Kin array bshow nsize"+PreferenceManager.getKinDetailsArrayListShow(mContext).size());
-                                                     RecyclerLayout.setVisibility(View.VISIBLE);
-                                                     NoDataLayout.setVisibility(View.GONE);
-                                                     familyKinRecyclerAdapter = new FamilyKinRecyclerAdapter(mContext,AppController.kinArrayShow);
-                                                     mRecyclerView.setAdapter(familyKinRecyclerAdapter);
-                                                     // familyKinRecyclerAdapter.notifyDataSetChanged();
-                                                     dialog.dismiss();
-                                                 }
+                                                        System.out.println("Kin array show Size"+ AppController.kinArrayShow.size());
+                                                        System.out.println("Kin array bshow nsize"+PreferenceManager.getKinDetailsArrayListShow(mContext).size());
+                                                        RecyclerLayout.setVisibility(View.VISIBLE);
+                                                        NoDataLayout.setVisibility(View.GONE);
+                                                        familyKinRecyclerAdapter = new FamilyKinRecyclerAdapter(mContext,AppController.kinArrayShow);
+                                                        mRecyclerView.setAdapter(familyKinRecyclerAdapter);
+                                                        // familyKinRecyclerAdapter.notifyDataSetChanged();
+                                                        dialog.dismiss();
+                                                    }
+                                                }
                                              }
 
                                          }
@@ -1959,38 +1917,7 @@ public class FirstScreenNewData extends Fragment {
                              }
                              else
                              {
-//                                String emailData=emailKin.getText().toString();
-//                                if (!isFound)
-//                                {
-//                                    if (PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).get(0).getEmail().equalsIgnoreCase(emailData))
-//                                    {
-//                                        isFound=true;
-//                                    }
-//                                    else
-//                                    {
-//                                        for (int i=0;i<AppController.kinArrayShow.size();i++)
-//                                        {
-//                                            String kinEmail=AppController.kinArrayShow.get(i).getEmail();
-//
-//                                            if (kinEmail.equalsIgnoreCase(emailData))
-//                                            {
-//                                                isFound=true;
-//
-//                                            }
-//                                        }
-//                                    }
-//                                }
 
-//                                if (isFound)
-//                                {
-//                                    ShowCondition("Email ID Already Exist");
-//                                    isFound=false;
-//
-//                                }
-//
-//
-//                                else
-//                                {
                                  boolean isPhoneFound=false;
                                  String phoneData=contactNumber.getText().toString();
                                  if (!isPhoneFound)
@@ -2818,13 +2745,13 @@ public class FirstScreenNewData extends Fragment {
                                         if (contactNumber.getText().toString().trim().equalsIgnoreCase("")) {
                                             ShowCondition("Please enter the Contact Number");
                                         } else {
-                                            String emailData = emailKin.getText().toString();
+                                            String emailData = emailKin.getText().toString().trim();
                                             if (!isFound) {
-                                                if (PreferenceManager.getOwnDetailArrayList("OwnContact", mContext).get(0).getEmail().equalsIgnoreCase(emailData)) {
+                                                if (PreferenceManager.getOwnDetailArrayList("OwnContact", mContext).get(0).getEmail().trim().equalsIgnoreCase(emailData)) {
                                                     isFound = true;
                                                 } else {
                                                     for (int i = 0; i < AppController.kinArrayShow.size(); i++) {
-                                                        String kinEmail = AppController.kinArrayShow.get(i).getEmail();
+                                                        String kinEmail = AppController.kinArrayShow.get(i).getEmail().trim();
 
                                                         if (kinEmail.equalsIgnoreCase(emailData)) {
                                                             if (position == i) {
@@ -2868,164 +2795,173 @@ public class FirstScreenNewData extends Fragment {
                                                     ShowCondition("Phone Number Already Exist");
                                                     isPhoneFound = false;
 
-                                                } else {
-                                                    if (RelationalSpinner.getText().toString().equalsIgnoreCase("Local Emergency Contact") || RelationalSpinner.getText().toString().equalsIgnoreCase("Emergency Contact")) {
-                                                        System.out.println("It eneters into country codeffffff");
-                                                        String status = "";
-                                                        String request = "";
-                                                        int kinArrayPassPos = -1;
-                                                        if (!AppController.kinArrayShow.get(position).isNewData()) {
-                                                            if (AppController.isKinEdited) {
-                                                                status = "1";
-                                                                request = "0";
+                                                }
+                                                else
+                                                {
+                                                    if (contactNumber.getText().toString().trim().length()<5)
+                                                    {
+                                                        ShowCondition("Please enter valid phone number.");
+                                                    }
+                                                    else {
+                                                        if (RelationalSpinner.getText().toString().equalsIgnoreCase("Local Emergency Contact") || RelationalSpinner.getText().toString().equalsIgnoreCase("Emergency Contact")) {
+                                                            System.out.println("It eneters into country codeffffff");
+                                                            String status = "";
+                                                            String request = "";
+                                                            int kinArrayPassPos = -1;
+                                                            if (!AppController.kinArrayShow.get(position).isNewData()) {
+                                                                if (AppController.isKinEdited) {
+                                                                    status = "1";
+                                                                    request = "0";
+                                                                } else {
+                                                                    status = "5";
+                                                                    request = "0";
+                                                                }
                                                             } else {
-                                                                status = "5";
-                                                                request = "0";
+                                                                if (AppController.isKinEdited) {
+                                                                    status = "0";
+                                                                    request = "1";
+                                                                } else {
+                                                                    status = "0";
+                                                                    request = "1";
+                                                                }
                                                             }
-                                                        } else {
-                                                            if (AppController.isKinEdited) {
-                                                                status = "0";
-                                                                request = "1";
+                                                            String kinID = AppController.kinArrayShow.get(position).getKin_id();
+                                                            String IDs = AppController.kinArrayShow.get(position).getId();
+                                                            String studentID = AppController.kinArrayShow.get(position).getStudent_id();
+                                                            String createdAT = AppController.kinArrayShow.get(position).getCreated_at();
+                                                            String updatedAT = AppController.kinArrayShow.get(position).getUpdated_at();
+                                                            String userID = AppController.kinArrayShow.get(position).getUser_id();
+                                                            String corresspondence = AppController.kinArrayShow.get(position).getCorrespondencemailmerge();
+                                                            String justcontact = AppController.kinArrayShow.get(position).getJustcontact();
+                                                            String contacts = AppController.kinArrayShow.get(position).getReportmailmerge();
+                                                            KinModel model = new KinModel();
+                                                            model.setStatus(status);
+                                                            model.setRequest(request);
+                                                            model.setName(firstName.getText().toString().trim());
+                                                            model.setLast_name(lastName.getText().toString().trim());
+                                                            model.setEmail(emailKin.getText().toString().trim());
+                                                            model.setTitle(ContactSpinner.getText().toString());
+                                                            model.setKin_id(kinID);
+                                                            model.setRelationship(RelationalSpinner.getText().toString());
+                                                            model.setCode(countryCode.getTextView_selectedCountry().getText().toString());
+                                                            model.setUser_mobile(contactNumber.getText().toString());
+                                                            model.setStudent_id(studentID);
+                                                            model.setCreated_at(createdAT);
+                                                            model.setUpdated_at(updatedAT);
+                                                            model.setPhone(contactNumber.getText().toString());
+                                                            model.setId(IDs);
+                                                            model.setUser_id(userID);
+                                                            model.setFullFilled(true);
+                                                            model.setCorrespondencemailmerge(corresspondence);
+                                                            model.setJustcontact(justcontact);
+                                                            model.setReportmailmerge(contacts);
+                                                            if (AppController.kinArrayShow.get(position).isNewData()) {
+                                                                model.setNewData(true);
                                                             } else {
-                                                                status = "0";
-                                                                request = "1";
+                                                                model.setNewData(false);
                                                             }
-                                                        }
-                                                        String kinID = AppController.kinArrayShow.get(position).getKin_id();
-                                                        String IDs = AppController.kinArrayShow.get(position).getId();
-                                                        String studentID = AppController.kinArrayShow.get(position).getStudent_id();
-                                                        String createdAT = AppController.kinArrayShow.get(position).getCreated_at();
-                                                        String updatedAT = AppController.kinArrayShow.get(position).getUpdated_at();
-                                                        String userID = AppController.kinArrayShow.get(position).getUser_id();
-                                                        String corresspondence = AppController.kinArrayShow.get(position).getCorrespondencemailmerge();
-                                                        String justcontact = AppController.kinArrayShow.get(position).getJustcontact();
-                                                        String contacts = AppController.kinArrayShow.get(position).getReportmailmerge();
-                                                        KinModel model = new KinModel();
-                                                        model.setStatus(status);
-                                                        model.setRequest(request);
-                                                        model.setName(firstName.getText().toString().trim());
-                                                        model.setLast_name(lastName.getText().toString().trim());
-                                                        model.setEmail(emailKin.getText().toString().trim());
-                                                        model.setTitle(ContactSpinner.getText().toString());
-                                                        model.setKin_id(kinID);
-                                                        model.setRelationship(RelationalSpinner.getText().toString());
-                                                        model.setCode(countryCode.getTextView_selectedCountry().getText().toString());
-                                                        model.setUser_mobile(contactNumber.getText().toString());
-                                                        model.setStudent_id(studentID);
-                                                        model.setCreated_at(createdAT);
-                                                        model.setUpdated_at(updatedAT);
-                                                        model.setPhone(contactNumber.getText().toString());
-                                                        model.setId(IDs);
-                                                        model.setUser_id(userID);
-                                                        model.setFullFilled(true);
-                                                        model.setCorrespondencemailmerge(corresspondence);
-                                                        model.setJustcontact(justcontact);
-                                                        model.setReportmailmerge(contacts);
-                                                        if (AppController.kinArrayShow.get(position).isNewData()) {
-                                                            model.setNewData(true);
-                                                        } else {
-                                                            model.setNewData(false);
-                                                        }
-                                                        model.setConfirmed(true);
-                                                        for (int j = 0; j < AppController.kinArrayPass.size(); j++) {
-                                                            String dataId = AppController.kinArrayPass.get(j).getId();
-                                                            if (IDs.equalsIgnoreCase(dataId)) {
-                                                                kinArrayPassPos = j;
+                                                            model.setConfirmed(true);
+                                                            for (int j = 0; j < AppController.kinArrayPass.size(); j++) {
+                                                                String dataId = AppController.kinArrayPass.get(j).getId();
+                                                                if (IDs.equalsIgnoreCase(dataId)) {
+                                                                    kinArrayPassPos = j;
+                                                                }
                                                             }
-                                                        }
-                                                        AppController.kinArrayShow.remove(position);
-                                                        AppController.kinArrayPass.remove(kinArrayPassPos);
-                                                        AppController.kinArrayShow.add(position, model);
-                                                        AppController.kinArrayPass.add(kinArrayPassPos, model);
-                                                        PreferenceManager.getKinDetailsArrayList(mContext).clear();
-                                                        PreferenceManager.getKinDetailsArrayListShow(mContext).clear();
-                                                        PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow, mContext);
-                                                        PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass, mContext);
-                                                        dialog.dismiss();
-                                                        familyKinRecyclerAdapter.notifyDataSetChanged();
-                                                        System.out.println("It eneters into country codeffffffdddd" + countryCode.getTextView_selectedCountry().getText().toString());
+                                                            AppController.kinArrayShow.remove(position);
+                                                            AppController.kinArrayPass.remove(kinArrayPassPos);
+                                                            AppController.kinArrayShow.add(position, model);
+                                                            AppController.kinArrayPass.add(kinArrayPassPos, model);
+                                                            PreferenceManager.getKinDetailsArrayList(mContext).clear();
+                                                            PreferenceManager.getKinDetailsArrayListShow(mContext).clear();
+                                                            PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow, mContext);
+                                                            PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass, mContext);
+                                                            dialog.dismiss();
+                                                            familyKinRecyclerAdapter.notifyDataSetChanged();
+                                                            System.out.println("It eneters into country codeffffffdddd" + countryCode.getTextView_selectedCountry().getText().toString());
 
 //                                                }
 
-                                                    } else {
-                                                        System.out.println("It eneters into country codevvvvvvv");
-                                                        String status = "";
-                                                        String request = "";
-                                                        int kinArrayPassPos = -1;
-                                                        if (!AppController.kinArrayShow.get(position).isNewData()) {
-                                                            if (AppController.isKinEdited) {
-                                                                status = "1";
-                                                                request = "0";
-                                                            } else {
-                                                                status = "5";
-                                                                request = "0";
-                                                            }
                                                         } else {
-                                                            if (AppController.isKinEdited) {
-                                                                status = "0";
-                                                                request = "1";
+                                                            System.out.println("It eneters into country codevvvvvvv");
+                                                            String status = "";
+                                                            String request = "";
+                                                            int kinArrayPassPos = -1;
+                                                            if (!AppController.kinArrayShow.get(position).isNewData()) {
+                                                                if (AppController.isKinEdited) {
+                                                                    status = "1";
+                                                                    request = "0";
+                                                                } else {
+                                                                    status = "5";
+                                                                    request = "0";
+                                                                }
                                                             } else {
-                                                                status = "0";
-                                                                request = "1";
+                                                                if (AppController.isKinEdited) {
+                                                                    status = "0";
+                                                                    request = "1";
+                                                                } else {
+                                                                    status = "0";
+                                                                    request = "1";
+                                                                }
                                                             }
-                                                        }
-                                                        String kinID = AppController.kinArrayShow.get(position).getKin_id();
-                                                        String IDs = AppController.kinArrayShow.get(position).getId();
-                                                        String studentID = AppController.kinArrayShow.get(position).getStudent_id();
-                                                        String createdAT = AppController.kinArrayShow.get(position).getCreated_at();
-                                                        String updatedAT = AppController.kinArrayShow.get(position).getUpdated_at();
-                                                        String userID = AppController.kinArrayShow.get(position).getUser_id();
-                                                        String corresspondence = AppController.kinArrayShow.get(position).getCorrespondencemailmerge();
-                                                        String justcontact = AppController.kinArrayShow.get(position).getJustcontact();
-                                                        String contacts = AppController.kinArrayShow.get(position).getReportmailmerge();
-                                                        KinModel model = new KinModel();
-                                                        model.setStatus(status);
-                                                        model.setRequest(request);
-                                                        model.setName(firstName.getText().toString().trim());
-                                                        model.setLast_name(lastName.getText().toString().trim());
-                                                        model.setEmail(emailKin.getText().toString().trim());
-                                                        model.setTitle(ContactSpinner.getText().toString());
-                                                        model.setKin_id(kinID);
-                                                        model.setRelationship(RelationalSpinner.getText().toString());
-                                                        model.setCode(countryCode.getTextView_selectedCountry().getText().toString());
-                                                        model.setUser_mobile(contactNumber.getText().toString());
-                                                        model.setStudent_id(studentID);
-                                                        model.setCreated_at(createdAT);
-                                                        model.setUpdated_at(updatedAT);
-                                                        model.setPhone(contactNumber.getText().toString());
-                                                        model.setId(IDs);
-                                                        model.setUser_id(userID);
-                                                        // String corresspondence=AppController.kinArrayShow.get(position).getCorrespondencemailmerge();
-                                                        //String contacts=AppController.kinArrayShow.get(position).getReportmailmerge();
-                                                        model.setCorrespondencemailmerge(corresspondence);
-                                                        model.setJustcontact(justcontact);
-                                                        model.setReportmailmerge(contacts);
-                                                        model.setFullFilled(true);
-                                                        if (AppController.kinArrayShow.get(position).isNewData()) {
-                                                            model.setNewData(true);
-                                                        } else {
-                                                            model.setNewData(false);
-                                                        }
-                                                        model.setConfirmed(true);
-                                                        for (int j = 0; j < AppController.kinArrayPass.size(); j++) {
-                                                            String dataId = AppController.kinArrayPass.get(j).getId();
-                                                            if (IDs.equalsIgnoreCase(dataId)) {
-                                                                kinArrayPassPos = j;
+                                                            String kinID = AppController.kinArrayShow.get(position).getKin_id();
+                                                            String IDs = AppController.kinArrayShow.get(position).getId();
+                                                            String studentID = AppController.kinArrayShow.get(position).getStudent_id();
+                                                            String createdAT = AppController.kinArrayShow.get(position).getCreated_at();
+                                                            String updatedAT = AppController.kinArrayShow.get(position).getUpdated_at();
+                                                            String userID = AppController.kinArrayShow.get(position).getUser_id();
+                                                            String corresspondence = AppController.kinArrayShow.get(position).getCorrespondencemailmerge();
+                                                            String justcontact = AppController.kinArrayShow.get(position).getJustcontact();
+                                                            String contacts = AppController.kinArrayShow.get(position).getReportmailmerge();
+                                                            KinModel model = new KinModel();
+                                                            model.setStatus(status);
+                                                            model.setRequest(request);
+                                                            model.setName(firstName.getText().toString().trim());
+                                                            model.setLast_name(lastName.getText().toString().trim());
+                                                            model.setEmail(emailKin.getText().toString().trim());
+                                                            model.setTitle(ContactSpinner.getText().toString());
+                                                            model.setKin_id(kinID);
+                                                            model.setRelationship(RelationalSpinner.getText().toString());
+                                                            model.setCode(countryCode.getTextView_selectedCountry().getText().toString());
+                                                            model.setUser_mobile(contactNumber.getText().toString());
+                                                            model.setStudent_id(studentID);
+                                                            model.setCreated_at(createdAT);
+                                                            model.setUpdated_at(updatedAT);
+                                                            model.setPhone(contactNumber.getText().toString());
+                                                            model.setId(IDs);
+                                                            model.setUser_id(userID);
+                                                            // String corresspondence=AppController.kinArrayShow.get(position).getCorrespondencemailmerge();
+                                                            //String contacts=AppController.kinArrayShow.get(position).getReportmailmerge();
+                                                            model.setCorrespondencemailmerge(corresspondence);
+                                                            model.setJustcontact(justcontact);
+                                                            model.setReportmailmerge(contacts);
+                                                            model.setFullFilled(true);
+                                                            if (AppController.kinArrayShow.get(position).isNewData()) {
+                                                                model.setNewData(true);
+                                                            } else {
+                                                                model.setNewData(false);
                                                             }
+                                                            model.setConfirmed(true);
+                                                            for (int j = 0; j < AppController.kinArrayPass.size(); j++) {
+                                                                String dataId = AppController.kinArrayPass.get(j).getId();
+                                                                if (IDs.equalsIgnoreCase(dataId)) {
+                                                                    kinArrayPassPos = j;
+                                                                }
+                                                            }
+                                                            AppController.kinArrayShow.remove(position);
+                                                            AppController.kinArrayPass.remove(kinArrayPassPos);
+                                                            AppController.kinArrayShow.add(position, model);
+                                                            AppController.kinArrayPass.add(kinArrayPassPos, model);
+                                                            PreferenceManager.getKinDetailsArrayList(mContext).clear();
+                                                            PreferenceManager.getKinDetailsArrayListShow(mContext).clear();
+                                                            PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow, mContext);
+                                                            PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass, mContext);
+                                                            dialog.dismiss();
+                                                            familyKinRecyclerAdapter.notifyDataSetChanged();
                                                         }
-                                                        AppController.kinArrayShow.remove(position);
-                                                        AppController.kinArrayPass.remove(kinArrayPassPos);
-                                                        AppController.kinArrayShow.add(position, model);
-                                                        AppController.kinArrayPass.add(kinArrayPassPos, model);
-                                                        PreferenceManager.getKinDetailsArrayList(mContext).clear();
-                                                        PreferenceManager.getKinDetailsArrayListShow(mContext).clear();
-                                                        PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow, mContext);
-                                                        PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass, mContext);
-                                                        dialog.dismiss();
-                                                        familyKinRecyclerAdapter.notifyDataSetChanged();
-                                                    }
 
+                                                    }
                                                 }
+
 
                                             }
 
@@ -3043,31 +2979,7 @@ public class FirstScreenNewData extends Fragment {
                                 if (contactNumber.getText().toString().trim().equalsIgnoreCase("")) {
                                     ShowCondition("Please enter the Contact Number");
                                 } else {
-//                                String emailData = emailKin.getText().toString();
-//                                if (!isFound) {
-//                                    if (PreferenceManager.getOwnDetailArrayList("OwnContact", mContext).get(0).getEmail().equalsIgnoreCase(emailData)) {
-//                                        isFound = true;
-//                                    } else {
-//                                        for (int i = 0; i < AppController.kinArrayShow.size(); i++) {
-//                                            String kinEmail = AppController.kinArrayShow.get(i).getEmail();
-//
-//                                            if (kinEmail.equalsIgnoreCase(emailData)) {
-//                                                if (position == i) {
-//
-//                                                } else {
-//                                                    isFound = true;
-//                                                }
-//
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//
-//                                if (isFound) {
-//                                    ShowCondition("Email ID Already Exist");
-//                                    isFound = false;
-//
-//                                } else {
+
                                     boolean isPhoneFound = false;
                                     String phoneData = contactNumber.getText().toString();
                                     if (!isPhoneFound) {
@@ -3093,259 +3005,171 @@ public class FirstScreenNewData extends Fragment {
                                         ShowCondition("Phone Number Already Exist");
                                         isPhoneFound = false;
 
-                                    } else {
-                                        if (RelationalSpinner.getText().toString().equalsIgnoreCase("Local Emergency Contact") || RelationalSpinner.getText().toString().equalsIgnoreCase("Emergency Contact")) {
-                                            System.out.println("It eneters into country codeffffff");
-                                            String status = "";
-                                            String request = "";
-                                            int kinArrayPassPos = -1;
-                                            if (!AppController.kinArrayShow.get(position).isNewData()) {
-                                                if (AppController.isKinEdited) {
-                                                    status = "1";
-                                                    request = "0";
+                                    }
+                                    else
+                                    {
+                                        if (contactNumber.getText().toString().trim().length()<5)
+                                        {
+                                            ShowCondition(" Please enter valid phone number.");
+                                        }
+                                        else
+                                        {
+                                            if (RelationalSpinner.getText().toString().equalsIgnoreCase("Local Emergency Contact") || RelationalSpinner.getText().toString().equalsIgnoreCase("Emergency Contact")) {
+                                                System.out.println("It eneters into country codeffffff");
+                                                String status = "";
+                                                String request = "";
+                                                int kinArrayPassPos = -1;
+                                                if (!AppController.kinArrayShow.get(position).isNewData()) {
+                                                    if (AppController.isKinEdited) {
+                                                        status = "1";
+                                                        request = "0";
+                                                    } else {
+                                                        status = "5";
+                                                        request = "0";
+                                                    }
                                                 } else {
-                                                    status = "5";
-                                                    request = "0";
+                                                    if (AppController.isKinEdited) {
+                                                        status = "0";
+                                                        request = "1";
+                                                    } else {
+                                                        status = "0";
+                                                        request = "1";
+                                                    }
                                                 }
-                                            } else {
-                                                if (AppController.isKinEdited) {
-                                                    status = "0";
-                                                    request = "1";
+                                                String kinID = AppController.kinArrayShow.get(position).getKin_id();
+                                                String IDs = AppController.kinArrayShow.get(position).getId();
+                                                String studentID = AppController.kinArrayShow.get(position).getStudent_id();
+                                                String createdAT = AppController.kinArrayShow.get(position).getCreated_at();
+                                                String updatedAT = AppController.kinArrayShow.get(position).getUpdated_at();
+                                                String userID = AppController.kinArrayShow.get(position).getUser_id();
+                                                String corresspondence = AppController.kinArrayShow.get(position).getCorrespondencemailmerge();
+                                                String justcontact = AppController.kinArrayShow.get(position).getJustcontact();
+                                                String contacts = AppController.kinArrayShow.get(position).getReportmailmerge();
+                                                KinModel model = new KinModel();
+                                                model.setStatus(status);
+                                                model.setRequest(request);
+                                                model.setName(firstName.getText().toString().trim());
+                                                model.setLast_name(lastName.getText().toString().trim());
+                                                model.setEmail(emailKin.getText().toString().trim());
+                                                model.setTitle(ContactSpinner.getText().toString());
+                                                model.setKin_id(kinID);
+                                                model.setRelationship(RelationalSpinner.getText().toString());
+                                                model.setCode(countryCode.getTextView_selectedCountry().getText().toString());
+                                                model.setUser_mobile(contactNumber.getText().toString());
+                                                model.setStudent_id(studentID);
+                                                model.setCreated_at(createdAT);
+                                                model.setUpdated_at(updatedAT);
+                                                model.setPhone(contactNumber.getText().toString());
+                                                model.setId(IDs);
+                                                model.setUser_id(userID);
+                                                model.setFullFilled(true);
+                                                model.setCorrespondencemailmerge(corresspondence);
+                                                model.setJustcontact(justcontact);
+                                                model.setReportmailmerge(contacts);
+                                                if (AppController.kinArrayShow.get(position).isNewData()) {
+                                                    model.setNewData(true);
                                                 } else {
-                                                    status = "0";
-                                                    request = "1";
+                                                    model.setNewData(false);
                                                 }
-                                            }
-                                            String kinID = AppController.kinArrayShow.get(position).getKin_id();
-                                            String IDs = AppController.kinArrayShow.get(position).getId();
-                                            String studentID = AppController.kinArrayShow.get(position).getStudent_id();
-                                            String createdAT = AppController.kinArrayShow.get(position).getCreated_at();
-                                            String updatedAT = AppController.kinArrayShow.get(position).getUpdated_at();
-                                            String userID = AppController.kinArrayShow.get(position).getUser_id();
-                                            String corresspondence = AppController.kinArrayShow.get(position).getCorrespondencemailmerge();
-                                            String justcontact = AppController.kinArrayShow.get(position).getJustcontact();
-                                            String contacts = AppController.kinArrayShow.get(position).getReportmailmerge();
-                                            KinModel model = new KinModel();
-                                            model.setStatus(status);
-                                            model.setRequest(request);
-                                            model.setName(firstName.getText().toString().trim());
-                                            model.setLast_name(lastName.getText().toString().trim());
-                                            model.setEmail(emailKin.getText().toString().trim());
-                                            model.setTitle(ContactSpinner.getText().toString());
-                                            model.setKin_id(kinID);
-                                            model.setRelationship(RelationalSpinner.getText().toString());
-                                            model.setCode(countryCode.getTextView_selectedCountry().getText().toString());
-                                            model.setUser_mobile(contactNumber.getText().toString());
-                                            model.setStudent_id(studentID);
-                                            model.setCreated_at(createdAT);
-                                            model.setUpdated_at(updatedAT);
-                                            model.setPhone(contactNumber.getText().toString());
-                                            model.setId(IDs);
-                                            model.setUser_id(userID);
-                                            model.setFullFilled(true);
-                                            model.setCorrespondencemailmerge(corresspondence);
-                                            model.setJustcontact(justcontact);
-                                            model.setReportmailmerge(contacts);
-                                            if (AppController.kinArrayShow.get(position).isNewData()) {
-                                                model.setNewData(true);
+                                                model.setConfirmed(true);
+                                                for (int j = 0; j < AppController.kinArrayPass.size(); j++) {
+                                                    String dataId = AppController.kinArrayPass.get(j).getId();
+                                                    if (IDs.equalsIgnoreCase(dataId)) {
+                                                        kinArrayPassPos = j;
+                                                    }
+                                                }
+                                                AppController.kinArrayShow.remove(position);
+                                                AppController.kinArrayPass.remove(kinArrayPassPos);
+                                                AppController.kinArrayShow.add(position, model);
+                                                AppController.kinArrayPass.add(kinArrayPassPos, model);
+                                                PreferenceManager.getKinDetailsArrayList(mContext).clear();
+                                                PreferenceManager.getKinDetailsArrayListShow(mContext).clear();
+                                                PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow, mContext);
+                                                PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass, mContext);
+                                                dialog.dismiss();
+                                                familyKinRecyclerAdapter.notifyDataSetChanged();
+                                                System.out.println("It eneters into country codeffffffdddd" + countryCode.getTextView_selectedCountry().getText().toString());
                                             } else {
-                                                model.setNewData(false);
-                                            }
-                                            model.setConfirmed(true);
-                                            for (int j = 0; j < AppController.kinArrayPass.size(); j++) {
-                                                String dataId = AppController.kinArrayPass.get(j).getId();
-                                                if (IDs.equalsIgnoreCase(dataId)) {
-                                                    kinArrayPassPos = j;
+                                                System.out.println("It eneters into country codevvvvvvv");
+                                                String status = "";
+                                                String request = "";
+                                                int kinArrayPassPos = -1;
+                                                if (!AppController.kinArrayShow.get(position).isNewData()) {
+                                                    if (AppController.isKinEdited) {
+                                                        status = "1";
+                                                        request = "0";
+                                                    } else {
+                                                        status = "5";
+                                                        request = "0";
+                                                    }
+                                                } else {
+                                                    if (AppController.isKinEdited) {
+                                                        status = "0";
+                                                        request = "1";
+                                                    } else {
+                                                        status = "0";
+                                                        request = "1";
+                                                    }
                                                 }
+                                                String kinID = AppController.kinArrayShow.get(position).getKin_id();
+                                                String IDs = AppController.kinArrayShow.get(position).getId();
+                                                String studentID = AppController.kinArrayShow.get(position).getStudent_id();
+                                                String createdAT = AppController.kinArrayShow.get(position).getCreated_at();
+                                                String updatedAT = AppController.kinArrayShow.get(position).getUpdated_at();
+                                                String userID = AppController.kinArrayShow.get(position).getUser_id();
+                                                String corresspondence = AppController.kinArrayShow.get(position).getCorrespondencemailmerge();
+                                                String justcontact = AppController.kinArrayShow.get(position).getJustcontact();
+                                                String contacts = AppController.kinArrayShow.get(position).getReportmailmerge();
+                                                KinModel model = new KinModel();
+                                                model.setStatus(status);
+                                                model.setRequest(request);
+                                                model.setName(firstName.getText().toString().trim());
+                                                model.setLast_name(lastName.getText().toString().trim());
+                                                model.setEmail(emailKin.getText().toString().trim());
+                                                model.setTitle(ContactSpinner.getText().toString());
+                                                model.setKin_id(kinID);
+                                                model.setRelationship(RelationalSpinner.getText().toString());
+                                                model.setCode(countryCode.getTextView_selectedCountry().getText().toString());
+                                                model.setUser_mobile(contactNumber.getText().toString());
+                                                model.setStudent_id(studentID);
+                                                model.setCreated_at(createdAT);
+                                                model.setUpdated_at(updatedAT);
+                                                model.setPhone(contactNumber.getText().toString());
+                                                model.setId(IDs);
+                                                model.setUser_id(userID);
+                                                // String corresspondence=AppController.kinArrayShow.get(position).getCorrespondencemailmerge();
+                                                //String contacts=AppController.kinArrayShow.get(position).getReportmailmerge();
+                                                model.setCorrespondencemailmerge(corresspondence);
+                                                model.setJustcontact(justcontact);
+                                                model.setReportmailmerge(contacts);
+                                                model.setFullFilled(true);
+                                                if (AppController.kinArrayShow.get(position).isNewData()) {
+                                                    model.setNewData(true);
+                                                } else {
+                                                    model.setNewData(false);
+                                                }
+                                                model.setConfirmed(true);
+                                                for (int j = 0; j < AppController.kinArrayPass.size(); j++) {
+                                                    String dataId = AppController.kinArrayPass.get(j).getId();
+                                                    if (IDs.equalsIgnoreCase(dataId)) {
+                                                        kinArrayPassPos = j;
+                                                    }
+                                                }
+                                                AppController.kinArrayShow.remove(position);
+                                                AppController.kinArrayPass.remove(kinArrayPassPos);
+                                                AppController.kinArrayShow.add(position, model);
+                                                AppController.kinArrayPass.add(kinArrayPassPos, model);
+                                                PreferenceManager.getKinDetailsArrayList(mContext).clear();
+                                                PreferenceManager.getKinDetailsArrayListShow(mContext).clear();
+                                                PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow, mContext);
+                                                PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass, mContext);
+                                                dialog.dismiss();
+                                                familyKinRecyclerAdapter.notifyDataSetChanged();
                                             }
-                                            AppController.kinArrayShow.remove(position);
-                                            AppController.kinArrayPass.remove(kinArrayPassPos);
-                                            AppController.kinArrayShow.add(position, model);
-                                            AppController.kinArrayPass.add(kinArrayPassPos, model);
-                                            PreferenceManager.getKinDetailsArrayList(mContext).clear();
-                                            PreferenceManager.getKinDetailsArrayListShow(mContext).clear();
-                                            PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow, mContext);
-                                            PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass, mContext);
-                                            dialog.dismiss();
-                                            familyKinRecyclerAdapter.notifyDataSetChanged();
-                                            System.out.println("It eneters into country codeffffffdddd" + countryCode.getTextView_selectedCountry().getText().toString());
-//                                                if (!countryCode.getTextView_selectedCountry().getText().toString().equalsIgnoreCase("+60"))
-//                                                {
-//                                                    System.out.println("It eneters into country codeffffffdddd");
-//                                                    ShowCondition("The “Emergency Contact” must have a Malaysian mobile number");
-//
-//                                                }
-//                                                else
-//                                                {
-//                                                    System.out.println("It eneters into country codeffffff");
-//                                                    String status="";
-//                                                    String request="";
-//                                                    int kinArrayPassPos=-1;
-//                                                    if (!AppController.kinArrayShow.get(position).isNewData())
-//                                                    {
-//                                                        if (AppController.isKinEdited)
-//                                                        {
-//                                                            status="1";
-//                                                            request="0";
-//                                                        }
-//                                                        else
-//                                                        {
-//                                                            status="5";
-//                                                            request="0";
-//                                                        }
-//                                                    }
-//                                                    else
-//                                                    {
-//                                                        if (AppController.isKinEdited)
-//                                                        {
-//                                                            status="0";
-//                                                            request="1";
-//                                                        }
-//                                                        else
-//                                                        {
-//                                                            status="0";
-//                                                            request="1";
-//                                                        }
-//                                                    }
-//                                                    String kinID=AppController.kinArrayShow.get(position).getKin_id();
-//                                                    String IDs=AppController.kinArrayShow.get(position).getId();
-//                                                    String studentID=AppController.kinArrayShow.get(position).getStudent_id();
-//                                                    String createdAT=AppController.kinArrayShow.get(position).getCreated_at();
-//                                                    String updatedAT=AppController.kinArrayShow.get(position).getUpdated_at();
-//                                                    String userID=AppController.kinArrayShow.get(position).getUser_id();
-//                                                    String corresspondence=AppController.kinArrayShow.get(position).getCorrespondencemailmerge();
-//                                                    String justcontact=AppController.kinArrayShow.get(position).getJustcontact();
-//                                                    String contacts=AppController.kinArrayShow.get(position).getReportmailmerge();
-//                                                    KinModel model = new KinModel();
-//                                                    model.setStatus(status);
-//                                                    model.setRequest(request);
-//                                                    model.setName(firstName.getText().toString().trim());
-//                                                    model.setLast_name(lastName.getText().toString().trim());
-//                                                    model.setEmail(emailKin.getText().toString().trim());
-//                                                    model.setTitle(ContactSpinner.getText().toString());
-//                                                    model.setKin_id(kinID);
-//                                                    model.setRelationship(RelationalSpinner.getText().toString());
-//                                                    model.setCode(countryCode.getTextView_selectedCountry().getText().toString());
-//                                                    model.setUser_mobile(contactNumber.getText().toString());
-//                                                    model.setStudent_id(studentID);
-//                                                    model.setCreated_at(createdAT);
-//                                                    model.setUpdated_at(updatedAT);
-//                                                    model.setPhone(contactNumber.getText().toString());
-//                                                    model.setId(IDs);
-//                                                    model.setUser_id(userID);
-//                                                    model.setFullFilled(true);
-//                                                    model.setCorrespondencemailmerge(corresspondence);
-//                                                    model.setJustcontact(justcontact);
-//                                                    model.setReportmailmerge(contacts);
-//                                                    if (AppController.kinArrayShow.get(position).isNewData())
-//                                                    {
-//                                                        model.setNewData(true);
-//                                                    }
-//                                                    else
-//                                                    {
-//                                                        model.setNewData(false);
-//                                                    }
-//                                                    model.setConfirmed(true);
-//                                                    for (int j=0;j<AppController.kinArrayPass.size();j++)
-//                                                    {
-//                                                        String dataId=AppController.kinArrayPass.get(j).getId();
-//                                                        if (IDs.equalsIgnoreCase(dataId))
-//                                                        {
-//                                                            kinArrayPassPos=j;
-//                                                        }
-//                                                    }
-//                                                    AppController.kinArrayShow.remove(position);
-//                                                    AppController.kinArrayPass.remove(kinArrayPassPos);
-//                                                    AppController.kinArrayShow.add(position,model);
-//                                                    AppController.kinArrayPass.add(kinArrayPassPos,model);
-//                                                    PreferenceManager.getKinDetailsArrayList(mContext).clear();
-//                                                    PreferenceManager.getKinDetailsArrayListShow(mContext).clear();
-//                                                    PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow,mContext);
-//                                                    PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass,mContext);
-//                                                    dialog.dismiss();
-//                                                    familyKinRecyclerAdapter.notifyDataSetChanged();
-//                                                }
 
-                                        } else {
-                                            System.out.println("It eneters into country codevvvvvvv");
-                                            String status = "";
-                                            String request = "";
-                                            int kinArrayPassPos = -1;
-                                            if (!AppController.kinArrayShow.get(position).isNewData()) {
-                                                if (AppController.isKinEdited) {
-                                                    status = "1";
-                                                    request = "0";
-                                                } else {
-                                                    status = "5";
-                                                    request = "0";
-                                                }
-                                            } else {
-                                                if (AppController.isKinEdited) {
-                                                    status = "0";
-                                                    request = "1";
-                                                } else {
-                                                    status = "0";
-                                                    request = "1";
-                                                }
-                                            }
-                                            String kinID = AppController.kinArrayShow.get(position).getKin_id();
-                                            String IDs = AppController.kinArrayShow.get(position).getId();
-                                            String studentID = AppController.kinArrayShow.get(position).getStudent_id();
-                                            String createdAT = AppController.kinArrayShow.get(position).getCreated_at();
-                                            String updatedAT = AppController.kinArrayShow.get(position).getUpdated_at();
-                                            String userID = AppController.kinArrayShow.get(position).getUser_id();
-                                            String corresspondence = AppController.kinArrayShow.get(position).getCorrespondencemailmerge();
-                                            String justcontact = AppController.kinArrayShow.get(position).getJustcontact();
-                                            String contacts = AppController.kinArrayShow.get(position).getReportmailmerge();
-                                            KinModel model = new KinModel();
-                                            model.setStatus(status);
-                                            model.setRequest(request);
-                                            model.setName(firstName.getText().toString().trim());
-                                            model.setLast_name(lastName.getText().toString().trim());
-                                            model.setEmail(emailKin.getText().toString().trim());
-                                            model.setTitle(ContactSpinner.getText().toString());
-                                            model.setKin_id(kinID);
-                                            model.setRelationship(RelationalSpinner.getText().toString());
-                                            model.setCode(countryCode.getTextView_selectedCountry().getText().toString());
-                                            model.setUser_mobile(contactNumber.getText().toString());
-                                            model.setStudent_id(studentID);
-                                            model.setCreated_at(createdAT);
-                                            model.setUpdated_at(updatedAT);
-                                            model.setPhone(contactNumber.getText().toString());
-                                            model.setId(IDs);
-                                            model.setUser_id(userID);
-                                            // String corresspondence=AppController.kinArrayShow.get(position).getCorrespondencemailmerge();
-                                            //String contacts=AppController.kinArrayShow.get(position).getReportmailmerge();
-                                            model.setCorrespondencemailmerge(corresspondence);
-                                            model.setJustcontact(justcontact);
-                                            model.setReportmailmerge(contacts);
-                                            model.setFullFilled(true);
-                                            if (AppController.kinArrayShow.get(position).isNewData()) {
-                                                model.setNewData(true);
-                                            } else {
-                                                model.setNewData(false);
-                                            }
-                                            model.setConfirmed(true);
-                                            for (int j = 0; j < AppController.kinArrayPass.size(); j++) {
-                                                String dataId = AppController.kinArrayPass.get(j).getId();
-                                                if (IDs.equalsIgnoreCase(dataId)) {
-                                                    kinArrayPassPos = j;
-                                                }
-                                            }
-                                            AppController.kinArrayShow.remove(position);
-                                            AppController.kinArrayPass.remove(kinArrayPassPos);
-                                            AppController.kinArrayShow.add(position, model);
-                                            AppController.kinArrayPass.add(kinArrayPassPos, model);
-                                            PreferenceManager.getKinDetailsArrayList(mContext).clear();
-                                            PreferenceManager.getKinDetailsArrayListShow(mContext).clear();
-                                            PreferenceManager.saveKinDetailsArrayListShow(AppController.kinArrayShow, mContext);
-                                            PreferenceManager.saveKinDetailsArrayList(AppController.kinArrayPass, mContext);
-                                            dialog.dismiss();
-                                            familyKinRecyclerAdapter.notifyDataSetChanged();
                                         }
 
                                     }
-
                                     //   }
 
                                 }

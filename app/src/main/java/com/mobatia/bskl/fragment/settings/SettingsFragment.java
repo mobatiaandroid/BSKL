@@ -178,6 +178,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemClic
 
             }
         });
+
         if(!PreferenceManager.getUserId(mContext).equalsIgnoreCase(""))
         {
             if (PreferenceManager.getIsVisible(mContext).equalsIgnoreCase("0"))

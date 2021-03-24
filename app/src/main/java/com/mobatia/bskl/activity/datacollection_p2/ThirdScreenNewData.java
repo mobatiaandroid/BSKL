@@ -375,7 +375,7 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
             passportExpiryTxt.setText(AppUtils.dateConversionMMM(passportExpiry));
         }
 
-        if (visaValue.equalsIgnoreCase("1"))
+        if (visaValue.equalsIgnoreCase("0"))
         {
             isStudentMalasiyanChecked=false;
             visaPermitNumberTxt.setHint(R.string.AST_VISA_PERMIT_TEXT_WITH_RED);
@@ -441,6 +441,10 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
             passportExpiryTxt.setBackgroundResource(R.drawable.rect_background_grey_checked);
             UploadPasspost.setAlpha(0.5f);
             attachPassportTxt.setAlpha(0.5f);
+            passportNationalityTxt.setAlpha(0.5f);
+            passportExpiryTxt.setAlpha(0.5f);
+            passportNumberTxt.setAlpha(0.5f);
+            paasportNationalityLinear.setAlpha(0.5f);
             passportNumberTxt.setClickable(false);
             passportNumberTxt.setEnabled(false);
             passportExpiryTxt.setClickable(false);
@@ -461,6 +465,10 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
             passportExpiryTxt.setBackgroundResource(R.drawable.rect_background_grey);
             UploadPasspost.setAlpha(1.0f);
             attachPassportTxt.setAlpha(1.0f);
+            passportNationalityTxt.setAlpha(1.0f);
+            passportExpiryTxt.setAlpha(1.0f);
+            passportNumberTxt.setAlpha(1.0f);
+            paasportNationalityLinear.setAlpha(1.0f);
             passportNumberTxt.setClickable(true);
             passportNumberTxt.setEnabled(true);
             passportExpiryTxt.setClickable(true);
@@ -717,6 +725,10 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
                     passportExpiryTxt.setBackgroundResource(R.drawable.rect_background_grey);
                     UploadPasspost.setAlpha(1.0f);
                     attachPassportTxt.setAlpha(1.0f);
+                    passportNationalityTxt.setAlpha(1.0f);
+                    passportExpiryTxt.setAlpha(1.0f);
+                    passportNumberTxt.setAlpha(1.0f);
+                    paasportNationalityLinear.setAlpha(1.0f);
                     passportNumberTxt.setClickable(true);
                     passportNumberTxt.setEnabled(true);
                     passportExpiryTxt.setClickable(true);
@@ -830,6 +842,10 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
                     passportExpiryTxt.setBackgroundResource(R.drawable.rect_background_grey_checked);
                     UploadPasspost.setAlpha(0.5f);
                     attachPassportTxt.setAlpha(0.5f);
+                    passportNationalityTxt.setAlpha(0.5f);
+                    passportExpiryTxt.setAlpha(0.5f);
+                    passportNumberTxt.setAlpha(0.5f);
+                    paasportNationalityLinear.setAlpha(0.5f);
                     passportNumberTxt.setClickable(false);
                     passportNumberTxt.setEnabled(false);
                     passportExpiryTxt.setClickable(false);
@@ -958,7 +974,7 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
                     uploadVisa.setEnabled(true);
                     uploadVisa.setClickable(true);
                     IsNational = "YES";
-                    visaValue="1";
+                    visaValue="0";
                     AppController.isPassportEdited=true;
                     String dataId=AppController.mPassportDetailArrayList.get(dataPosition).getId();
                     String dataStatus="";
@@ -1043,7 +1059,7 @@ public class ThirdScreenNewData extends Fragment implements NaisTabConstants, Ca
                     visaPermitNumberTxt.setEnabled(false);
                     visaPermitExpiryTxt.setEnabled(false);
                     IsNational = "NO";
-                    visaValue="0";
+                    visaValue="1";
                     AppController.isPassportEdited=true;
                     String dataId=AppController.mPassportDetailArrayList.get(dataPosition).getId();
                     String dataStatus="";

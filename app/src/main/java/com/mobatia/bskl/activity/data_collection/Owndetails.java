@@ -267,6 +267,7 @@ public class Owndetails extends Fragment {
                     editor.putString("own_status", "1");
                     editor.apply();
 
+
                 }
             });
             contactNoOwnDetails.addTextChangedListener(new TextWatcher() {

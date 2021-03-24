@@ -1194,6 +1194,7 @@ public class HomeScreenFragment extends Fragment implements
                             PreferenceManager.setDataCollectionTriggerType(mContext,respObj.optString("trigger_type"));
                             String prefAlreadyTriggered=PreferenceManager.getAlreadyTriggered(mContext);
                              alreadyTriggered=respObj.optString("already_triggered");
+
                              if (prefAlreadyTriggered.equalsIgnoreCase(alreadyTriggered))
                              {
                                  PreferenceManager.setAlreadyTriggered(mContext,respObj.optString("already_triggered"));
@@ -1212,7 +1213,58 @@ public class HomeScreenFragment extends Fragment implements
 //                            String data = prefs.getString("data_collection_flag"," ");
 //                            if(data.equalsIgnoreCase("0"))
 //                            {
-                                if (PreferenceManager.getDataCollection(mContext).equalsIgnoreCase("1")) {
+
+                            if (PreferenceManager.getPreviousTriggerType(mContext).equalsIgnoreCase(""))
+                            {
+                                PreferenceManager.setPreviousTriggerType(mContext,respObj.optString("trigger_type"));
+                            }
+                            else
+                            {
+                                if (PreferenceManager.getPreviousTriggerType(mContext).equalsIgnoreCase(PreferenceManager.getDataCollectionTriggerType(mContext)))
+                                {
+                                    if (PreferenceManager.getAlreadyTriggered(mContext).equalsIgnoreCase("1"))
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        AppController.kinArrayShow.clear();
+                                        AppController.kinArrayPass.clear();
+                                        ArrayList<OwnContactModel>mOwnArrayList=PreferenceManager.getOwnDetailArrayList("OwnContact",mContext);
+                                        mOwnArrayList.clear();
+                                        PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).clear();
+                                        PreferenceManager.saveOwnDetailArrayList(mOwnArrayList,"OwnContact",mContext);
+                                        PreferenceManager.saveKinDetailsArrayListShow( AppController.kinArrayShow,mContext);
+                                        PreferenceManager.saveKinDetailsArrayList( AppController.kinArrayPass,mContext);
+                                        ArrayList<InsuranceDetailModel>mInsurance=PreferenceManager.getInsuranceDetailArrayList(mContext);
+                                        mInsurance.clear();
+                                        PreferenceManager.saveInsuranceDetailArrayList(mInsurance,mContext);
+                                        ArrayList<PassportDetailModel>mPassport=PreferenceManager.getPassportDetailArrayList(mContext);
+                                        mPassport.clear();
+                                        PreferenceManager.savePassportDetailArrayList(mPassport,mContext);
+                                    }
+                                }
+                                else
+                                {
+                                    AppController.kinArrayShow.clear();
+                                    AppController.kinArrayPass.clear();
+                                    ArrayList<OwnContactModel>mOwnArrayList=PreferenceManager.getOwnDetailArrayList("OwnContact",mContext);
+                                    mOwnArrayList.clear();
+                                    PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).clear();
+                                    PreferenceManager.saveOwnDetailArrayList(mOwnArrayList,"OwnContact",mContext);
+                                    PreferenceManager.saveKinDetailsArrayListShow( AppController.kinArrayShow,mContext);
+                                    PreferenceManager.saveKinDetailsArrayList( AppController.kinArrayPass,mContext);
+                                    ArrayList<InsuranceDetailModel>mInsurance=PreferenceManager.getInsuranceDetailArrayList(mContext);
+                                    mInsurance.clear();
+                                    PreferenceManager.saveInsuranceDetailArrayList(mInsurance,mContext);
+                                    ArrayList<PassportDetailModel>mPassport=PreferenceManager.getPassportDetailArrayList(mContext);
+                                    mPassport.clear();
+                                    PreferenceManager.savePassportDetailArrayList(mPassport,mContext);
+                                    PreferenceManager.setPreviousTriggerType(mContext,respObj.optString("trigger_type"));
+                                }
+                            }
+
+                            if (PreferenceManager.getDataCollection(mContext).equalsIgnoreCase("1")) {
                                     System.out.println("SHOW: 1");
                                     new Handler().postDelayed(new Runnable() {
                                         @Override

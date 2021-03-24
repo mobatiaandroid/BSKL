@@ -948,7 +948,7 @@ public class DataCollectionActivity extends FragmentActivity implements ViewPage
             Log.e("finalarray: ", JsonData);
             //========================
 
-            VolleyWrapper volleyWrapper = new VolleyWrapper(URLConstants.URL_SUBMIT_DATA_COLLECTION);
+            VolleyWrapper volleyWrapper = new VolleyWrapper(URLConstants.URL_SUBMIT_DATA_COLLECTION_NEW);
 
             String[] name = {"access_token", "data", "user_ids", "overall_status"};
             String[] value = {PreferenceManager.getAccessToken(DataCollectionActivity.this), String.valueOf(InnerData), PreferenceManager.getUserId(DataCollectionActivity.this), OverallValue};

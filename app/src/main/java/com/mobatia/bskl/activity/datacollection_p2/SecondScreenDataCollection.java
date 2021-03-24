@@ -952,94 +952,6 @@ public class SecondScreenDataCollection extends FragmentActivity implements View
 
 
     }
-//    public String emptyValueCheckInsurance()
-//    {
-//        int pos=AppController.confirmingPosition;
-//        String feild="";
-//        if (AppController.mInsuranceDetailArrayList.get(pos).getDeclaration().equalsIgnoreCase("0"))
-//        {
-//            System.out.println("check condition insurance 1");
-//            feild="Please Tick the Agreement.";
-//        }
-//        else
-//        {
-//            if (AppController.mInsuranceDetailArrayList.get(pos).getMedical_insurence_policy_no().equalsIgnoreCase(""))
-//            {
-//                System.out.println("check condition insurance 1");
-//                feild="Medical Insurance Policy Number";
-//            }
-//            else
-//            {
-//                System.out.println("check condition insurance 2");
-//
-//                if (AppController.mInsuranceDetailArrayList.get(pos).getMedical_insurence_member_number().equalsIgnoreCase(""))
-//                {
-//                    System.out.println("check condition insurance 3");
-//                    feild="Medical Insurance Member Number";
-//                }
-//                else
-//                {
-//                    System.out.println("check condition insurance 4");
-//                    if (AppController.mInsuranceDetailArrayList.get(pos).getMedical_insurence_provider().equalsIgnoreCase(""))
-//                    {
-//                        System.out.println("check condition insurance 5");
-//                        feild="Medical Insurance Provider";
-//                    }
-//                    else
-//                    {
-//                        System.out.println("check condition insurance 6");
-//                        if (AppController.mInsuranceDetailArrayList.get(pos).getMedical_insurence_expiry_date().equalsIgnoreCase(""))
-//                        {
-//                            System.out.println("check condition insurance 7");
-//                            feild="Medical Insurance Expiry Date";
-//                        }
-//                        else
-//                        {
-//                            System.out.println("Empty value check insurance type"+AppController.mInsuranceDetailArrayList.get(pos).getNo_personal_accident_insurance());
-//
-//                            System.out.println("check condition insurance 8");
-//                            if(AppController.mInsuranceDetailArrayList.get(pos).getNo_personal_accident_insurance().equalsIgnoreCase("1"))
-//                            {
-//                                System.out.println("check condition insurance 9");
-//                                feild="";
-//                            }
-//                            else
-//                            {
-//                                System.out.println("check condition insurance 10");
-//                                if (AppController.mInsuranceDetailArrayList.get(pos).getPersonal_accident_insurence_policy_no().equalsIgnoreCase(""))
-//                                {
-//                                    System.out.println("check condition insurance 11");
-//                                    feild="Personal Insurance Policy Number";
-//                                }
-//                                else
-//                                {
-//
-//                                    if (AppController.mInsuranceDetailArrayList.get(pos).getPersonal_accident_insurence_provider().equalsIgnoreCase(""))
-//                                    {
-//                                        feild="Personal Insurance Provider";
-//                                    }
-//                                    else
-//                                    {
-//                                        if (AppController.mInsuranceDetailArrayList.get(pos).getPersonal_acident_insurence_expiry_date().equalsIgnoreCase(""))
-//                                        {
-//                                            feild="Personal Insurance Expiry Date";
-//                                        }
-//                                        else
-//                                        {
-//                                            feild="";
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//        }
-//
-//        return feild;
-//    }
 
     public String emptyValueCheckInsurance()
     {
@@ -1051,9 +963,11 @@ public String emptyValueCheckPassport()
 {
     int pos=AppController.confirmingPosition;
     String feild="";
+    System.out.println("Insrance empty works passport 101010dd");
         if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getNot_have_a_valid_passport().equalsIgnoreCase("1"))
         {
-            if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa().equalsIgnoreCase("1"))
+            System.out.println("Insrance empty works passport 101010ff");
+            if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa().equalsIgnoreCase("0"))
             {
                 System.out.println("Insrance empty works passport 101010");
                 if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_permit_no().equalsIgnoreCase(""))
@@ -1090,6 +1004,8 @@ public String emptyValueCheckPassport()
         }
         else
         {
+            System.out.println("Insrance empty works passport 101010 hdd");
+
             if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getNationality().equalsIgnoreCase(""))
             {
                 feild="Nationality";
@@ -1120,7 +1036,7 @@ public String emptyValueCheckPassport()
                                 {
                                     //visa data
 
-                                    if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa().equalsIgnoreCase("1"))
+                                    if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa().equalsIgnoreCase("0"))
                                     {
                                         System.out.println("Insrance empty works passport 101010");
                                         if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_permit_no().equalsIgnoreCase(""))
@@ -1164,7 +1080,7 @@ public String emptyValueCheckPassport()
                         else
                         {
                             //check visa
-                            if (!PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa().equalsIgnoreCase("0"))
+                            if (!PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa().equalsIgnoreCase("1"))
                             {
                                 if (PreferenceManager.getPassportDetailArrayList(mContext).get(pos).getVisa_permit_no().equalsIgnoreCase(""))
                                 {

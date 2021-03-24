@@ -2651,6 +2651,20 @@ public class PreferenceManager implements NaisTabConstants,KeyConstants {
         timetableAvailable = prefs.getString("OTPSignature", "0");
         return timetableAvailable;
     }
+    /*********** DataCollectiom trigger type**********/
+    public static void setPreviousTriggerType(Context context, String result) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREF_NAS,
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("previous_trigger_type", result);
+        editor.commit();
+    }
+
+    public static String getPreviousTriggerType(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREF_NAS,
+                Context.MODE_PRIVATE);
+        return prefs.getString("previous_trigger_type", "");
+    }
 
 }
 

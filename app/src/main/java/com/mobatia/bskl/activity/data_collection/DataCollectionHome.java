@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -33,6 +34,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mobatia.bskl.BuildConfig;
 import com.mobatia.bskl.R;
 import com.mobatia.bskl.activity.datacollection_p2.DataCollectionActivity;
 import com.mobatia.bskl.activity.datacollection_p2.FirstScreen;
@@ -81,33 +83,36 @@ import java.util.prefs.PreferenceChangeEvent;
 import static com.mobatia.bskl.constants.JSONConstants.JTAG_RESPONSE;
 import static com.mobatia.bskl.constants.JSONConstants.JTAG_RESPONSECODE;
 import static com.mobatia.bskl.constants.JSONConstants.JTAG_STATUSCODE;
+import static com.mobatia.bskl.constants.URLConstants.URL_SUBMIT_DATA_COLLECTION;
 import static com.mobatia.bskl.constants.URLConstants.URL_SUBMIT_DATA_COLLECTION_NEW;
 
 
 public class DataCollectionHome extends FragmentActivity implements ViewPager.OnPageChangeListener, RadioGroup.OnCheckedChangeListener {
 
-    /**
-     * fields
-     */
     private static final int NUMBER_OF_PAGES = 3;
-    private RadioGroup radioGroup;
-    public ViewPager pager;
-    private ImageView nextBtn, backBtn;
-    private TextView submitBtn;
-    private String OverallValue;
-    Context mContext;
-    String closeMsgKin;
-    String closeMsgLocal;
     JSONArray own_details = null;
     JSONArray kin_details = null;
     JSONArray emergency_details = null;
-    LinearLayout bottomLinear;
+
+    private RadioGroup radioGroup;
     RadioButton radioButton1,radioButton2,radioButton3;
-    ArrayList<InsuranceDetailModel>mInsuranceDetailArrayList;
+
+    public ViewPager pager;
+
+    private ImageView nextBtn, backBtn;
+
+    private TextView submitBtn;
+
+    private String OverallValue;
+    String closeMsgKin;
+    String closeMsgLocal;
     String JSONSTRING = null;
-    /**
-     * {@inheritDoc}
-     */
+
+    Context mContext;
+
+    LinearLayout bottomLinear;
+
+    ArrayList<InsuranceDetailModel>mInsuranceDetailArrayList;
 
     int previousPage;
 
@@ -174,7 +179,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
         editor.putString("validationkin", "0");
         editor.putString("validationlocal", "0");
         editor.apply();
-        // System.out.println("access_token getting " + PreferenceManager.getAccessToken(mContext));
+
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,7 +219,6 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
             {
-                //    Log.e("onPageScrolled: ", String.valueOf(position));
 
                 if (PreferenceManager.getDataCollectionTriggerType(mContext).equalsIgnoreCase("1"))
                 {
@@ -228,7 +232,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                             {
                                 for (int i=0;i<AppController.kinArrayShow.size();i++)
                                 {
-                                     System.out.println();
+
                                     if (!AppController.kinArrayShow.get(i).isConfirmed())
                                     {
                                         isFound=true;
@@ -247,10 +251,6 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                                    {
                                        isLocalFound=true;
                                    }
-//                                   if (AppController.kinArrayShow.get(i).getRelationship().equalsIgnoreCase("Next of Kin"))
-//                                   {
-//                                       isKinFound=true;
-//                                   }
                                }
                                if (isLocalFound )
                                {
@@ -273,36 +273,8 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                                         showAlertOKButton(mContext, "Alert", "There should be at least one Emergency contact for the family", "Ok", R.drawable.exclamationicon, R.drawable.round);
 
                                     }
-
-//                                    if (!isLocalFound && !isKinFound)
-//                                    {
-//                                        showAlertOKButton(mContext, "Alert", "There should be at least one Next of Kin and one Local Emergency contact for the family", "Ok", R.drawable.exclamationicon, R.drawable.round);
-//
-//                                    }
-//                                    else
-//                                    {
-//
-//                                        else
-//                                        {
-//                                            if (!isKinFound)
-//                                            {
-//                                                showAlertOKButton(mContext, "Alert", "There should be at least one Next of Kin contact for the family", "Ok", R.drawable.exclamationicon, R.drawable.round);
-//
-//                                            }
-//                                        }
-//                                    }
-
                                 }
                             }
-                           // checkFamilConatctEmpty();
-//                            if (PreferenceManager.getIsValueEmpty(mContext).equals("1"))
-//                            {
-//                                ShowCondition(PreferenceManager.getWhoValueEmpty(mContext));
-//                            }
-//                           else if (PreferenceManager.getConfirmButton(mContext).equals("1"))
-//                            {
-//                                showAlertOKButton(mContext, "Alert", "Please Confirm all Contact", "Ok", R.drawable.exclamationicon, R.drawable.round);
-//                            }
                         }
                         else
                         {
@@ -316,7 +288,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                     {
                         if (checkOwnDetailEmpty().equalsIgnoreCase(""))
                         {
-                            // checkFamilConatctEmpty();
+
                             boolean isFound=false;
                             if (!isFound)
                             {
@@ -348,7 +320,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                     {
                         if (checkOwnDetailEmpty().equalsIgnoreCase(""))
                         {
-                            // checkFamilConatctEmpty();
+
                             boolean isFound=false;
                             if (!isFound)
                             {
@@ -373,10 +345,6 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                                     {
                                         isLocalFound=true;
                                     }
-//                                    if (AppController.kinArrayShow.get(i).getRelationship().equalsIgnoreCase("Next of Kin"))
-//                                    {
-//                                        isKinFound=true;
-//                                    }
                                 }
                                 if (isLocalFound)
                                 {
@@ -409,11 +377,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                                         }
                                         else
                                         {
-//                                            if (!isKinFound)
-//                                            {
-//                                                showAlertOKButton(mContext, "Alert", "TThere should be at least one Next of Kin contact for the family", "Ok", R.drawable.exclamationicon, R.drawable.round);
-//
-//                                            }
+
                                         }
                                     }
 
@@ -432,7 +396,6 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                //       Log.e("onPageState: ", String.valueOf(state));
             }
         });
 
@@ -443,8 +406,6 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
             public void onClick(View v) {
                 String triggerType="";
                 String overallStatus="";
-                System.out.println("PRESSED: TYPE: "+PreferenceManager.getDataCollectionTriggerType(mContext));
-
                 if (PreferenceManager.getDataCollectionTriggerType(mContext).equalsIgnoreCase("1"))
                 {
 
@@ -453,13 +414,13 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                     {
                         if (checkOwnDetailEmpty().equalsIgnoreCase(""))
                         {
-                            // checkFamilConatctEmpty();
+
                             boolean isFound=false;
                             if (!isFound)
                             {
                                 for (int i=0;i<AppController.kinArrayShow.size();i++)
                                 {
-                                    System.out.println();
+
                                     if (!AppController.kinArrayShow.get(i).isConfirmed())
                                     {
                                         isFound=true;
@@ -477,10 +438,6 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                                     {
                                         isLocalFound=true;
                                     }
-//                                    if (AppController.kinArrayShow.get(i).getRelationship().equalsIgnoreCase("Next of Kin"))
-//                                    {
-//                                        isKinFound=true;
-//                                    }
                                 }
                                 if (isLocalFound)
                                 {
@@ -512,11 +469,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                                         }
                                         else
                                         {
-//                                            if (!isKinFound)
-//                                            {
-//                                                showAlertOKButton(mContext, "Alert", "TThere should be at least one Next of Kin contact for the family", "Ok", R.drawable.exclamationicon, R.drawable.round);
-//
-//                                            }
+
                                         }
                                     }
 
@@ -538,7 +491,6 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                     }
                     else
                     {
-                        System.out.println("Current page item"+pager.getCurrentItem());
                         boolean isFound=false;
                         int foundPosition=-1;
 
@@ -563,7 +515,6 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                         }
                         else {
 
-                            System.out.println("Current page item"+pager.getCurrentItem());
                             triggerType="1";
                             overallStatus="2";
                               callSubmitAPI(triggerType,overallStatus);
@@ -577,13 +528,13 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                 {
                     if (checkOwnDetailEmpty().equalsIgnoreCase(""))
                     {
-                        // checkFamilConatctEmpty();
+
                         boolean isFound=false;
                         if (!isFound)
                         {
                             for (int i=0;i<AppController.kinArrayShow.size();i++)
                             {
-                                System.out.println();
+
                                 if (!AppController.kinArrayShow.get(i).isConfirmed())
                                 {
                                     isFound=true;
@@ -601,10 +552,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                                 {
                                     isLocalFound=true;
                                 }
-//                                if (AppController.kinArrayShow.get(i).getRelationship().equalsIgnoreCase("Next of Kin"))
-//                                {
-//                                    isKinFound=true;
-//                                }
+
                             }
                             if (isLocalFound )
                             {
@@ -636,11 +584,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                                     }
                                     else
                                     {
-//                                        if (!isKinFound)
-//                                        {
-//                                            showAlertOKButton(mContext, "Alert", "TThere should be at least one Next of Kin contact for the family", "Ok", R.drawable.exclamationicon, R.drawable.round);
-//
-//                                        }
+
                                     }
                                 }
 
@@ -728,11 +672,11 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                     {
 
                         if (checkOwnDetailEmpty().equalsIgnoreCase("")) {
-                            // checkFamilConatctEmpty();
+
                             boolean isFound = false;
                             if (!isFound) {
                                 for (int i = 0; i < AppController.kinArrayShow.size(); i++) {
-                                    System.out.println();
+
                                     if (!AppController.kinArrayShow.get(i).isConfirmed()) {
                                         isFound = true;
                                     }
@@ -749,10 +693,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                                     {
                                         isLocalFound=true;
                                     }
-//                                    if (AppController.kinArrayShow.get(i).getRelationship().equalsIgnoreCase("Next of Kin"))
-//                                    {
-//                                        isKinFound=true;
-//                                    }
+
                                 }
                                 if (isLocalFound )
                                 {
@@ -783,11 +724,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                                         }
                                         else
                                         {
-//                                            if (!isKinFound)
-//                                            {
-//                                                showAlertOKButton(mContext, "Alert", "TThere should be at least one Next of Kin contact for the family", "Ok", R.drawable.exclamationicon, R.drawable.round);
-//
-//                                            }
+
                                         }
                                     }
 
@@ -876,7 +813,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                     {
 
                         if (checkOwnDetailEmpty().equalsIgnoreCase("")) {
-                            // checkFamilConatctEmpty();
+
                             boolean isFound = false;
                             if (!isFound) {
                                 for (int i = 0; i < AppController.kinArrayShow.size(); i++) {
@@ -897,10 +834,6 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                                     {
                                         isLocalFound=true;
                                     }
-//                                    if (AppController.kinArrayShow.get(i).getRelationship().equalsIgnoreCase("Next of Kin"))
-//                                    {
-//                                        isKinFound=true;
-//                                    }
                                 }
                                 if (isLocalFound)
                                 {
@@ -930,11 +863,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                                         }
                                         else
                                         {
-//                                            if (!isKinFound)
-//                                            {
-//                                                showAlertOKButton(mContext, "Alert", "TThere should be at least one Next of Kin contact for the family", "Ok", R.drawable.exclamationicon, R.drawable.round);
-//
-//                                            }
+
                                         }
                                     }
 
@@ -990,19 +919,8 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
 
     private void callSubmitAPI(String trigger, String overall)
     {
-        System.out.println("CAlling: Submit");
-
         String OWNDATA = null;
-   //     String FIRSTDATA = null;
         String SECONDDATA = null;
-
-//        ArrayList<String> FirstArray = new ArrayList<>();
-//        FirstArray.add(String.valueOf(PreferenceManager.getFirstFragmentJSONArrayList(mContext)));
-//        for (int i = 0; i<FirstArray.size();i++){
-//            System.out.println("GEt: A "+FirstArray.get(i));
-//            FIRSTDATA = FirstArray.get(i);
-//        }
-
         ArrayList<KinModel> newArrayData=new ArrayList<>();
         for (int i=0;i<AppController.kinArrayPass.size();i++)
         {
@@ -1049,32 +967,23 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
         FirstArray=newArrayData;
         Gson newGson = new Gson();
         String FIRSTDATA = newGson.toJson(FirstArray);
-        System.out.println("GEt: A "+FIRSTDATA);
+
         ArrayList<InsuranceDetailModel> SecondArray = new ArrayList<>();
         SecondArray=(PreferenceManager.getInsuranceDetailArrayList(mContext));
         Gson IsuGson = new Gson();
         String InsuranceGson = IsuGson.toJson(SecondArray);
-        System.out.println("GEt: B "+InsuranceGson);
+
 
         ArrayList<PassportDetailModel> PassArray = new ArrayList<>();
         PassArray = (PreferenceManager.getPassportDetailArrayList(mContext));
         Gson PGson = new Gson();
         String PassGson = PGson.toJson(PassArray);
-        System.out.println("GEt: C "+PassGson);
-        Log.e("Pass",PassGson);
-        if (PreferenceManager.getPassportDetailArrayList(mContext).size()>0)
-        {
-            for (int i=0;i<PreferenceManager.getPassportDetailArrayList(mContext).size();i++)
-            {
-                System.out.println("status "+i+PreferenceManager.getPassportDetailArrayList(mContext).get(i).getStatus());
-                System.out.println("request "+i+PreferenceManager.getPassportDetailArrayList(mContext).get(i).getRequest());
-            }
-        }
+
 
         ArrayList<String> OwnData = new ArrayList<>();
         OwnData.add(String.valueOf(PreferenceManager.getOwnDetailsJSONArrayList(mContext)));
         for (int i = 0; i<OwnData.size();i++){
-            System.out.println("GEt: D "+OwnData.get(i));
+
             OWNDATA = OwnData.get(i);
         }
 
@@ -1085,33 +994,29 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
             if (overall.equalsIgnoreCase("2") && trigger.equalsIgnoreCase("1"))
             {
                 JSONSTRING = "{\"data\":{\"own_details\""+":"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+","+"\"health_details\""+":"+InsuranceGson+","+"\"passport_details\""+":"+PassGson+"} }";
-                System.out.println("JSON_DATA: "+JSONSTRING);
-                Log.e("JSON_DATA: ",JSONSTRING);
                 CallApi(JSONSTRING,trigger,overall);
             }
             else
             {
                 JSONSTRING= "{\"data\":{"+"\"own_details\""+":"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+"}}";
-                System.out.println("JSON_DATA: "+JSONSTRING);
                 CallApi(JSONSTRING,trigger,overall);
             }
         }
        else if (PreferenceManager.getDataCollectionTriggerType(mContext).equalsIgnoreCase("2"))
         {
             JSONSTRING= "{\"data\":{"+"\"own_details\""+":"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+"}}";
-            System.out.println("JSON_DATA: "+JSONSTRING);
+
             CallApi(JSONSTRING,trigger,overall);
         }
        else if (PreferenceManager.getDataCollectionTriggerType(mContext).equalsIgnoreCase("3"))
         {
             JSONSTRING = "{\"data\":{"+"\"health_details\""+":"+InsuranceGson+"}}";
-            System.out.println("JSON_DATA: "+JSONSTRING);
+
             CallApi(JSONSTRING,trigger,overall);
         }
        else if (PreferenceManager.getDataCollectionTriggerType(mContext).equalsIgnoreCase("4"))
         {   // -->  ONLY PASSPORT
             JSONSTRING = "{\"data\":{"+"\"passport_details\""+":"+PassGson+"}}";
-            System.out.println("JSON_DATA: "+JSONSTRING);
 
             CallApi(JSONSTRING,trigger,overall);
         }
@@ -1119,20 +1024,17 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
             if (overall.equalsIgnoreCase("2") && trigger.equalsIgnoreCase("1"))
             {
                 JSONSTRING = "{\"data\":{\"own_details\""+":"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+","+"\"health_details\""+":"+InsuranceGson+"}}";
-                System.out.println("JSON_DATA: "+JSONSTRING);
                 CallApi(JSONSTRING,trigger,overall);
             }
             else
             {
                 JSONSTRING= "{\"data\":{"+"\"own_details\""+":"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+"}}";
-                System.out.println("JSON_DATA: "+JSONSTRING);
                 CallApi(JSONSTRING,trigger,overall);
             }
         }
       else if (PreferenceManager.getDataCollectionTriggerType(mContext).equalsIgnoreCase("6")){   //  --> HEALTH + PASSPORT
 
             JSONSTRING = "{\"data\":{"+"\"health_details\""+":"+InsuranceGson+","+"\"passport_details\""+":"+PassGson+"}}";
-            System.out.println("JSON_DATA: "+JSONSTRING);
             CallApi(JSONSTRING,trigger,overall);
 
         }else if (PreferenceManager.getDataCollectionTriggerType(mContext).equalsIgnoreCase("7"))
@@ -1140,13 +1042,11 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
             if (overall.equalsIgnoreCase("2") && trigger.equalsIgnoreCase("1"))
             {
                 JSONSTRING = "{\"data\":{\"own_details\""+":"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+","+"\"passport_details\""+":"+PassGson+"}}";
-                System.out.println("JSON_DATA: "+JSONSTRING);
                 CallApi(JSONSTRING,trigger,overall);
             }
             else
             {
                 JSONSTRING= "{\"data\":{"+"\"own_details\""+":"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+"}}";
-                System.out.println("JSON_DATA: "+JSONSTRING);
                 CallApi(JSONSTRING,trigger,overall);
             }
 
@@ -1157,13 +1057,17 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
     }
 
     private void CallApi(String jsonstring,String triggerType, String overAll) {
-
+        String deviceBrand = android.os.Build.MANUFACTURER;
+        String deviceModel = Build.MODEL;
+        String osVersion = android.os.Build.VERSION.RELEASE;
+        String devicename=deviceBrand+" "+deviceModel+" "+osVersion;
+      //  int versionCode= BuildConfig.VERSION_NAME;
+        String version= BuildConfig.VERSION_NAME;
         VolleyWrapper volleyWrapper = new VolleyWrapper(URL_SUBMIT_DATA_COLLECTION_NEW);
-        String[] name = {"access_token","user_ids","overall_status","data","trigger_type"};
-        String[] value = {PreferenceManager.getAccessToken(mContext), PreferenceManager.getUserId(mContext),overAll,jsonstring,triggerType};
+        String[] name = {"access_token","user_ids","overall_status","data","trigger_type","device_type","device_name","app_version"};
+        String[] value = {PreferenceManager.getAccessToken(mContext), PreferenceManager.getUserId(mContext),overAll,jsonstring,triggerType,"2",devicename,version};
         System.out.println("JSON String"+jsonstring);
-
-        //String[] value={PreferenceManager.getAccessToken(mContext),mStaffList.get(pos).getStaffEmail(),JTAG_USERS_ID_VALUE,text_dialog.getText().toString(),text_content.getText().toString()};
+        System.out.println("OVERALL AND TRIGGER TYPE"+overAll+"TRIGGER "+triggerType);
         volleyWrapper.getResponsePOST(mContext, 11, name, value, new VolleyWrapper.ResponseListener() {
             @Override
             public void responseSuccess(String successResponse) {
@@ -1179,10 +1083,11 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                         {
                             if (triggerType.equalsIgnoreCase("1") && overAll.equalsIgnoreCase("2"))
                             {
-                                System.out.println("It enters inside");
+
+
+                                AppController.mStudentDataArrayList.clear();
                                 AppController.kinArrayShow.clear();
                                 AppController.kinArrayPass.clear();
-                                AppController.mStudentDataArrayList.clear();
                                 ArrayList<OwnContactModel>mOwnArrayList=PreferenceManager.getOwnDetailArrayList("OwnContact",mContext);
                                 mOwnArrayList.clear();
                                 PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).clear();
@@ -1203,10 +1108,29 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                             }
                             else
                             {
-                                PreferenceManager.setDataCollectionTriggerType(mContext,triggerType);
-                                DataCollectionHome.this.finish();
-                                Intent i = new Intent(mContext, DataCollectionHome.class);
-                                startActivity(i);
+                                if(overAll.equalsIgnoreCase("1") && triggerType.equalsIgnoreCase("6"))
+                                {
+                                    ArrayList<OwnContactModel>mOwnArrayList=PreferenceManager.getOwnDetailArrayList("OwnContact",mContext);
+                                    mOwnArrayList.clear();
+                                    AppController.kinArrayShow.clear();
+                                    AppController.kinArrayPass.clear();
+                                    PreferenceManager.getOwnDetailArrayList("OwnContact",mContext).clear();
+                                    PreferenceManager.saveOwnDetailArrayList(mOwnArrayList,"OwnContact",mContext);
+                                    PreferenceManager.saveKinDetailsArrayListShow( AppController.kinArrayShow,mContext);
+                                    PreferenceManager.saveKinDetailsArrayList( AppController.kinArrayPass,mContext);
+                                    PreferenceManager.setDataCollectionTriggerType(mContext,triggerType);
+                                    DataCollectionHome.this.finish();
+                                    Intent i = new Intent(mContext, DataCollectionHome.class);
+                                    startActivity(i);
+                                }
+                                else
+                                {
+                                    PreferenceManager.setDataCollectionTriggerType(mContext,triggerType);
+                                    DataCollectionHome.this.finish();
+                                    Intent i = new Intent(mContext, DataCollectionHome.class);
+                                    startActivity(i);
+                                }
+
                             }
 
 
@@ -1235,23 +1159,19 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                         });
                         CallApi(JSONSTRING,triggerType,overAll);
                     } else {
-                        /*CustomDialog dialog = new CustomDialog(mContext, getResources().getString(R.string.common_error)
-								, getResources().getString(R.string.ok));
-						dialog.show();*/
+
                         AppUtils.showDialogAlertDismiss((Activity) mContext, "Alert", mContext.getString(R.string.common_error), R.drawable.exclamationicon, R.drawable.round);
 
                     }
                 } catch (Exception ex) {
-                    System.out.println("The Exception in edit profile is" + ex.toString());
+
                 }
 
             }
 
             @Override
             public void responseFailure(String failureResponse) {
-				/*CustomDialog dialog = new CustomDialog(mContext, getResources().getString(R.string.common_error)
-						, getResources().getString(R.string.ok));
-				dialog.show();*/
+
 
             }
         });
@@ -1288,12 +1208,8 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
 
 
                 dialog.dismiss();
-//                    PreferenceManager.setIsValueEmpty(mContext,"0");
 
                 pager.setCurrentItem(0,true);
-
-
-
 
             }
         });
@@ -1322,69 +1238,13 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
 
 
                 dialog.dismiss();
-//                    PreferenceManager.setIsValueEmpty(mContext,"0");
-
-              //  pager.setCurrentItem(0,true);
-
-
-
-
             }
         });
 
         dialog.show();
     }
 
-    public void showDialogCloseButton(final Activity activity, String msg, String msgHead, int ico, int bgIcon, final String page) {
-        final Dialog dialog = new Dialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.alert_dialogue_ok_layout_data_collection);
-        ImageView icon = dialog.findViewById(R.id.iconImageView);
-        icon.setBackgroundResource(bgIcon);
-        icon.setImageResource(ico);
-        TextView text = dialog.findViewById(R.id.text_dialog);
-        TextView textHead = dialog.findViewById(R.id.alertHead);
-        text.setText(msgHead);
-        textHead.setText(msg);
 
-        Button dialogButton = dialog.findViewById(R.id.btn_Ok);
-        dialogButton.setText("Ok");
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                if (page.equals("1")) {
-                    pager.setCurrentItem(1); //go to kin details
-                } else {
-                    pager.setCurrentItem(2);  // go to local
-                }
-//				Intent homeIntent = new Intent(mContext, HomeListActivity.class);
-
-
-            }
-        });
-
-        dialog.show();
-    }
-    public ArrayList<KinDetails.KinModel> getKinArrayList(String key) {
-        SharedPreferences prefs = getSharedPreferences("BSKL", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = prefs.getString(key, null);
-        Type type = new TypeToken<ArrayList<KinDetails.KinModel>>() {
-        }.getType();
-        return gson.fromJson(json, type);
-    }
-
-    public ArrayList<EmergencyDetails.EmergencyModel> getEmergencyArrayList(String key) {
-        SharedPreferences prefs = getSharedPreferences("BSKL", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = prefs.getString(key, null);
-        Type type = new TypeToken<ArrayList<EmergencyDetails.EmergencyModel>>() {
-        }.getType();
-        return gson.fromJson(json, type);
-    }
     /*************************************************************
      * Listeners for ViewPager
      *************************************************************/
@@ -1421,12 +1281,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                     backBtn.setVisibility(View.INVISIBLE);
                     submitBtn.setVisibility(View.VISIBLE);
                     break;
-//                case 1:
-//                    radioGroup.check(R.id.radioButton2);
-//                    nextBtn.setVisibility(View.VISIBLE);
-//                    backBtn.setVisibility(View.VISIBLE);
-//                    submitBtn.setVisibility(View.INVISIBLE);
-//                    break;
+
                 case 1:
                     radioButton1.setVisibility(View.VISIBLE);
                     radioButton2.setVisibility(View.VISIBLE);
@@ -1755,40 +1610,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
         dialog.show();
 
     }
-    public void showInsurance(final Context activity, String msg, String msgHead, String button, int ico, int bgIcon) {
-        final Dialog dialog = new Dialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.alert_dialogue_ok_layout_data_collection);
-        ImageView icon = dialog.findViewById(R.id.iconImageView);
-        icon.setBackgroundResource(bgIcon);
-        icon.setImageResource(ico);
-        TextView text = dialog.findViewById(R.id.text_dialog);
-        TextView textHead = dialog.findViewById(R.id.alertHead);
-        text.setText(msgHead);
-        textHead.setText(msg);
 
-        Button dialogButton = dialog.findViewById(R.id.btn_Ok);
-        dialogButton.setText(button);
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-
-                if (PreferenceManager.getDataCollectionTriggerType(mContext).equalsIgnoreCase("6")){
-                    pager.setCurrentItem(0,true);
-                }else {
-                    pager.setCurrentItem(1,true);
-                }
-
-
-            }
-        });
-
-        dialog.show();
-
-    }
 public String checkOwnDetailEmpty()
 {
     String feild="";
@@ -1867,11 +1689,7 @@ public String checkOwnDetailEmpty()
 
     return feild;
 }
- public String checkFamilConatctEmpty()
- {
-     String emptyFeild="";
-     return emptyFeild;
- }
+
     private void showDataSuccess(Context mContext, String msgHead, String msg, int ico, int bgIcon)
     {
         final Dialog dialog = new Dialog(mContext);
@@ -1895,7 +1713,6 @@ public String checkOwnDetailEmpty()
 
             }
         });
-        Button dialogButtonCancel = dialog.findViewById(R.id.btn_Cancel);
         dialog.show();
     }
 }

@@ -105,32 +105,7 @@ public class KinDetails extends Fragment {
 
     }
 
-    /* public void showAlertButton(final Activity activity, String msg, String msgHead, int ico, int bgIcon) {
-         final Dialog dialog = new Dialog(activity);
-         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-         dialog.setCancelable(false);
-         dialog.setContentView(R.layout.alert_dialogue_ok_layout_data_collection);
-         ImageView icon = dialog.findViewById(R.id.iconImageView);
-         icon.setBackgroundResource(bgIcon);
-         icon.setImageResource(ico);
-         TextView text = dialog.findViewById(R.id.text_dialog);
-         TextView textHead = dialog.findViewById(R.id.alertHead);
-         text.setText(msgHead);
-         textHead.setText(msg);
 
-         Button dialogButton = dialog.findViewById(R.id.btn_Ok);
-         dialogButton.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 dialog.dismiss();
-
-             }
-         });
-
-         dialog.show();
-
-     }*/
     public void showAlertOKButton(final Activity activity, String msg, String msgHead, String button, int ico, int bgIcon) {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
