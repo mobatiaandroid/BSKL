@@ -69,6 +69,10 @@ String type="";
             }
 
         }
+        else
+        {
+            Log.d(TAG, "Message data payload else: " + remoteMessage.getData());
+        }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
@@ -168,10 +172,10 @@ String type="";
     }
 
     private void handleDataMessage(JSONObject json) {
-        //log.e(TAG, "push json: " + json.toString());
+        Log.e(TAG, "push json: " + json.toString());
 
         try {
-            JSONObject data = json.getJSONObject("body");
+            JSONObject data = json.getJSONObject("notification");
 
             String badge = data.getString("badge");
             String type = data.getString("type");

@@ -40,6 +40,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.mobatia.bskl.R;
@@ -193,7 +194,7 @@ public class HomeScreenFragment extends Fragment implements
         locationPermissionStatus = getActivity().getSharedPreferences("locationPermissionStatus", getActivity().MODE_PRIVATE);
         initUI();
         mSectionText = new String[4];
-
+        Log.e("DEVICE ID", FirebaseInstanceId.getInstance().getToken());
         setDragListenersForButtons();
         getButtonBgAndTextImages();
         return mRootView;
@@ -1242,6 +1243,11 @@ public class HomeScreenFragment extends Fragment implements
                                         ArrayList<PassportDetailModel>mPassport=PreferenceManager.getPassportDetailArrayList(mContext);
                                         mPassport.clear();
                                         PreferenceManager.savePassportDetailArrayList(mPassport,mContext);
+                                        AppController.mStudentDataArrayList.clear();
+                                        ArrayList<StudentModelNew>mStuudent=PreferenceManager.getInsuranceStudentList(mContext);
+                                        mStuudent.clear();
+                                        PreferenceManager.saveInsuranceStudentList(mStuudent,mContext);
+
                                     }
                                 }
                                 else
@@ -1260,7 +1266,12 @@ public class HomeScreenFragment extends Fragment implements
                                     ArrayList<PassportDetailModel>mPassport=PreferenceManager.getPassportDetailArrayList(mContext);
                                     mPassport.clear();
                                     PreferenceManager.savePassportDetailArrayList(mPassport,mContext);
+                                    AppController.mStudentDataArrayList.clear();
+                                    ArrayList<StudentModelNew>mStuudent=PreferenceManager.getInsuranceStudentList(mContext);
+                                    mStuudent.clear();
+                                    PreferenceManager.saveInsuranceStudentList(mStuudent,mContext);
                                     PreferenceManager.setPreviousTriggerType(mContext,respObj.optString("trigger_type"));
+
                                 }
                             }
 
@@ -1270,9 +1281,9 @@ public class HomeScreenFragment extends Fragment implements
                                         @Override
                                         public void run() {
                                             if (PreferenceManager.getSuspendTrigger(mContext).equalsIgnoreCase("0")) {
+                                                showDataCollectionUserDetail();
                                                 getStudentsListAPI(URL_GET_STUDENT_LIST);
                                                 getCountryList();
-                                                showDataCollectionUserDetail();
                                             }else {
                                                 System.out.println("Dont show triggered window");
                                             }

@@ -1085,7 +1085,7 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                             {
 
 
-                                AppController.mStudentDataArrayList.clear();
+
                                 AppController.kinArrayShow.clear();
                                 AppController.kinArrayPass.clear();
                                 ArrayList<OwnContactModel>mOwnArrayList=PreferenceManager.getOwnDetailArrayList("OwnContact",mContext);
@@ -1100,6 +1100,8 @@ public class DataCollectionHome extends FragmentActivity implements ViewPager.On
                                 ArrayList<PassportDetailModel>mPassport=PreferenceManager.getPassportDetailArrayList(mContext);
                                 mPassport.clear();
                                 PreferenceManager.savePassportDetailArrayList(mPassport,mContext);
+
+                                AppController.mStudentDataArrayList.clear();
                                 ArrayList<StudentModelNew>mStuudent=PreferenceManager.getInsuranceStudentList(mContext);
                                 mStuudent.clear();
                                 PreferenceManager.saveInsuranceStudentList(mStuudent,mContext);

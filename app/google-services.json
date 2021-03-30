@@ -1,39 +1,36 @@
 {
   "project_info": {
-    "project_number": "750988456561",
-    "firebase_url": "https://bskl-208308.firebaseio.com",
-    "project_id": "bskl-208308",
-    "storage_bucket": "bskl-208308.appspot.com"
+    "project_number": "106762186042",
+    "project_id": "bskl-bf9de",
+    "storage_bucket": "bskl-bf9de.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:750988456561:android:9bbe010ecd3a275d",
+        "mobilesdk_app_id": "1:106762186042:android:17cffcf48db289ad157403",
         "android_client_info": {
           "package_name": "com.mobatia.bskl"
         }
       },
       "oauth_client": [
         {
-          "client_id": "750988456561-7cecqtdeklll1h42o0755098nbpa488b.apps.googleusercontent.com",
+          "client_id": "106762186042-2l8f791oun3vprqprtpnf4i38vmj3j0h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBEjlyJjEw_uOd_eEk379L0SYKdPs3tjhk"
+          "current_key": "AIzaSyBAvwlpqFCtDRrIr7rmQ-XHQIZW5wARjEg"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106762186042-2l8f791oun3vprqprtpnf4i38vmj3j0h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
