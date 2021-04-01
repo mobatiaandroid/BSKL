@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.provider.Settings;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -417,9 +418,11 @@ public class SignUpActivity extends AppCompatActivity implements
     }
 
     private void sendOtpRequest(String URL) {
+        String androidId = Settings.Secure.getString(mContext.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         VolleyWrapper volleyWrapper = new VolleyWrapper(URL);
-        String[] name = {"access_token", "otp", "email", "deviceid", "devicetype","users_id"};
-        String[] value = {PreferenceManager.getAccessToken(mContext), verificationCodeTxt.getText().toString(), mMailEdtText.getText().toString(), FirebaseInstanceId.getInstance().getToken(), "2",users_id};
+        String[] name = {"access_token", "otp", "email", "deviceid", "devicetype","users_id","device_identifier"};
+        String[] value = {PreferenceManager.getAccessToken(mContext), verificationCodeTxt.getText().toString(), mMailEdtText.getText().toString(), FirebaseInstanceId.getInstance().getToken(), "2",users_id,androidId};
         volleyWrapper.getResponsePOST(mContext, 11, name, value, new VolleyWrapper.ResponseListener() {
             @Override
             public void responseSuccess(String successResponse) {

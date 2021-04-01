@@ -2666,5 +2666,20 @@ public class PreferenceManager implements NaisTabConstants,KeyConstants {
         return prefs.getString("previous_trigger_type", "");
     }
 
+    /*********** DataCollectiom trigger type**********/
+    public static void setLoggedInStatus(Context context, String result) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREF_NAS,
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("logged_in_status", result);
+        editor.commit();
+    }
+
+    public static String getLoggedInStatus(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(SHARED_PREF_NAS,
+                Context.MODE_PRIVATE);
+        return prefs.getString("logged_in_status", "");
+    }
+
 }
 

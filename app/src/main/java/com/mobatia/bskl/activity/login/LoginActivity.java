@@ -14,6 +14,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -632,9 +633,11 @@ public class LoginActivity extends Activity implements View.OnTouchListener,
 
     private void sendSignUpRequest(String URL)
     {
+        String androidId = Settings.Secure.getString(mContext.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         VolleyWrapper volleyWrapper = new VolleyWrapper(URL);
-        String[] name = {"access_token", "email", "deviceid", "devicetype", "mobile_no"};
-        String[] value = {PreferenceManager.getAccessToken(mContext), mMailEdtText.getText().toString(), FirebaseInstanceId.getInstance().getToken(), "2", PreferenceManager.getPhoneNo(mContext)};
+        String[] name = {"access_token", "email", "deviceid", "devicetype", "mobile_no","device_identifier"};
+        String[] value = {PreferenceManager.getAccessToken(mContext), mMailEdtText.getText().toString(), FirebaseInstanceId.getInstance().getToken(), "2", PreferenceManager.getPhoneNo(mContext),androidId};
         volleyWrapper.getResponsePOST(mContext, 11, name, value, new VolleyWrapper.ResponseListener() {
             @Override
             public void responseSuccess(String successResponse) {
@@ -723,9 +726,11 @@ public class LoginActivity extends Activity implements View.OnTouchListener,
     }
 
     private void LoginApiCall(String URL) {
+        String androidId = Settings.Secure.getString(mContext.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         VolleyWrapper volleyWrapper = new VolleyWrapper(URL);
-        String[] name = {"access_token", "email", "password", "deviceid", "devicetype"};
-        String[] value = {PreferenceManager.getAccessToken(mContext), mUserNameEdtTxt.getText().toString(), mPasswordEdtTxt.getText().toString(), FirebaseInstanceId.getInstance().getToken(), "2"};
+        String[] name = {"access_token", "email", "password", "deviceid", "devicetype","device_identifier"};
+        String[] value = {PreferenceManager.getAccessToken(mContext), mUserNameEdtTxt.getText().toString(), mPasswordEdtTxt.getText().toString(), FirebaseInstanceId.getInstance().getToken(), "2",androidId};
         System.out.println("acccessTokenpostInitPost: " + PreferenceManager.getAccessToken(mContext));
 
         volleyWrapper.getResponsePOST(mContext, 11, name, value, new VolleyWrapper.ResponseListener() {
@@ -743,6 +748,7 @@ public class LoginActivity extends Activity implements View.OnTouchListener,
                             PreferenceManager.setUserId(mContext, respObj.optString(JTAG_USER_ID));
                             PreferenceManager.setUserEmail(mContext, mUserNameEdtTxt.getText().toString());
                             PreferenceManager.setPhoneNo(mContext, respObj.optString(JTAG_PHONE_NO));
+                            PreferenceManager.setLoggedInStatus(mContext,"1");
                             PreferenceManager.setFullName(mContext, respObj.optString("name"));
                             showSettingUserDetail(URL_GET_SETTINGS_USER_DETAIL);
 //                            AppController.getInstance().getGoogleAnalyticsTracker().set("&uid", PreferenceManager.getUserId(mContext));
@@ -883,9 +889,13 @@ public class LoginActivity extends Activity implements View.OnTouchListener,
     }
 
     private void sendOtpRequest(String URL) {
+        String androidId = Settings.Secure.getString(mContext.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        //device_identifier
+        //androidId
         VolleyWrapper volleyWrapper = new VolleyWrapper(URL);
-        String[] name = {"access_token", "otp", "email", "deviceid", "devicetype"};
-        String[] value = {PreferenceManager.getAccessToken(mContext), mOtpEditText.getText().toString(), mMailEdtText.getText().toString(), FirebaseInstanceId.getInstance().getToken(), "2"};
+        String[] name = {"access_token", "otp", "email", "deviceid", "devicetype","device_identifier"};
+        String[] value = {PreferenceManager.getAccessToken(mContext), mOtpEditText.getText().toString(), mMailEdtText.getText().toString(), FirebaseInstanceId.getInstance().getToken(), "2",androidId};
         volleyWrapper.getResponsePOST(mContext, 11, name, value, new VolleyWrapper.ResponseListener() {
             @Override
             public void responseSuccess(String successResponse) {
@@ -1174,9 +1184,13 @@ public class LoginActivity extends Activity implements View.OnTouchListener,
     }
 
     private void sendForGotpassWord(String URL) {
+        String androidId = Settings.Secure.getString(mContext.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        //device_identifier
+        //androidId
         VolleyWrapper volleyWrapper = new VolleyWrapper(URL);
-        String[] name = {"access_token", "email", "deviceid", "devicetype"};
-        String[] value = {PreferenceManager.getAccessToken(mContext), mMailEdtText.getText().toString(), FirebaseInstanceId.getInstance().getToken(), "2"};
+        String[] name = {"access_token", "email", "deviceid", "devicetype","device_identifier"};
+        String[] value = {PreferenceManager.getAccessToken(mContext), mMailEdtText.getText().toString(), FirebaseInstanceId.getInstance().getToken(), "2",androidId};
 
         //String[] value={PreferenceManager.getAccessToken(mContext),mStaffList.get(pos).getStaffEmail(),JTAG_USERS_ID_VALUE,text_dialog.getText().toString(),text_content.getText().toString()};
         volleyWrapper.getResponsePOST(mContext, 11, name, value, new VolleyWrapper.ResponseListener() {

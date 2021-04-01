@@ -162,7 +162,7 @@ public class HomeActivity extends AppCompatActivity
         if (extras != null) {
             notificationRecieved = extras.getInt("Notification_Recieved", 0);
             fromsplash = extras.getBoolean("fromsplash");
-
+            Log.e("NOTIFY",String.valueOf(notificationRecieved));
         }
         initialiseUI();
         initialSettings();

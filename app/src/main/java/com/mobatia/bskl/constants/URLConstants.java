@@ -25,12 +25,12 @@ public interface URLConstants extends KeyConstants {
     //   ===================================================================================================
 
     String URL_DEVICE_REGISTRATION = URL_HEAD
-            + "deviceregistration";
+            + "deviceregistration_V2";
     String URL_TERMS_OF_SERVICE = URL_HEAD
             + "terms_of_service";
-    String URL_GET_OTP_VERIFICATION = URL_HEAD + "otpverfication";
+    String URL_GET_OTP_VERIFICATION = URL_HEAD + "otpverfication_V2";
     String URL_GET_OTP_NEWPHONENUMBER = URL_HEAD + "newphone_number_request";
-    String URL_LOGOUT = URL_HEAD + "logout";
+    String URL_LOGOUT = URL_HEAD + "logout_V2";
     String URL_GET_NOTICATIONS_LIST = URL_HEAD + "notifications";
     String URL_GET_NOTICATIONS_LIST_NEW = URL_HEAD + "notifications_new";
     String URL_GET_SAFE_GUARDING_LIST = URL_HEAD + "safeguarding";
@@ -54,7 +54,7 @@ public interface URLConstants extends KeyConstants {
     String URL_GET_SAFEGUARD_RESET = URL_HEAD + "reset_safeguarding_notifaction";
     String URL_GET_STUDENT_REPORT = URL_HEAD + "progressreport";
     String URL_PARENT_SIGNUP = URL_HEAD + "parent_signup";
-    String URL_LOGIN = URL_HEAD + "login";
+    String URL_LOGIN = URL_HEAD + "login_V2";
     String URL_SUBMIT_DATA_COLLECTION = URL_HEAD + "submit_datacollection";
     String URL_SUBMIT_DATA_COLLECTION_NEW = URL_HEAD + "submit_datacollection_new";
     String URL_GET_TIME_TABLE_LIST = URL_HEAD + "timetable_v2";

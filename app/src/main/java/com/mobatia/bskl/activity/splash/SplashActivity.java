@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.core.app.ActivityCompat;
 
+import android.provider.Settings;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,6 +17,11 @@ import android.widget.VideoView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.mobatia.bskl.R;
+import com.mobatia.bskl.activity.datacollection_p2.model.InsuranceDetailModel;
+import com.mobatia.bskl.activity.datacollection_p2.model.KinModel;
+import com.mobatia.bskl.activity.datacollection_p2.model.OwnContactModel;
+import com.mobatia.bskl.activity.datacollection_p2.model.PassportDetailModel;
+import com.mobatia.bskl.activity.datacollection_p2.model.StudentModelNew;
 import com.mobatia.bskl.activity.home.HomeActivity;
 import com.mobatia.bskl.activity.login.LoginActivity;
 import com.mobatia.bskl.activity.tutorial.TutorialActivity;
@@ -29,6 +35,8 @@ import com.mobatia.bskl.manager.PreferenceManager;
 import com.mobatia.bskl.volleywrappermanager.VolleyWrapper;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class SplashActivity extends Activity implements
@@ -173,28 +181,56 @@ public class SplashActivity extends Activity implements
 
                 @Override
                 public void run() {
+
                     if (PreferenceManager.getIsFirstLaunch(mContext) && PreferenceManager.getUserId(mContext).equals("")) {
                         Intent tutorialIntent = new Intent(mContext,
                                 TutorialActivity.class);
                         tutorialIntent.putExtra(TYPE, 1);
                         startActivity(tutorialIntent);
                         finish();
-                    } else if (PreferenceManager.getUserId(mContext).equals("")) {
+                    }
+                    else if (PreferenceManager.getUserId(mContext).equals("")) {
                         Intent loginIntent = new Intent(mContext,
                                 LoginActivity.class);
                         loginIntent.putExtra("fromsplash", true);
                         startActivity(loginIntent);
                         overridePendingTransition(0, 0);
                         finish();
-                    } else {
+                    }
+                    else {
 //                    Intent loginIntent = new Intent(mContext,
 //                            HomeListActivity.class);
-                        Intent loginIntent = new Intent(mContext,
-                                HomeActivity.class);
-                        loginIntent.putExtra("fromsplash", true);
-                        startActivity(loginIntent);
-                        overridePendingTransition(0, 0);
-                        finish();
+                        if (PreferenceManager.getLoggedInStatus(mContext).equalsIgnoreCase(""))
+                        {
+                            PreferenceManager.setUserId(mContext,"");
+                            ArrayList<OwnContactModel> dummyOwn=new ArrayList<>();
+                            ArrayList<KinModel> dummyKin=new ArrayList<>();
+                            ArrayList<InsuranceDetailModel> dummyInsurance=new ArrayList<>();
+                            ArrayList<PassportDetailModel> dummyPassport=new ArrayList<>();
+                            ArrayList<StudentModelNew> dummyStudent=new ArrayList<>();
+                            PreferenceManager.saveOwnDetailArrayList(dummyOwn,"OwnContact",mContext);
+                            PreferenceManager.saveKinDetailsArrayListShow( dummyKin,mContext);
+                            PreferenceManager.saveKinDetailsArrayList( dummyKin,mContext);
+                            PreferenceManager.saveInsuranceDetailArrayList(dummyInsurance,mContext);
+                            PreferenceManager.savePassportDetailArrayList(dummyPassport,mContext);
+                            PreferenceManager.saveInsuranceStudentList(dummyStudent,mContext);
+                            Intent loginIntent = new Intent(mContext,
+                                    LoginActivity.class);
+                            loginIntent.putExtra("fromsplash", true);
+                            startActivity(loginIntent);
+                            overridePendingTransition(0, 0);
+                            finish();
+                        }
+                        else
+                        {
+                            Intent loginIntent = new Intent(mContext,
+                                    HomeActivity.class);
+                            loginIntent.putExtra("fromsplash", true);
+                            startActivity(loginIntent);
+                            overridePendingTransition(0, 0);
+                            finish();
+                        }
+
                     }
                 }
             }, 500);
@@ -238,7 +274,15 @@ public class SplashActivity extends Activity implements
                             if (rootObject != null) {
                                 String acccessToken = rootObject.optString(JTAG_ACCESSTOKEN);
                                 PreferenceManager.setAccessToken(mContext, acccessToken);
-                                deviceRegistration(mContext);
+                                if (PreferenceManager.getUserId(mContext).equalsIgnoreCase(""))
+                                {
+                                    goToNextView();
+                                }
+                                else
+                                {
+                                    deviceRegistration(mContext);
+                                }
+
 //							if (PreferenceManager.getUserId(mContext).equals("")) {
 //
 //								deviceRegistration(mContext);//changed on 22-09-2017
@@ -261,10 +305,11 @@ public class SplashActivity extends Activity implements
         {
 
             try {
-
+                String androidId = Settings.Secure.getString(mContext.getContentResolver(),
+                        Settings.Secure.ANDROID_ID);
                 final VolleyWrapper manager = new VolleyWrapper(URL_DEVICE_REGISTRATION);
-                String[] name = {JTAG_ACCESSTOKEN, JTAG_DEVICE_ID, JTAG_DEVICE_TYPE};
-                String[] value = {PreferenceManager.getAccessToken(mContext), FirebaseID, "2"};
+                String[] name = {JTAG_ACCESSTOKEN, JTAG_DEVICE_ID, JTAG_DEVICE_TYPE,"device_identifier","user_ids"};
+                String[] value = {PreferenceManager.getAccessToken(mContext), FirebaseID, "2",androidId,PreferenceManager.getUserId(mContext)};
                 //log.e("acc: ", PreferenceManager.getAccessToken(mContext));
                 //log.e("dev: ", FirebaseID);
                 manager.getResponsePOST(mContext, 11, name, value, new VolleyWrapper.ResponseListener() {

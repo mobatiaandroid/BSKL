@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +81,10 @@ public class MessageFragment extends Fragment implements AdapterView.OnItemClick
 
     private void callPushNotification() {
         pushNotificationArrayList = new ArrayList<PushNotificationModel>();
-
+        String androidId = Settings.Secure.getString(mContext.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        //device_identifier
+        //androidId
         try {
 
             final VolleyWrapper manager = new VolleyWrapper(URL_GET_NOTICATIONS_LIST);

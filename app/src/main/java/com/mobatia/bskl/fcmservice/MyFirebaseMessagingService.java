@@ -101,6 +101,7 @@ String type="";
         LocalBroadcastManager.getInstance(this).sendBroadcast(mIntent);
         if(type.equalsIgnoreCase("Text"))
         {
+            Log.e("It enters ","Here");
             intent.putExtra("Notification_Recieved",1);
 
         }else if(type.equalsIgnoreCase("Calender"))

@@ -15,6 +15,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -596,6 +597,7 @@ public class AppUtils implements JSONConstants, URLConstants, NameValueConstants
             public void onClick(View v) {
                 if (PreferenceManager.getUserId(activity).equalsIgnoreCase("")) {
                     PreferenceManager.setUserId(activity, "");
+                    PreferenceManager.setLoggedInStatus(activity, "");
                     dialog.dismiss();
                     Intent mIntent = new Intent(activity, LoginActivity.class);
                     mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -617,9 +619,11 @@ public class AppUtils implements JSONConstants, URLConstants, NameValueConstants
     }
 
     private static void callLogoutApi(final Activity mActivity,Context context, final Dialog dialog) {
+        String androidId = Settings.Secure.getString(context.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         VolleyWrapper volleyWrapper = new VolleyWrapper(URL_LOGOUT);
-        String[] name = {"access_token", "users_id", JTAG_DEVICE_iD, JTAG_DEVICE_tYPE};
-        String[] value = {PreferenceManager.getAccessToken(mActivity), PreferenceManager.getUserId(mActivity), FirebaseInstanceId.getInstance().getToken(), "2"};
+        String[] name = {"access_token", "users_id", JTAG_DEVICE_iD, JTAG_DEVICE_tYPE,"device_identifier"};
+        String[] value = {PreferenceManager.getAccessToken(mActivity), PreferenceManager.getUserId(mActivity), FirebaseInstanceId.getInstance().getToken(), "2",androidId};
 
         //String[] value={PreferenceManager.getAccessToken(mContext),mStaffList.get(pos).getStaffEmail(),JTAG_USERS_ID_VALUE,text_dialog.getText().toString(),text_content.getText().toString()};
         volleyWrapper.getResponsePOST(mActivity, 11, name, value, new VolleyWrapper.ResponseListener() {
@@ -637,15 +641,10 @@ public class AppUtils implements JSONConstants, URLConstants, NameValueConstants
                             NotificationManager nm = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
                             nm.cancelAll();
                             PreferenceManager.setUserId(mActivity, "");
+                            PreferenceManager.setLoggedInStatus(mActivity, "");
                             PreferenceManager.setDataCollection(mActivity,"0");
-//                            SharedPreferences.Editor editor = mActivity.getSharedPreferences("BSKL", Context.MODE_PRIVATE).edit();
-//                            editor.putString("data_collection_flag", "0");
-//                            editor.apply();
-                            System.out.println("insurance array size in logout1");
                             AppController.kinArrayShow.clear();
-                            System.out.println("insurance array size in logout2");
                             AppController.kinArrayPass.clear();
-                            System.out.println("insurance array size in logout3");
                             if(PreferenceManager.getOwnDetailArrayList("OwnContact",context)==null ||PreferenceManager.getOwnDetailArrayList("OwnContact",context).size()==0 )
                             {
 
@@ -653,9 +652,7 @@ public class AppUtils implements JSONConstants, URLConstants, NameValueConstants
                             else
                             {
                                 ArrayList<OwnContactModel> mOwnArrayList=PreferenceManager.getOwnDetailArrayList("OwnContact",context);
-                                System.out.println("insurance array size in logout4"+PreferenceManager.getOwnDetailArrayList("OwnContact",context).size());
                                 mOwnArrayList.clear();
-                                System.out.println("insurance array size in logout5");
                                 PreferenceManager.saveOwnDetailArrayList(mOwnArrayList,"OwnContact",context);
                             }
 
@@ -665,17 +662,11 @@ public class AppUtils implements JSONConstants, URLConstants, NameValueConstants
                             }
                             else
                             {
-                                System.out.println("insurance array size in logout6");
                                 ArrayList<KinModel>mKinShowArray=PreferenceManager.getKinDetailsArrayListShow(context);
-                                System.out.println("insurance array size in logout7");
                                 mKinShowArray.clear();
-                                System.out.println("insurance array size in logout8");
                                 PreferenceManager.saveKinDetailsArrayListShow( mKinShowArray,context);
-                                System.out.println("insurance array size in logout9");
                                 ArrayList<KinModel>mKinPassArray=PreferenceManager.getKinDetailsArrayList(context);
-                                System.out.println("insurance array size in logout10");
                                 mKinPassArray.clear();
-                                System.out.println("insurance array size in logout11");
                                 PreferenceManager.saveKinDetailsArrayList( mKinPassArray,context);
                             }
                             if (PreferenceManager.getInsuranceDetailArrayList(context)==null ||PreferenceManager.getInsuranceDetailArrayList(context).size()==0)
@@ -699,6 +690,7 @@ public class AppUtils implements JSONConstants, URLConstants, NameValueConstants
                             }
                             else
                             {
+                                ArrayList dummyPassport=new ArrayList<PassportDetailModel>();
                                 System.out.println("insurance array size in logout15");
                                 ArrayList<PassportDetailModel>mPassportDataArray=PreferenceManager.getPassportDetailArrayList(context);
                                 System.out.println("insurance array size in logout");
@@ -718,7 +710,17 @@ public class AppUtils implements JSONConstants, URLConstants, NameValueConstants
                                 PreferenceManager.saveInsuranceStudentList(mStudentArray,context);
 
                             }
-
+                            ArrayList<OwnContactModel> dummyOwn=new ArrayList<>();
+                            ArrayList<KinModel> dummyKin=new ArrayList<>();
+                            ArrayList<InsuranceDetailModel> dummyInsurance=new ArrayList<>();
+                            ArrayList<PassportDetailModel> dummyPassport=new ArrayList<>();
+                            ArrayList<StudentModelNew> dummyStudent=new ArrayList<>();
+                            PreferenceManager.saveOwnDetailArrayList(dummyOwn,"OwnContact",context);
+                            PreferenceManager.saveKinDetailsArrayListShow( dummyKin,context);
+                            PreferenceManager.saveKinDetailsArrayList( dummyKin,context);
+                            PreferenceManager.saveInsuranceDetailArrayList(dummyInsurance,context);
+                            PreferenceManager.savePassportDetailArrayList(dummyPassport,context);
+                            PreferenceManager.saveInsuranceStudentList(dummyStudent,context);
                             Intent mIntent = new Intent(mActivity, LoginActivity.class);
                             mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             mActivity.startActivity(mIntent);
@@ -818,10 +820,11 @@ public class AppUtils implements JSONConstants, URLConstants, NameValueConstants
     public static void deviceRegistration(final Context mContext) {
 
         try {
-
+            String androidId = Settings.Secure.getString(mContext.getContentResolver(),
+                    Settings.Secure.ANDROID_ID);
             final VolleyWrapper manager = new VolleyWrapper(URL_DEVICE_REGISTRATION);
-            String[] name = {JTAG_ACCESSTOKEN, JTAG_DEVICE_ID, JTAG_DEVICE_TYPE};
-            String[] value = {PreferenceManager.getAccessToken(mContext), FirebaseInstanceId.getInstance().getToken(), "2"};
+            String[] name = {JTAG_ACCESSTOKEN, JTAG_DEVICE_ID, JTAG_DEVICE_TYPE,"device_identifier","user_ids"};
+            String[] value = {PreferenceManager.getAccessToken(mContext), FirebaseInstanceId.getInstance().getToken(), "2",androidId,PreferenceManager.getUserId(mContext)};
             manager.getResponsePOST(mContext, 11, name, value, new VolleyWrapper.ResponseListener() {
 
                 @Override
